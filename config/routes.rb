@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   resources :games
   resources :users
   resources :players
-  resources :participants
   resources :teams
   resources :tournaments
   resources :leagues
@@ -18,6 +17,14 @@ Rails.application.routes.draw do
   get 'user_session/destroy' => 'user_session#destroy', as: :logout
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
+
+  get 'listallteams' => 'teams#all', as: :all_teams
+
+  get 'listallplayers' => 'players#all', as: :all_players
+
+  post 'team/clone' => 'teams#clone', as: :clone_team
+
+  post 'player/clone' => 'player_participants#create', as: :player_participants
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products

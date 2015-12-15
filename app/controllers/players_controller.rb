@@ -8,6 +8,11 @@ class PlayersController < ApplicationController
     @player = Player.new
   end
 
+  def all
+    @player_participant = PlayerParticipant.new
+    @players = Player.all
+  end
+
   def show
     @player = Player.find(params['id'])
   end
@@ -26,6 +31,11 @@ class PlayersController < ApplicationController
 
   def user_params
     params.require(:player).permit(:first_name, :last_name, :suffix, :jersey_number, :date_of_birth )
+  end
+
+  def team(team)
+    self.team = team
+    self.save
   end
 
 end

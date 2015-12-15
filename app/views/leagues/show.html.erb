@@ -1,0 +1,9 @@
+
+<div class="container">
+  <h1><%= "#{@league.name}" %> </h1>
+  <ul>
+    <% @league.tournaments.each do |t| %>
+      <%= link_to "#{t.name}", t %>
+    <% end %>
+  </ul>
+</div>

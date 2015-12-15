@@ -1,0 +1,18 @@
+<div class="container">
+  <h1>Which Player would you like to add?</h1>
+  <div class="all-teams-rows row">
+    <% @players.each do |p| %>
+      <div class="team-row row">
+        <div class="col-xs-3">
+          <%= link_to "#{p.last_name}, #{p.first_name}", p %></p>
+        </div>
+        <%= form_for @player_participant do |f| %>
+          <%= f.hidden_field :player_id, value: p.id %>
+          <%= f.collection_select(:team_id ,Team.where("user_id= "+current_user.id.to_s), :id, :name, {:prompt => 'Please select a Team'}) %>
+          <%= f.submit "Add To Team" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  </ul>
+</div>

@@ -16,13 +16,18 @@
         <%= link_to "New Team", new_team_path, class:"btn btn-primary" %>
         <%= link_to "My Teams", teams_path, class:"btn btn-primary" %>
         <%= link_to "New Tournament", new_tournament_path, class:"btn btn-primary" %>
-        <%= link_to "My Tournament", tournaments_path, class:"btn btn-primary" %>
+        <%= link_to "My Tournaments", tournaments_path, class:"btn btn-primary" %>
+        <%= link_to "New League", new_league_path, class:"btn btn-primary" %>
+        <%= link_to "My Leagues", leagues_path, class:"btn btn-primary" %>
       <% else %>
         <%= link_to "New User", new_user_path, class:"btn btn-primary" %>
         <%= link_to "Login", new_user_session_path, class:"btn btn-primary" %>
       <% end %>
 
     </div>
+    <% if flash[:notice] %>
+      <div class="notice col-xs-12"><%= flash[:notice] %></div>
+    <% end %>
     <%= yield %>
   </div>
 </body>
