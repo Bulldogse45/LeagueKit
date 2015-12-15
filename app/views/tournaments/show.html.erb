@@ -3,7 +3,8 @@
   <h1><%= "#{@tournament.name}" %> </h1>
   <ul>
     <% @tournament.teams.each do |t| %>
-      <%= link_to "#{t.name}", t %>
+      <li><%= link_to "#{t.name}", t %></li>
     <% end %>
   </ul>
+  <%= link_to "Add Team", all_teams_path, class:"btn btn-primary" %>
 </div>

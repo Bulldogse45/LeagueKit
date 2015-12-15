@@ -1,9 +1,12 @@
 
 <div class="container">
-  <h1><%= "#{@team.name}" %> </h1>
+  <h1>Team: <%= "#{@team.name}" %> </h1>
+  <h4>Coach: <%= link_to "#{@team.user.last_name}, #{@team.user.first_name}" , @team.user %> </h4>
+  <h4>Players:</h4>
   <ul>
     <% @team.players.each do |p| %>
-      <%= link_to "#{p.last_name}, #{p.first_name}", p %>
+      <li><%= link_to "#{p.last_name}, #{p.first_name}", p %></li>
     <% end %>
   </ul>
+  <%= link_to "Add Player", all_players_path, class:"btn btn-primary" %>
 </div>

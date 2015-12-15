@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   resources :games
   resources :users
   resources :players
-  resources :participants
   resources :teams
   resources :tournaments
   resources :leagues
@@ -21,7 +20,11 @@ Rails.application.routes.draw do
 
   get 'listallteams' => 'teams#all', as: :all_teams
 
-  post 'team_participant/create' => 'team_participant#create', as: :add_tournament_team
+  get 'listallplayers' => 'players#all', as: :all_players
+
+  post 'team/clone' => 'teams#clone', as: :clone_team
+
+  post 'player/clone' => 'player_participants#create', as: :player_participants
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
