@@ -1,0 +1,2 @@
+module TeamParticipantsHelper
+end
