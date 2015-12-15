@@ -1,0 +1,7 @@
+<h1>Which Team would you like to add?</h1>
+<div class="all-teams-rows row">
+  <% @teams.each do |t| %>
+    <p><%= link_to t.name, t %></p>
+  <% end %>
+</div>
+</ul>

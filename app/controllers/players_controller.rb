@@ -28,4 +28,9 @@ class PlayersController < ApplicationController
     params.require(:player).permit(:first_name, :last_name, :suffix, :jersey_number, :date_of_birth )
   end
 
+  def team(team)
+    self.team = team
+    self.save
+  end
+
 end

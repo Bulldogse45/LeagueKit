@@ -7,6 +7,10 @@ class TeamsController < ApplicationController
     @team = Team.new
   end
 
+  def all
+    @teams = Team.all
+  end
+
   def show
     @team = Team.find(params['id'])
   end
