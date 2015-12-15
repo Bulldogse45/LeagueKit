@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date_of_birth: MyString
+  shirt_size: MyString
+  jersey_number: 1
+  user_id: 1
+  name: MyString
+
+two:
+  date_of_birth: MyString
+  shirt_size: MyString
+  jersey_number: 1
+  user_id: 1
+  name: MyString

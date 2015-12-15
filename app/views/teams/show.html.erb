@@ -1,0 +1,9 @@
+
+<div class="container">
+  <h1><%= "#{@team.name}" %> </h1>
+  <ul>
+    <% @team.players.each do |p| %>
+      <%= link_to "#{p.last_name}, #{p.first_name}", p %>
+    <% end %>
+  </ul>
+</div>
