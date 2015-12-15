@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="col-lg-6 col-lg-offset-3">
+    <%= bootstrap_form_for(@tournament) do |f| %>
+      <%= f.text_field :name %>
+      <%= f.datetime_select :start_time %>
+      <%= f.datetime_select :end_time %>
+
+      <%= f.submit %>
+    <% end %>
+
+</div>

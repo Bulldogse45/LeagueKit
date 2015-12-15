@@ -7,8 +7,23 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div class="container-fluid">
+    <div class="navbar">
+      <% if current_user_session %>
+        <%= link_to "Logout", user_session_path(current_user_session), :method => :delete, :confirm => "Are you sure you want to logout?", class:"btn btn-primary" %>
+        <%= link_to "New Player", new_player_path, class:"btn btn-primary" %>
+        <%= link_to "My Players", players_path, class:"btn btn-primary" %>
+        <%= link_to "New Team", new_team_path, class:"btn btn-primary" %>
+        <%= link_to "My Teams", teams_path, class:"btn btn-primary" %>
+        <%= link_to "New Tournament", new_tournament_path, class:"btn btn-primary" %>
+        <%= link_to "My Tournament", tournaments_path, class:"btn btn-primary" %>
+      <% else %>
+        <%= link_to "New User", new_user_path, class:"btn btn-primary" %>
+        <%= link_to "Login", new_user_session_path, class:"btn btn-primary" %>
+      <% end %>
 
-<%= yield %>
-
+    </div>
+    <%= yield %>
+  </div>
 </body>
 </html>

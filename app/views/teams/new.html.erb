@@ -1,0 +1,9 @@
+<div class="container">
+  <h1 class="text-center">New Team</h1>
+  <div class="col-lg-6 col-lg-offset-3">
+    <%= bootstrap_form_for(@team) do |f| %>
+      <%= f.text_field :name %>
+      <%= f.submit %>
+    <% end %>
+
+</div>
