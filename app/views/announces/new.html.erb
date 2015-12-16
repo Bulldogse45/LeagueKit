@@ -1,0 +1,12 @@
+<h1>What would you like to announce?</h1>
+<%= bootstrap_form_for [@announcable, @announce] do |f| %>
+  <% if @announce.errors.any? %>
+    <ul>
+      <% @announce.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <%= f.text_area :content %>
+  <%= f.submit %>
+<% end %>
