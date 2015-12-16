@@ -8,7 +8,7 @@
         </div>
         <%= form_for @player_participant do |f| %>
           <%= f.hidden_field :player_id, value: p.id %>
-          <%= f.collection_select(:team_id ,Team.where("user_id= "+current_user.id.to_s), :id, :name, {:prompt => 'Please select a Team'}) %>
+          <%= f.collection_select(:team_id ,Team.where("user_id= "+current_user.id.to_s), :id, :display_name, {:prompt => 'Please select a Team'}) %>
           <%= f.submit "Add To Team" %>
         <% end %>
       </div>
