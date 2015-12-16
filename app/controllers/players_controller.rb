@@ -13,6 +13,11 @@ class PlayersController < ApplicationController
     @players = Player.all
   end
 
+  def edit
+    @player = Player.find(params['id'])
+    render 'new'
+  end
+
   def show
     @player = Player.find(params['id'])
   end
