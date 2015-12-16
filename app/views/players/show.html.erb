@@ -3,4 +3,10 @@
   <h1><%= "#{@player.first_name} #{@player.last_name}" %> </h1>
   <p>Jersey: <%= @player.jersey_number %></p>
   <p>Guardian: <%= @player.user.first_name + " " + @player.last_name %></p>
+  <h5>Teams:</h5>
+    <ul>
+      <% @teams.each do |t| %>
+        <li><%= t.display_name %> </li>
+      <% end %>
+    </ul>
 </div>
