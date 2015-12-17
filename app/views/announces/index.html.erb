@@ -1,0 +1,9 @@
+<h1>Announcements!</h1>
+
+<div class="container">
+  <% @announces.each do |announce| %>
+    <p><%= simple_format announce.content %></p>
+  <% end %>
+</div>
+
+<p><%= link_to "New Announcement", [:new, @announcable, :announce] %></p>

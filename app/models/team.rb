@@ -1,5 +1,8 @@
 class Team < ActiveRecord::Base
 
+  acts_as_followable
+  has_many :announces, as: :announcable
+
   belongs_to :tournament
   belongs_to :user
   has_many :player_participants

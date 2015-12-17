@@ -18,12 +18,13 @@ class TeamsController < ApplicationController
 
   def clone
     @team = Team.new(team_params)
-    @team.name = Team.find(params['team']['original_id']).name
-    @team.user = Team.find(params['team']['original_id']).user
-    Team.find(params['team']['original_id']).players.each do |p|
-      @team.players << p
-    end
+    @team.name = Team.find(params['team']['original_id'].to_i).name
+    @team.user = Team.find(params['team']['original_id'].to_i).user
     if @team.save
+      Team.find(@team.original_id).players.each do |p|
+        @team.players << p
+      end
+      team_members_follow_tournament(@team.tournament_id, @team.id)
       redirect_to @team.tournament
     else
       flash[:notice] = @team.errors
@@ -45,5 +46,13 @@ class TeamsController < ApplicationController
 
   def team_params
     params.require(:team).permit(:name, :original_id, :tournament_id )
+  end
+
+  def team_members_follow_tournament(tournament_id, team_id)
+    tournament = Tournament.find(tournament_id)
+    Team.find(team_id).players.each do |p|
+      user = User.find(p.user_id)
+      user.follow(tournament)
+    end
   end
 end
