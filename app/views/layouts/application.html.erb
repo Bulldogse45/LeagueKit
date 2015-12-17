@@ -29,6 +29,9 @@
     <% if flash[:notice] %>
       <div class="notice col-xs-12"><%= flash[:notice] %></div>
     <% end %>
+    <% if flash[:alert] %>
+      <div class="alert col-xs-12"><%= flash[:alert] %></div>
+    <% end %>
     <%= yield %>
   </div>
 </body>

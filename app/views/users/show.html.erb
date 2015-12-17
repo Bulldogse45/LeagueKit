@@ -1,0 +1,6 @@
+<div class="container">
+  <h1><%= "#{@user.last_name}, #{@user.first_name}" %></h1>
+  <% @user.teams.each do |t| %>
+    <p><%= link_to t.display_name, t %></p>
+  <% end %>
+</div>

@@ -8,7 +8,7 @@ class TeamsController < ApplicationController
   end
 
   def all
-    @teams = Team.all
+    @teams = Team.where("id = original_id")
     @team = Team.new
   end
 
@@ -36,6 +36,7 @@ class TeamsController < ApplicationController
     @team = Team.new(team_params)
     @team.user = current_user
     if @team.save
+      @team.update(original_id:@team.id)
       redirect_to @team
     else
       render 'new'

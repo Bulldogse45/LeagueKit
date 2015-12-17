@@ -1,4 +1,5 @@
 class PlayersController < ApplicationController
+  before_action :check_user_is_owner, only: [:edit, :update]
 
   def index
     @players = Player.where("user_id = " + current_user.id.to_s)
@@ -42,6 +43,13 @@ class PlayersController < ApplicationController
   def team(team)
     self.team = team
     self.save
+  end
+
+  def check_user_is_owner
+    unless current_user == Player.find(params['id'].to_i).user
+      flash[:alert]= "You must be the player's guardian to access this page!"
+      redirect_to root_path
+    end
   end
 
 end

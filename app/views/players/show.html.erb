@@ -2,11 +2,14 @@
 <div class="container">
   <h1><%= "#{@player.first_name} #{@player.last_name}" %> </h1>
   <p>Jersey: <%= @player.jersey_number %></p>
-  <p>Guardian: <%= @player.user.first_name + " " + @player.last_name %></p>
+  <p>Guardian: <%= @player.user.first_name + " " + @player.user.last_name %></p>
   <h5>Teams:</h5>
-    <ul>
-      <% @teams.each do |t| %>
-        <li><%= t.display_name %> </li>
-      <% end %>
-    </ul>
+  <ul>
+    <% @teams.each do |t| %>
+      <li><%= t.display_name %> </li>
+    <% end %>
+  </ul>
+  <% if @player.user == current_user %>
+    <%= link_to "Update Player", edit_player_path(@player), class:"btn-primary btn" %>
+  <% end %>  
 </div>
