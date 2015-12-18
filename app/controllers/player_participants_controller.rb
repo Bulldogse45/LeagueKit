@@ -1,4 +1,5 @@
 class PlayerParticipantsController < ApplicationController
+  before_action :check_user_is_owner, only: [:edit, :update]
 
   def create
     @player = PlayerParticipant.new(player_participant_params)
@@ -35,6 +36,13 @@ class PlayerParticipantsController < ApplicationController
     tournament = Tournament.find(tournament_id)
     user = User.find(Player.find(player_id).user_id)
     user.follow(tournament)
+  end
+
+  def check_user_is_owner
+    unless current_user == Player.find(params['id'].to_i).user
+      flash[:alert]= "You must be the player's guardian to access this page!"
+      redirect_to root_path
+    end
   end
 
 end

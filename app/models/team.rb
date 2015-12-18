@@ -2,6 +2,7 @@ class Team < ActiveRecord::Base
 
   acts_as_followable
   has_many :announces, as: :announcable
+  validates_presence_of :name
 
   belongs_to :tournament
   belongs_to :user

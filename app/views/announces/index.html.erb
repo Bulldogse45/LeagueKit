@@ -1,9 +1,8 @@
-<h1>Announcements!</h1>
-
 <div class="container">
-  <% @announces.each do |announce| %>
-    <p><%= simple_format announce.content %></p>
-  <% end %>
+  <h1>Announcements!</h1>
+    <%= render "announces/announces" %>
+  <p>
+    <%= link_to "New Announcement", [:new, @announcable, :announce], class:"btn-primary btn" %>
+    <%= link_to "#{@announcable.class} Home", "#{root_url}/#{@announcable.class.to_s.downcase.pluralize}/#{@announcable.id}", class:"btn-primary btn" %>
+  </p>
 </div>
-
-<p><%= link_to "New Announcement", [:new, @announcable, :announce] %></p>

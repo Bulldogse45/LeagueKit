@@ -1,9 +1,9 @@
 class AnnouncesController < ApplicationController
 
-  before_filter :load_announcable
+  before_filter :load_announcable, :check_user_is_affiliated
 
   def index
-    @announces = @announcable.announces
+    @announces = @announcable.announces.order('created_at DESC')
   end
 
   def new
@@ -30,5 +30,17 @@ class AnnouncesController < ApplicationController
 
   def announce_params
     params.require(:announce).permit(:content)
+  end
+
+  def check_user_is_affiliated
+    if current_user_session
+      unless @announcable.followers.include?(current_user.id) || @announcable.user == current_user
+        flash[:alert]= "You are not permitted to view this page."
+        redirect_to root_path
+      end
+    else
+      flash[:notice]= "You must be logged and allowed to view this page."
+      redirect_to root_path
+    end
   end
 end

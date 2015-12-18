@@ -20,7 +20,7 @@
   10.times do
     new_user = User.create!(first_name:Faker::Name.first_name, last_name:Faker::Name.last_name, email:Faker::Internet.email, password:"password", password_confirmation:"password", address_1:Faker::Address.street_address, city:Faker::Address.city, state:Faker::Address.state_abbr, zip:Faker::Address.zip, phone1:Faker::PhoneNumber.cell_phone)
     team = Team.create!(name:"The #{Faker::Hacker.noun.pluralize}", user_id:new_user.id)
-    team.update!(original_id:team1.id)
+    team.update!(original_id:team.id)
     5.times do
       new_user2 = User.create!(first_name:Faker::Name.first_name, last_name:Faker::Name.last_name, email:Faker::Internet.email, password:"password", password_confirmation:"password", address_1:Faker::Address.street_address, city:Faker::Address.city, state:Faker::Address.state_abbr, zip:Faker::Address.zip, phone1:Faker::PhoneNumber.cell_phone)
       team.players << player = Player.create(first_name:Faker::Name.first_name, last_name:Faker::Name.last_name,user_id:new_user2.id, date_of_birth:Faker::Date.between(10.years.ago, 8.years.ago), jersey_number:Faker::Number.between(0, 99))

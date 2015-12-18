@@ -1,0 +1,22 @@
+<% @announces.each do |f| %>
+  <%= link_to "#{root_url}/#{f.announcable_type.downcase.pluralize}/#{f.announcable_id.to_s}/announces" do %>
+    <% if f.announcable_type == "Team" %>
+      <div class="team-announcement col-xs-12 announcement">
+    <% elsif f.announcable_type == "Tournament" %>
+      <div class="tournament-announcement col-xs-12 announcement">
+    <% elsif f.announcable_type == "League" %>
+      <div class="league-announcement col-xs-12 announcement">
+    <% elsif f.announcable_type == "League" %>
+      <div class="league-announcement col-xs-12 announcement">
+    <% else %>
+      <div class="announcement">
+    <% end %>
+        <div class="col-xs-12">
+          <%= f.content %>
+        </div>
+        <div class="col-xs-12 content-area">
+          <%= f.announcable.name %>
+        </div>
+      </div>
+  <% end %>
+<% end %>

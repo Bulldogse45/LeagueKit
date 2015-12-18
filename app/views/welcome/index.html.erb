@@ -1,9 +1,4 @@
 <div class="container">
-  <% @following.each do |f| %>
-    <h1><%= f.name %></h1>
-    <h3>Announcements</h3>
-    <% f.announces.each do |a| %>
-      <p><%= a.content %></p>
-    <% end %>
-  <% end %>
+  <h1 class="text-center">Announcements!</h1>
+  <%= render "announces/announces" %>
 </div>
