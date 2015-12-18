@@ -1,17 +1,34 @@
 <div class="container">
-  <h1>Login</h1>
+  <div class="row user-session-row">
+    <div class="col-xs-7">
+      <h1 class="text-center">Login</h1>
+    </div>
+  </div>
   <%= form_for @user_session, :url => user_sessions_path do |f| %>
-      <% @user_session.errors.full_messages.each do |msg| %>
-        <p><%= msg %></p>
-      <% end %>
-    <%= f.label :email %>
-    <%= f.text_field :email %>
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-
-    <%= f.check_box :remember_me %><%= f.label :remember_me %>
-
-    <%= f.submit "Login" %>
+    <% @user_session.errors.full_messages.each do |msg| %>
+      <p><%= msg %></p>
+    <% end %>
+    <div class="row user-session-row">
+      <div class="col-xs-3">
+        <%= f.label :email, class:"pull-right" %>
+      </div>
+      <div class="">
+        <%= f.text_field :email, class:"form-field" %>
+      </div>
+    </div>
+    <div class="row user-session-row">
+      <div class="col-xs-3">
+        <%= f.label :password, class:"pull-right" %>
+      </div>
+      <div class="">
+        <%= f.password_field :password, class:"form-field" %>
+      </div>
+    </div>
+    <div class="row user-session-row">
+      <div class="col-xs-7">
+        <%= f.submit "Login", class:"btn-primary btn center-block" %>
+      </div>
+    </div>
   <% end %>
 
 </div>

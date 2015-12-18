@@ -8,28 +8,30 @@
 </head>
 <body>
   <div class="container-fluid">
-    <div class="navbar">
-      <% if current_user_session %>
-        <%= link_to "Logout", user_session_path(current_user_session), :method => :delete, :confirm => "Are you sure you want to logout?", class:"btn btn-primary" %>
-        <%= link_to "New Player", new_player_path, class:"btn btn-primary" %>
-        <%= link_to "My Players", players_path, class:"btn btn-primary" %>
-        <%= link_to "New Team", new_team_path, class:"btn btn-primary" %>
-        <%= link_to "My Teams", teams_path, class:"btn btn-primary" %>
-        <%= link_to "New Tournament", new_tournament_path, class:"btn btn-primary" %>
-        <%= link_to "My Tournaments", tournaments_path, class:"btn btn-primary" %>
-        <%= link_to "New League", new_league_path, class:"btn btn-primary" %>
-        <%= link_to "My Leagues", leagues_path, class:"btn btn-primary" %>
+    <div class="header jumbotron">
+      <div class="navbar">
         <%= link_to "Home", root_path, class:"btn btn-primary" %>
-      <% else %>
-        <%= link_to "New User", new_user_path, class:"btn btn-primary" %>
-        <%= link_to "Login", new_user_session_path, class:"btn btn-primary" %>
-      <% end %>
-
+        <% if current_user_session %>
+          <%= link_to "Logout", user_session_path(current_user_session), :method => :delete, :confirm => "Are you sure you want to logout?", class:"btn btn-primary pull-right" %>
+          <%= link_to "User Options", user_path(current_user), class:"btn btn-primary pull-right" %>
+        <% else %>
+          <%= link_to "New User", new_user_path, class:"btn btn-primary pull-right" %>
+          <%= link_to "Login", new_user_session_path, class:"btn btn-primary pull-right" %>
+        <% end %>
+      </div>
     </div>
     <% if flash[:notice] %>
       <div class="notice col-xs-12"><%= flash[:notice] %></div>
     <% end %>
-    <%= yield %>
+    <% if flash[:alert] %>
+      <div class="alert col-xs-12"><%= flash[:alert] %></div>
+    <% end %>
+    <div class="container-fluid body-container">
+      <%= yield %>
+    </div>
+    <div class="footer">
+      <p class="text-center">Test | Test | Test</p>
+    </div>
   </div>
 </body>
 </html>

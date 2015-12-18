@@ -1,0 +1,16 @@
+<div class="container">
+  <h1><%= "#{@user.last_name}, #{@user.first_name}" %></h1>
+  <% @user.teams.each do |t| %>
+    <p><%= link_to t.display_name, t %></p>
+  <% end %>
+  <% if current_user == @user %>
+    <%= link_to "New Player", new_player_path, class:"btn btn-primary" %>
+    <%= link_to "My Players", players_path, class:"btn btn-primary" %>
+    <%= link_to "New Team", new_team_path, class:"btn btn-primary" %>
+    <%= link_to "My Teams", teams_path, class:"btn btn-primary" %>
+    <%= link_to "New Tournament", new_tournament_path, class:"btn btn-primary" %>
+    <%= link_to "My Tournaments", tournaments_path, class:"btn btn-primary" %>
+    <%= link_to "New League", new_league_path, class:"btn btn-primary" %>
+    <%= link_to "My Leagues", leagues_path, class:"btn btn-primary" %>
+  <% end %>
+</div>

@@ -15,3 +15,76 @@
  @import "bootstrap-sprockets";
  @import "bootstrap";
  @import "rails_bootstrap_forms";
+ @import "user_sessions";
+
+body{
+  background-color: #111;
+  color:#fff;
+  padding: 0;
+  min-height: 95vh;
+}
+
+.body-container{
+
+  width: 100%
+}
+
+.btn-primary{
+  background-image: url(basketball-texture.jpg);
+  border: 1px #fff solid;
+  color:black;
+  font-weight: bold;
+}
+.content-area{
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.announcement{
+  margin:8px auto;
+  color: #000;
+  min-height:50px;
+  padding-top: 3px;
+  padding-left: 20px;
+}
+
+.header {
+  width:100%;
+  min-height: 200px;
+  background-image: url(basketball_court_wood_background.jpg);
+}
+
+
+.announcement .content-area {
+
+  width:auto;
+}
+
+.league-announcement{
+  background-color: #9ac1cd;
+  border-radius: 5px;
+}
+.tournament-announcement{
+  background-color: green;
+  border-radius: 5px;
+}
+.team-announcement{
+  background-color: orange;
+  border-radius: 5px;
+}
+
+.footer{
+  background-color: #ccc;
+  height: 50px;
+  width: 100%;
+  margin: 0;
+  padding:0;
+  color:#000;
+  margin-top: 15px;
+
+}
+
+.footer p {
+  vertical-align: bottom;
+}
