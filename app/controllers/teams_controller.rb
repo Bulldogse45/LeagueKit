@@ -3,7 +3,7 @@ class TeamsController < ApplicationController
   before_action :check_user_is_tournament_owner, only: [:clone]
 
   def index
-    @teams = Team.where('user_id = '+ current_user.id.to_s)
+    @teams = Team.where('user_id = '+ current_user.id.to_s).where('id = original_id')
   end
 
   def new
@@ -50,7 +50,7 @@ class TeamsController < ApplicationController
       render 'new'
     end
   end
-  
+
   def create
     @team = Team.new(team_params)
     @team.user = current_user

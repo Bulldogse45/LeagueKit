@@ -1,5 +1,5 @@
 
-<div class="container">
+<div class="container-fluid  body-container">
   <h1><%= "#{@player.first_name} #{@player.last_name}" %> </h1>
   <p>Jersey: <%= @player.jersey_number %></p>
   <p>Guardian: <%= @player.user.first_name + " " + @player.user.last_name %></p>
@@ -11,5 +11,5 @@
   </ul>
   <% if @player.user == current_user %>
     <%= link_to "Update Player", edit_player_path(@player), class:"btn-primary btn" %>
-  <% end %>  
+  <% end %>
 </div>

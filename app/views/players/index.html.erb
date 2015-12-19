@@ -1,3 +1,6 @@
-<% @players.each do |p| %>
-  <%= link_to "#{p.last_name}, #{p.first_name}", p %>
-<% end %>
+<div class="container-fluid  body-container">
+  <div class="col-xs-7 col-sm-4">
+    <%= render 'player' %>
+    <%= link_to "New Player", new_player_path, class:"btn btn-primary center-block" %>
+  </div>
+</div>

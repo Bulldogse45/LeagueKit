@@ -1,5 +1,7 @@
-<ul>
-  <% @users.each do |u| %>
-    <li><%= link_to u.email, u %></li>
-  <% end %>
-</ul>
+<div class="container-fluid  body-container">
+  <ul>
+    <% @users.each do |u| %>
+      <li><%= link_to u.email, u %></li>
+    <% end %>
+  </ul>
+</div>

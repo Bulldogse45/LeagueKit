@@ -15,6 +15,10 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params['id'].to_i)
+    @teams = Team.where('user_id = '+ current_user.id.to_s).where('id = original_id')
+    @players = Player.where("user_id = " + current_user.id.to_s)
+    @tournaments = Team.where('user_id = '+ current_user.id.to_s).where('id != original_id')
+    @owned_tournaments = Tournament.where("user_id = " + current_user.id.to_s)
   end
 
   def edit

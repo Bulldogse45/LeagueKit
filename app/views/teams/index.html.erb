@@ -1,8 +1,6 @@
-<div class="container">
-  <% @teams.each do |t| %>
-  <div class="team-row">
-    <p>Team Name: <%= link_to "#{t.name}", t %> </p>
-    <p>Team Coach: <%= link_to "#{t.user.last_name}, #{t.user.first_name}", t.user %></p>
+<div class="container-fluid  body-container">
+  <div class="col-xs-7 col-sm-4">
+    <%= render 'team' %>
+    <%= link_to "New Team", new_team_path, class:"btn btn-primary center-block" %>
   </div>
-  <% end %>
 </div>
