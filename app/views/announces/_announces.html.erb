@@ -14,8 +14,12 @@
         <div class="col-xs-12">
           <%= f.content %>
         </div>
+        <br>
+        <div class="col-xs-12">
+          <%= "#{f.created_at.strftime('%a %b %e, %l:%M %P ')}" %>
+        </div>
         <div class="col-xs-12 content-area">
-          <%= f.announcable.name %>
+          <%= "Click for more announcements from #{f.announcable.name}" %>
         </div>
       </div>
   <% end %>

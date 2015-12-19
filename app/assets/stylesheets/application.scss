@@ -16,25 +16,50 @@
  @import "bootstrap";
  @import "rails_bootstrap_forms";
  @import "user_sessions";
+ @import "players";
 
 body{
   background-color: #111;
   color:#fff;
   padding: 0;
-  min-height: 95vh;
+}
+.jumbotron{
+  padding: 20px;
+}
+.logo{
+  height: 75px;
 }
 
+.container-fluid{
+  padding-right: 0;
+  padding-left: 0;
+}
 .body-container{
-
-  width: 100%
+  min-height: 55vh;
+  width: 100%;
+  padding: 0 30px;
 }
-
+.list-link {
+  background-color: #eee;
+  color:#000;
+  font-weight: bold;
+  border-radius: 5px;
+  font-size: 1em;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .btn-primary{
-  background-image: url(basketball-texture.jpg);
+  background-image: url(basketball-texture.png);
   border: 1px #fff solid;
   color:black;
   font-weight: bold;
 }
+
+.navbar .btn-primary{
+  margin-right: 10px;
+}
+
 .content-area{
   margin-top: 15px;
   margin-bottom: 5px;
@@ -66,11 +91,11 @@ body{
   border-radius: 5px;
 }
 .tournament-announcement{
-  background-color: green;
+  background-color: #98fb98;
   border-radius: 5px;
 }
 .team-announcement{
-  background-color: orange;
+  background-color: pink;
   border-radius: 5px;
 }
 

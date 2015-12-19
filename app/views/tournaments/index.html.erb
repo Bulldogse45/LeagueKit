@@ -1,5 +1,7 @@
-<ul>
-  <% @tournaments.each do |t| %>
-    <li><%= link_to "#{t.name}", t %></li>
-  <% end %>
-</ul>
+<div class="container-fluid  body-container">
+  <ul>
+    <% @tournaments.each do |t| %>
+      <li><%= link_to "#{t.name}", t %></li>
+    <% end %>
+  </ul>
+</div>

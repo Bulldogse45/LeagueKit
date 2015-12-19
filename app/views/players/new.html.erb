@@ -1,11 +1,13 @@
-<div class="col-lg-6 col-lg-offset-3">
-  <%= bootstrap_form_for(@player) do |f| %>
-    <%= f.text_field :first_name %>
-    <%= f.text_field :last_name %>
-    <%= f.text_field :suffix %>
-    <%= f.date_field :date_of_birth %>
-    <%= f.number_field :jersey_number %>
+<div class="container-fluid  body-container">
+  <div class="col-lg-6 col-lg-offset-3">
+    <%= bootstrap_form_for(@player) do |f| %>
+      <%= f.text_field :first_name %>
+      <%= f.text_field :last_name %>
+      <%= f.text_field :suffix %>
+      <%= f.date_field :date_of_birth %>
+      <%= f.number_field :jersey_number %>
 
-    <%= f.submit %>
-  <% end %>
+      <%= f.submit %>
+    <% end %>
+  </div>
 </div>
