@@ -7,6 +7,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      UserMailer.create_confirmation(@user).deliver
       redirect_to root_path
     else
       render 'new'
@@ -26,7 +27,7 @@ class UsersController < ApplicationController
     render 'new'
   end
 
-  def create
+  def update
     @user = User.find(current_user.id)
     if @user.update(user_params)
       flash[:notice] = "Update Successful!"

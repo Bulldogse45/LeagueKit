@@ -1,6 +1,5 @@
 class TournamentsController < ApplicationController
   before_action :check_user_is_owner, only: [:edit, :update]
-  before_action :check_user_is_league_owner, only: [:create]
 
   def index
     @tournaments = Tournament.where("user_id = " + current_user.id.to_s)
@@ -8,6 +7,7 @@ class TournamentsController < ApplicationController
 
   def new
     @tournament = Tournament.new
+    @leagues = League.where("user_id = " + current_user.id.to_s)
   end
 
   def show
@@ -17,7 +17,11 @@ class TournamentsController < ApplicationController
   def create
     @tournament = Tournament.new(tournament_params)
     @tournament.user = current_user
+    if params[:tournament][:league_id] != ""
+      check_user_is_league_owner
+    end
     if @tournament.save
+      current_user.follow(@tournament)
       redirect_to @tournament
     else
       render 'new'

@@ -25,6 +25,7 @@ class TeamsController < ApplicationController
     @team.name = Team.find(params['team']['original_id'].to_i).name
     @team.user = Team.find(params['team']['original_id'].to_i).user
     if @team.save
+      current_user.follow(@team)
       Team.find(@team.original_id).players.each do |p|
         @team.players << p
       end
@@ -57,6 +58,7 @@ class TeamsController < ApplicationController
     @team.user = current_user
     if @team.save
       @team.update(original_id:@team.id)
+      current_user.follow(@team)
       redirect_to @team
     else
       render 'new'
@@ -74,6 +76,7 @@ class TeamsController < ApplicationController
     Team.find(team_id).players.each do |p|
       user = User.find(p.user_id)
       user.follow(tournament)
+      UserMailer.new_follow(user, tournament).deliver
     end
   end
 

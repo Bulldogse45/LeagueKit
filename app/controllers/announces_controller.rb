@@ -14,6 +14,9 @@ class AnnouncesController < ApplicationController
     @announce = @announcable.announces.new(announce_params)
     if @announce.save
       flash[:notice] = "Announcement successful!"
+      @announcable.followers.each do |f|
+        UserMailer.announcement_notification(f).deliver
+      end
       redirect_to [@announcable, :announces]
     else
       flash[:alert] = @announce.errors

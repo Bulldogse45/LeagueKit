@@ -30,12 +30,14 @@ class PlayerParticipantsController < ApplicationController
     team = Team.find(team_id)
     user = User.find(Player.find(player_id).user_id)
     user.follow(team)
+    UserMailer.new_follow(user, team).deliver
   end
 
   def player_follows_tournament(tournament_id, player_id)
     tournament = Tournament.find(tournament_id)
     user = User.find(Player.find(player_id).user_id)
     user.follow(tournament)
+    UserMailer.new_follow(user, tournament).deliver
   end
 
   def check_user_is_owner
