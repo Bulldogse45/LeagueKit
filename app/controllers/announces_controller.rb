@@ -4,6 +4,14 @@ class AnnouncesController < ApplicationController
 
   def index
     @announces = @announcable.announces.order('created_at DESC')
+    respond_to do |format|
+      format.json{
+        render json: @announces
+      }
+      format.html{
+
+      }
+    end
   end
 
   def new
@@ -15,7 +23,7 @@ class AnnouncesController < ApplicationController
     if @announce.save
       flash[:notice] = "Announcement successful!"
       @announcable.followers.each do |f|
-        UserMailer.announcement_notification(f).deliver
+        UserMailer.announcement_notification(f, @announce).deliver
       end
       redirect_to [@announcable, :announces]
     else

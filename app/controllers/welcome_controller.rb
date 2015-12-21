@@ -7,6 +7,14 @@ class WelcomeController < ApplicationController
         follower_ids = follower_ids +", "+ f.id.to_s
       end
       @announces = Announce.select("announces.*").where("announcable_id IN (" + current_user.id.to_s + follower_ids+")").order(:created_at.to_s + " DESC").page(params['page']).per(5)
+      respond_to do |format|
+        format.json{
+          render json: @announces, serializer: AnnounceSerializer
+        }
+        format.html{
+
+        }
+      end
     else
       @announces = []
     end
