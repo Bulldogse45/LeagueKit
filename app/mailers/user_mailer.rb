@@ -2,7 +2,8 @@ class UserMailer < ApplicationMailer
 
   default :from => "LeagueKit@gmail.com"
 
-  def announcement_notification(user)
+  def announcement_notification(user, announce)
+    @announce = announce
     mail(:to => user.email, :subject => "There was an announcement in LeagueKit")
   end
 
