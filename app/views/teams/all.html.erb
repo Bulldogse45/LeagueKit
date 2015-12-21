@@ -8,8 +8,8 @@
         </div>
         <%= form_for @team, url: clone_team_path do |f| %>
           <%= f.hidden_field :original_id, value:t.id %>
-          <%= f.collection_select(:tournament_id ,Tournament.all, :id, :name, {:prompt => 'Please select a Tournament'}) %>
-          <%= f.submit "Add Team" %>
+          <%= f.collection_select(:tournament_id ,@tournaments, :id, :name, {:prompt => 'Please select a Tournament'}) %>
+          <%= f.submit "Add Team", class:"btn btn-primary" %>
         <% end %>
       </div>
     <% end %>

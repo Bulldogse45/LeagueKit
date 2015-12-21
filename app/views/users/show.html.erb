@@ -4,12 +4,14 @@
   <div class="col-lg-3 col-sm-6">
     <h4 class="text-center">Teams</h4>
     <%= render "teams/team" %>
-    <%= link_to "New Team", new_team_path, class:"btn btn-primary center-block" %>
+    <% if @user == current_user %>
+      <%= link_to "New Team", new_team_path, class:"btn btn-primary center-block" %>
+    <% end %>
   </div>
   <div class="col-lg-3 col-sm-6">
     <h4 class="text-center">Tournaments Participating In</h4>
     <% @tournaments.each do |t| %>
-      <%= link_to t.name, t, class:"list-link btn center-block"  %>
+      <%= link_to t.tournament.name, t, class:"list-link btn center-block"  %>
     <% end %>
   </div>
   <div class="col-lg-3 col-sm-6">
@@ -17,11 +19,15 @@
     <% @owned_tournaments.each do |t| %>
       <%= link_to t.name, t, class:"list-link btn center-block" %>
     <% end %>
-    <%= link_to "New Tournament", new_tournament_path, class:"btn btn-primary center-block" %>
+    <% if @user == current_user %>
+      <%= link_to "New Tournament", new_tournament_path, class:"btn btn-primary center-block" %>
+    <% end %>
   </div>
   <div class="col-lg-3 col-sm-6">
     <h4 class="text-center">Players</h4>
     <%= render "players/player" %>
-    <%= link_to "New Player", new_player_path, class:"btn btn-primary center-block" %>
+    <% if @user == current_user %>
+      <%= link_to "New Player", new_player_path, class:"btn btn-primary center-block" %>
+    <% end %>
   </div>
 </div>

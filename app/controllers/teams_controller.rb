@@ -13,6 +13,7 @@ class TeamsController < ApplicationController
   def all
     @teams = Team.where("id = original_id")
     @team = Team.new
+    @tournaments = Tournament.where("user_id = " + current_user.id.to_s)
   end
 
   def show
