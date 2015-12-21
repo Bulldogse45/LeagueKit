@@ -1,7 +1,9 @@
 <div class="container-fluid  body-container">
-  <h1 class="text-center">Announcements!</h1>
-  <%= render "announces/announces" %>
-  <div class= "pagination">
-    <%= paginate @announces %>
-  </div>
+  <% if current_user_session %>
+    <h1 class="text-center">Announcements!</h1>
+    <%= render "announces/announces" %>
+    <div class= "pagination">
+      <%= paginate @announces %>
+    </div>
+  <% end %>
 </div>

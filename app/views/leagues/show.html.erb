@@ -6,4 +6,9 @@
       <%= link_to "#{t.name}", t %>
     <% end %>
   </ul>
+  <%= link_to "Add Tournament", new_tournament_path, class:"btn btn-primary" %>
+  <%= link_to "Announcements", league_announces_path(@league), class:"btn btn-primary" %>
+  <% if current_user == @league.user %>
+    <%= link_to "Update League", edit_league_path(@league), class:"btn btn-primary" %>
+  <% end %>
 </div>
