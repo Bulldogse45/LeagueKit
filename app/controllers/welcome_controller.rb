@@ -12,7 +12,7 @@ class WelcomeController < ApplicationController
           render json: @announces, serializer: AnnounceSerializer
         }
         format.html{
-
+          
         }
       end
     else
