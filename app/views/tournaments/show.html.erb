@@ -7,5 +7,7 @@
     <% end %>
   </ul>
   <%= link_to "Add Team", all_teams_path, class:"btn btn-primary" %>
+  <%= link_to "Add Game", new_game_path(tournament_id:@tournament.id), class:"btn btn-primary" %>
   <%= link_to "Announcements", tournament_announces_path(@tournament), class:"btn btn-primary" %>
+
 </div>

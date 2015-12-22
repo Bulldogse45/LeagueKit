@@ -1,0 +1,6 @@
+<h1> My Games!</h1>
+<ul>
+  <% @games.each do |g| %>
+    <li><%=link_to g.name, g %></li>
+  <% end %>
+</ul>
