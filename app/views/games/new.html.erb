@@ -1,0 +1,14 @@
+<div class="container-fluid  body-container">
+  <div class="col-lg-6 col-lg-offset-3">
+    <%= bootstrap_form_for(@game) do |f| %>
+
+      <%= f.datetime_select :begin_time %>
+      <%= f.collection_select(:home_team_id ,@teams, :id, :name, {:prompt => "Home Team"}) %>
+      <%= f.collection_select(:away_team_id ,@teams, :id, :name, {:prompt => "Away Team"}) %>
+      <%= f.collection_select(:location_id ,@locations, :id, :name) %>
+      <%= f.hidden_field :tournament_id, :value => @game.tournament_id %>
+
+      <%= f.submit %>
+    <% end %>
+  </div>
+</div>

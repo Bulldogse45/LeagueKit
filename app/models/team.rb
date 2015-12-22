@@ -7,6 +7,7 @@ class Team < ActiveRecord::Base
   belongs_to :tournament
   belongs_to :user
   has_many :player_participants
+  has_many :games
   has_many :players, through: :player_participants
 
   def display_name

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151216205541) do
+ActiveRecord::Schema.define(version: 20151222152241) do
 
   create_table "announces", force: :cascade do |t|
     t.text     "content"
@@ -37,12 +37,13 @@ ActiveRecord::Schema.define(version: 20151216205541) do
   add_index "follows", ["follower_id", "follower_type"], name: "fk_follows"
 
   create_table "games", force: :cascade do |t|
-    t.string   "begin_time"
-    t.integer  "participant1_id"
-    t.integer  "participant2_id"
+    t.datetime "begin_time"
+    t.integer  "away_team_id"
+    t.integer  "home_team_id"
     t.integer  "location_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "tournament_id"
   end
 
   create_table "leagues", force: :cascade do |t|
