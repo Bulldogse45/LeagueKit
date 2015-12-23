@@ -1,7 +1,8 @@
 class GamesController < ApplicationController
 
   before_action :check_user_is_tournament_owner, only: [:edit, :update, :create]
-
+  before_action :require_user
+  
   def index
     team_ids = "(" + current_user.teams.collect{|t| t.id}.join(",") +")"
     @games = Game.where("home_team_id IN #{team_ids} OR away_team_id IN #{team_ids}"  )

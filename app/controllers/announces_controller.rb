@@ -1,6 +1,7 @@
 class AnnouncesController < ApplicationController
 
   before_filter :load_announcable, :check_user_is_affiliated
+  before_action :require_user
 
   def index
     @announces = @announcable.announces.order('created_at DESC')

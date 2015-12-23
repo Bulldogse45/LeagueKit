@@ -1,4 +1,5 @@
 class TeamsController < ApplicationController
+  before_action :require_user
   before_action :check_user_is_owner, only: [:edit, :update]
   before_action :check_user_is_tournament_owner, only: [:clone]
 

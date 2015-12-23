@@ -1,5 +1,6 @@
 class LeaguesController < ApplicationController
   before_action :check_user_is_owner, only: [:edit, :update]
+  before_action :require_user
 
   def index
     @leagues = League.where("user_id = " + current_user.id.to_s)
