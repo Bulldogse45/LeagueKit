@@ -13,10 +13,12 @@
  */
 
  @import "bootstrap-sprockets";
- @import "bootstrap";
  @import "rails_bootstrap_forms";
  @import "user_sessions";
  @import "players";
+ @import "font-awesome";
+ @import "bootstrap";
+ @import "sb-admin";
 
 .pagination {
  font-size:.9em;
@@ -29,12 +31,6 @@
 }
 .pagination li a:hover{
   color:white;
-}
-
-body{
-  background-color: #111;
-  color:#fff;
-  padding: 0;
 }
 
 .jumbotron{

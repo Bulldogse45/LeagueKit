@@ -1,4 +1,5 @@
 class TournamentsController < ApplicationController
+  before_action :require_user
   before_action :check_user_is_owner, only: [:edit, :update]
 
   def index

@@ -1,5 +1,6 @@
 class PlayerParticipantsController < ApplicationController
   before_action :check_user_is_owner, only: [:edit, :update]
+  before_action :require_user
 
   def create
     @player = PlayerParticipant.new(player_participant_params)

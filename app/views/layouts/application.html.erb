@@ -6,35 +6,194 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
-  <div class="container-fluid">
-    <div class="header jumbotron">
-      <div class="navbar">
-        <div class="col-xs-2">
-          <%= link_to root_path do %>
-            <%= image_tag("icon.png", class:"logo") %>
-          <% end %>
-        </div>
-        <% if current_user_session %>
-          <%= link_to "Logout", user_session_path(current_user_session), :method => :delete, :confirm => "Are you sure you want to logout?", class:"btn btn-primary pull-right" %>
-          <%= link_to "User Options", user_path(current_user), class:"btn btn-primary pull-right" %>
-          <%= link_to "League Admin", leagues_path, class:"btn btn-primary pull-right" %>
-        <% else %>
-          <%= link_to "New User", new_user_path, class:"btn btn-primary pull-right" %>
-          <%= link_to "Login", new_user_session_path, class:"btn btn-primary pull-right" %>
-        <% end %>
+  <body>
+
+      <div id="wrapper">
+
+          <!-- Navigation -->
+          <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+              <!-- Brand and toggle get grouped for better mobile display -->
+              <div class="navbar-header">
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                  </button>
+                  <%= link_to "Home", root_url, class:"navbar-brand" %>
+              </div>
+              <!-- Top Menu Items -->
+              <% if current_user_session %>
+                <ul class="nav navbar-right top-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
+                        <ul class="dropdown-menu message-dropdown">
+                            <li class="message-preview">
+                                <a href="#">
+                                    <div class="media">
+                                        <span class="pull-left">
+                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                        </span>
+                                        <div class="media-body">
+                                            <h5 class="media-heading"><strong>John Smith</strong>
+                                            </h5>
+                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="message-preview">
+                                <a href="#">
+                                    <div class="media">
+                                        <span class="pull-left">
+                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                        </span>
+                                        <div class="media-body">
+                                            <h5 class="media-heading"><strong><%= "#{current_user.last_name}, #{current_user.first_name}" %></strong>
+                                            </h5>
+                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="message-preview">
+                                <a href="#">
+                                    <div class="media">
+                                        <span class="pull-left">
+                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                        </span>
+                                        <div class="media-body">
+                                            <h5 class="media-heading"><strong>John Smith</strong>
+                                            </h5>
+                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="message-footer">
+                                <a href="#">Read All New Messages</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
+                        <ul class="dropdown-menu alert-dropdown">
+                            <li>
+                                <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">View All</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= "#{current_user.last_name}, #{current_user.first_name}" %> <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                              <%= link_to user_path(current_user) do %>
+                                <i class="fa fa-fw fa-user"></i> Profile
+                              <% end %>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                              <%= link_to logout_path do %>
+                                <i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                              <% end %>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+              <% end %>
+              <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+              <% if current_user_session %>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+                  <ul class="nav navbar-nav side-nav">
+                      <li>
+                          <a href="javascript:;" data-toggle="collapse" data-target="#teams"><i class="fa fa-fw fa-arrows-v"></i> Teams <i class="fa fa-fw fa-caret-down"></i></a>
+                          <ul id="teams" class="collapse">
+                            <% @my_teams.each do |t| %>
+                              <li>
+                                  <%= link_to t.name, t %>
+                              </li>
+                            <% end %>
+                          </ul>
+                      </li>
+                      <li>
+                          <a href="javascript:;" data-toggle="collapse" data-target="#tournaments"><i class="fa fa-fw fa-arrows-v"></i> Tournaments <i class="fa fa-fw fa-caret-down"></i></a>
+                          <ul id="tournaments" class="collapse">
+                            <% @my_tournaments.each do |t| %>
+                              <li>
+                                  <%= link_to t.name, t %>
+                              </li>
+                            <% end %>
+                          </ul>
+                      </li>
+                      <li>
+                          <a href="javascript:;" data-toggle="collapse" data-target="#leagues"><i class="fa fa-fw fa-arrows-v"></i> Leagues <i class="fa fa-fw fa-caret-down"></i></a>
+                          <ul id="leagues" class="collapse">
+                            <% unless @my_leagues.empty?  %>
+                                <% @my_leagues.each do |l| %>
+                                  <li>
+                                      <%= link_to l.name, l %>
+                                  </li>
+                                <% end %>
+                            <% end %>
+                          </ul>
+                      </li>
+                  </ul>
+              </div>
+              <% end %>
+              <!-- /.navbar-collapse -->
+          </nav>
+
+          <div id="page-wrapper">
+
+              <div class="container-fluid">
+                <%= yield %>
+                  <!-- Page Heading -->
+                                    <!-- /.row -->
+
+              </div>
+              <!-- /.container-fluid -->
+
+          </div>
+          <!-- /#page-wrapper -->
+
       </div>
-    </div>
-    <% if flash[:notice] %>
-      <div class="notice col-xs-12"><%= flash[:notice] %></div>
-    <% end %>
-    <% if flash[:alert] %>
-      <div class="alert col-xs-12"><%= flash[:alert] %></div>
-    <% end %>
-      <%= yield %>
-    <div class="footer">
-      <p class="text-center">Test | Test | Test</p>
-    </div>
-  </div>
-</body>
+
+      <!-- /#wrapper -->
+
+      <!-- jQuery -->
+      <script src="js/jquery.js"></script>
+
+      <!-- Bootstrap Core JavaScript -->
+      <script src="js/bootstrap.min.js"></script>
+
+      <!-- Morris Charts JavaScript -->
+
+  </body>
+
+
 </html>

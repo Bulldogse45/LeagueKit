@@ -26,7 +26,9 @@ Rails.application.routes.draw do
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
-  get 'user_session/destroy' => 'user_session#destroy', as: :logout
+  get 'user_session/destroy' => 'user_sessions#destroy', as: :logout
+
+  get 'user_session/new' => 'user_sessions#new', as: :login
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
@@ -37,6 +39,9 @@ Rails.application.routes.draw do
   post 'team/clone' => 'teams#clone', as: :clone_team
 
   post 'player/clone' => 'player_participants#create', as: :player_participants
+
+  get 'landing' => 'welcome#landing', as: :landing
+
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
