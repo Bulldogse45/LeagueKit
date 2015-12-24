@@ -2,7 +2,7 @@ class GamesController < ApplicationController
 
   before_action :check_user_is_tournament_owner, only: [:edit, :update, :create]
   before_action :require_user
-  
+
   def index
     team_ids = "(" + current_user.teams.collect{|t| t.id}.join(",") +")"
     @games = Game.where("home_team_id IN #{team_ids} OR away_team_id IN #{team_ids}"  )
@@ -35,6 +35,7 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     if @game.update(game_params)
       flash[:notice] = "Your game was updated!"
+      team_members_follow_game(@game)
       redirect_to game_path(@game)
     else
       flash[:alert] = @game.errors
@@ -62,13 +63,17 @@ class GamesController < ApplicationController
   def team_members_follow_game(game)
     Team.find(game.home_team_id).players.each do |p|
       user = User.find(p.user_id)
-      user.follow(game)
-      UserMailer.new_follow(user, game).deliver
+      if !user.following?(game)
+        user.follow(game)
+        UserMailer.new_follow(user, game).deliver
+      end
     end
     Team.find(game.away_team_id).players.each do |p|
       user = User.find(p.user_id)
-      user.follow(game)
-      UserMailer.new_follow(user, game).deliver
+      if !user.following?(game)
+        user.follow(game)
+        UserMailer.new_follow(user, game).deliver
+      end
     end
   end
 

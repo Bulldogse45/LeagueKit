@@ -6,6 +6,17 @@ class TournamentsController < ApplicationController
     @tournaments = Tournament.where("user_id = " + current_user.id.to_s)
   end
 
+  def volunteer
+    user_tournaments = "(" + current_user.referee.collect{|t| t.id}.join(",") +")"
+    @referee_tournaments = Tournament.where("id IN #{user_tournaments}")
+    @tournaments = Tournament.all
+  end
+
+  def referee
+
+    redirect_to volunteer_path
+  end
+
   def new
     @tournament = Tournament.new
     @leagues = League.where("user_id = " + current_user.id.to_s)

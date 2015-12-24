@@ -29,6 +29,7 @@ class ApplicationController < ActionController::Base
       @my_teams = current_user.teams.where("id = original_id")
       @my_tournaments = current_user.tournaments
       @my_leagues = current_user.leagues
+      @my_players = current_user.players
     end
 
     def require_no_user

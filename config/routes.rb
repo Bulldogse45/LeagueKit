@@ -42,6 +42,8 @@ Rails.application.routes.draw do
 
   get 'landing' => 'welcome#landing', as: :landing
 
+  get 'volunteer' => 'tournaments#volunteer', as: :volunteer
+
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
