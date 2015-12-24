@@ -1,18 +1,25 @@
 class UserMailer < ApplicationMailer
 
+
   default :from => "LeagueKit@gmail.com"
 
   def announcement_notification(user, announce)
-    @announce = announce
-    mail(:to => user.email, :subject => "There was an announcement in LeagueKit")
+    unless user.email_optout
+      @announce = announce
+      mail(:to => user.email, :subject => "There was an announcement in LeagueKit")
+    end
   end
 
   def create_confirmation(user)
-    mail(:to => user.email, :subject => "Welcome to LeagueKit")
+    unless user.email_optout
+      mail(:to => user.email, :subject => "Welcome to LeagueKit")
+    end
   end
 
   def new_follow(user, followable)
-    @followable = followable
-    mail(:to => user.email, :subject => "Welcome to the #{followable.class} - #{followable.name}")
+    unless user.email_optout
+      @followable = followable
+      mail(:to => user.email, :subject => "Welcome to the #{followable.class} - #{followable.name}")
+    end
   end
 end

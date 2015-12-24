@@ -1,31 +1,33 @@
-<% @announces.each do |a| %>
-  <%= link_to "#{root_url}#{a.announcable_type.downcase.pluralize}/#{a.announcable_id.to_s}/announces" do %>
-  <div class="col-xs-12">
-    <% if a.announcable_type == "Team" %>
-      <div class="panel panel-primary">
-    <% elsif a.announcable_type == "Tournament" %>
-      <div class="panel panel-green">
-    <% elsif a.announcable_type == "League" %>
-      <div class="panel panel-yellow">
-    <% elsif a.announcable_type == "Game" %>
-      <div class="panel panel-red">
-    <% else %>
-      <div class="panel panel-red">
-    <% end %>
+
+<div class="col-lg-12">
+    <div class="panel panel-default">
         <div class="panel-heading">
-            <div class="row">
-                <div class="col-xs-12 text-left">
-                    <div><p><%= a.content %></p></div>
-                </div>
+            <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Recent Announcements</h3>
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+              <% @announces.each do |a| %>
+                <a href="#" class="list-group-item">
+                    <span class="badge"><%= a.content %></span>
+
+                    <% if a.announcable_type == "Team" %>
+                      <i class="fa fa-fw fa-calendar"></i> <%=a.announcable.name %>
+                    <% elsif a.announcable_type == "Tournament" %>
+                      <i class="fa fa-fw fa-calendar"></i> <%=a.announcable.name %>
+                    <% elsif a.announcable_type == "League" %>
+                      <i class="fa fa-fw fa-calendar"></i> <%=a.announcable.name %>
+                    <% elsif a.announcable_type == "Game" %>
+                      <i class="fa fa-fw fa-calendar"></i> <%=a.announcable.name %>
+                    <% else %>
+                      <div class="panel panel-red">
+                    <% end %>
+
+                </a>
+                <% end %>
+            </div>
+            <div class="text-right">
+                <a href="#">View All Activity <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
-            <div class="panel-footer">
-                <span class="pull-left"><%= a.announcable.name %></span>
-                <span class="pull-right"><i class="fa fa-dribbble"></i></span>
-                <div class="clearfix"></div>
-            </div>
-
-      </div>
-  </div>
-  <% end %>
-<% end %>
+    </div>
+</div>

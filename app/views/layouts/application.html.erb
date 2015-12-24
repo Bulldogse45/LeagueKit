@@ -114,7 +114,9 @@
                               <% end %>
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                              <%= link_to edit_user_path(current_user) do %>
+                                <i class="fa fa-fw fa-gear"></i> Settings
+                              <% end %>
                             </li>
                             <li class="divider"></li>
                             <li>
@@ -131,6 +133,19 @@
               <div class="collapse navbar-collapse navbar-ex1-collapse">
                   <ul class="nav navbar-nav side-nav">
                       <li>
+                          <a href="javascript:;" data-toggle="collapse" data-target="#players"><i class="fa fa-fw fa-arrows-v"></i> Players <i class="fa fa-fw fa-caret-down"></i></a>
+                          <ul id="players" class="collapse">
+                            <% @my_players.each do |p| %>
+                              <li>
+                                  <%= link_to "#{p.first_name}", p %>
+                              </li>
+                            <% end %>
+                            <li>
+                                <%= link_to "New Player", new_player_path %>
+                            </li>
+                          </ul>
+                      </li>
+                      <li>
                           <a href="javascript:;" data-toggle="collapse" data-target="#teams"><i class="fa fa-fw fa-arrows-v"></i> Teams <i class="fa fa-fw fa-caret-down"></i></a>
                           <ul id="teams" class="collapse">
                             <% @my_teams.each do |t| %>
@@ -138,6 +153,9 @@
                                   <%= link_to t.name, t %>
                               </li>
                             <% end %>
+                            <li>
+                                <%= link_to "New Team", new_team_path %>
+                            </li>
                           </ul>
                       </li>
                       <li>
@@ -148,6 +166,9 @@
                                   <%= link_to t.name, t %>
                               </li>
                             <% end %>
+                            <li>
+                                <%= link_to "New Tournament", new_tournament_path %>
+                            </li>
                           </ul>
                       </li>
                       <li>
@@ -160,7 +181,15 @@
                                   </li>
                                 <% end %>
                             <% end %>
+                            <li>
+                                <%= link_to "New League", new_league_path %>
+                            </li>
                           </ul>
+                      </li>
+                      <li>
+                          <%= link_to volunteer_path do %>
+                            <i class="fa fa-fw fa-star"></i> Referees
+                          <% end %>
                       </li>
                   </ul>
               </div>
