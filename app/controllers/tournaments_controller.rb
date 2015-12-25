@@ -7,9 +7,9 @@ class TournamentsController < ApplicationController
   end
 
   def volunteer
-    user_tournaments = "(" + current_user.referee.collect{|t| t.id}.join(",") +")"
-    @referee_tournaments = Tournament.where("id IN #{user_tournaments}")
-    @tournaments = Tournament.all
+    referee_tourny = "( #{current_user.referees.collect{|r| r.tournament_id}.compact.join(", ")} )"
+    @referee_tournaments = Tournament.where("id IN #{referee_tourny}")
+    @tournaments = Tournament.where("id NOT IN #{referee_tourny}")
   end
 
   def referee

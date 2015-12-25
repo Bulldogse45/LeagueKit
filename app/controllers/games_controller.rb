@@ -9,6 +9,10 @@ class GamesController < ApplicationController
   end
 
   def new
+    @referees = []
+    Tournament.find(params[:tournament_id]).referees.each do |r|
+      @referees << User.find(r.user_id)
+    end
     @game = Game.new
     if params[:tournament_id]
       @game.tournament = Tournament.find(params[:tournament_id])
@@ -16,8 +20,8 @@ class GamesController < ApplicationController
       flash[:alert] = "You must create a tournament to add a game"
       redirect_to tournaments_path
     end
-    @teams = @game.tournament.teams
     @locations = []
+    @teams = @game.tournament.teams
   end
 
   def show
@@ -28,6 +32,13 @@ class GamesController < ApplicationController
 
   def edit
     @game = Game.find(params[:id])
+    @referees = []
+    @game.tournament.referees.each do |r|
+      @referees << User.find(r.user_id)
+    end
+    @locations = []
+    @teams = @game.tournament.teams
+
     render 'new'
   end
 
@@ -57,7 +68,7 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:home_team_id, :away_team_id, :tournament_id, :location_id, :begin_time )
+    params.require(:game).permit(:home_team_id, :away_team_id, :tournament_id, :location_id, :begin_time, :list_referees => [] )
   end
 
   def team_members_follow_game(game)
@@ -78,10 +89,18 @@ class GamesController < ApplicationController
   end
 
   def check_user_is_tournament_owner
-    unless current_user == Tournament.find(params[:game][:tournament_id]).user
-      flash[:alert]= "You must be the Tournament's owner to access this page!"
-      redirect_to root_path
+    if params[:game]
+      unless current_user == Tournament.find(params[:game][:tournament_id]).user
+        flash[:alert]= "You must be the Tournament's owner to access this page!"
+        redirect_to root_path
+      end
+    else
+      unless current_user == Game.find(params[:id]).tournament.user
+        flash[:alert]= "You must be the Tournament's owner to access this page!"
+        redirect_to root_path
+      end
     end
   end
+
 
 end

@@ -1,53 +1,61 @@
-<h2>These are the tournaments you have volunteered to referee.  Thank you!</h2>
-<% @referee_tournaments.each do |t| %>
-  <div class="col-lg-3 col-md-6">
-      <div class="panel panel-green">
-          <div class="panel-heading">
+<div class="row">
+  <h2>These are the tournaments you have volunteered to referee.  Thank you!</h2>
+</div>
+<div class="row">
+  <% @referee_tournaments.each do |t| %>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-green">
+            <div class="panel-heading">
 
-              <div class="row">
-                  <div class="col-xs-3">
-                      <i class="fa fa-list-ol fa-3x"></i>
-                  </div>
-                  <div class="col-xs-9 text-right">
-                      <div class="huge"><%= t.announces.count %></div>
-                  </div>
-              </div>
-            <div class="row"><h4 class="text-center"><%= t.name %></h4></div>
-          </div>
-          <%= link_to tournament_path(t) do %>
-              <div class="panel-footer">
-                  <span class="pull-left">Volunteer</span>
-                  <span class="pull-right"><i class="fa fa-list-ol"></i></span>
-                  <div class="clearfix"></div>
-              </div>
-          <% end %>
-      </div>
-  </div>
-<% end %>
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-list-ol fa-3x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge"></div>
+                    </div>
+                </div>
+              <div class="row"><h4 class="text-center"><%= t.name %></h4></div>
+            </div>
+            <%= link_to tournament_path(t) do %>
+                <div class="panel-footer">
+                    <span class="pull-left">Volunteer</span>
+                    <span class="pull-right"><i class="fa fa-list-ol"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+  <% end %>
+</div>
 
-<h2>Would you like to volunteer for a tournament below?</h2>
-<% @tournaments.each do |t| %>
-  <div class="col-lg-3 col-md-6">
-      <div class="panel panel-green">
-          <div class="panel-heading">
+<div class="row">
+  <h2>Would you like to volunteer for a tournament below?</h2>
+</div>
+<div class="row">
+  <% @tournaments.each do |t| %>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-green">
+            <div class="panel-heading">
 
-              <div class="row">
-                  <div class="col-xs-3">
-                      <i class="fa fa-list-ol fa-3x"></i>
-                  </div>
-                  <div class="col-xs-9 text-right">
-                      <div class="huge"><%= t.announces.count %></div>
-                  </div>
-              </div>
-            <div class="row"><h4 class="text-center"><%= t.name %></h4></div>
-          </div>
-          <%= link_to tournament_path(t) do %>
-              <div class="panel-footer">
-                  <span class="pull-left">Volunteer</span>
-                  <span class="pull-right"><i class="fa fa-list-ol"></i></span>
-                  <div class="clearfix"></div>
-              </div>
-          <% end %>
-      </div>
-  </div>
-<% end %>
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-list-ol fa-3x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge"><%= t.announces.count %></div>
+                    </div>
+                </div>
+              <div class="row"><h4 class="text-center"><%= t.name %></h4></div>
+            </div>
+            <%= link_to new_referee_path(tournament_id:t.id) do %>
+                <div class="panel-footer">
+                    <span class="pull-left">Volunteer</span>
+                    <span class="pull-right"><i class="fa fa-list-ol"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+  <% end %>
+</div>

@@ -8,5 +8,7 @@ class Tournament < ActiveRecord::Base
   has_many :locations
   belongs_to :league
   belongs_to :user
+  has_many :referees
+  has_many :users, through: :referees
 
 end

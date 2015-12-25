@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
 
     def assign_teams_tournaments_leagues
       @my_teams = current_user.teams.where("id = original_id")
-      @my_tournaments = current_user.tournaments
+      @my_tournaments = Tournament.where("user_id = "+ current_user.id.to_s)
       @my_leagues = current_user.leagues
       @my_players = current_user.players
     end
