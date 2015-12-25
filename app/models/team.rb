@@ -18,4 +18,16 @@ class Team < ActiveRecord::Base
     end
   end
 
+  def tournaments
+    original_team = Team.find(self.original_id)
+    teams = Team.where("original_id = #{self.id}")
+    team_tournys = []
+    teams.each do |t|
+      if t.tournament_id
+        team_tournys << Tournament.find(t.tournament_id)
+      end
+    end
+    team_tournys
+  end
+
 end
