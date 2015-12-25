@@ -12,5 +12,12 @@ class User < ActiveRecord::Base
   has_many :games
   has_many :players
   has_many :tournaments
+  has_many :referees
+  has_many :tournaments, through: :referees
+  has_many :games, through: :referees
+
+  def full_name
+    return "#{self.last_name}, #{self.first_name}"
+  end
 
 end
