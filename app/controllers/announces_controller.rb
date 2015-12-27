@@ -1,6 +1,7 @@
 class AnnouncesController < ApplicationController
 
-  before_filter :load_announcable, :check_user_is_affiliated
+  before_filter :load_announcable
+  before_filter :check_user_is_affiliated, :only => [:index, :new, :create]
   before_action :require_user
 
   def index
@@ -15,6 +16,10 @@ class AnnouncesController < ApplicationController
     end
   end
 
+  def show
+    @announce = Announce.find(params[:id])
+  end
+
   def new
     @announce = Announce.new
   end
@@ -22,6 +27,7 @@ class AnnouncesController < ApplicationController
   def create
     @announce = @announcable.announces.new(announce_params)
     if @announce.save
+      AnnouncementViewed.create(user_id:current_user.id, announce_id:@announce.id, viewed:false)
       flash[:notice] = "Announcement successful!"
       @announcable.followers.each do |f|
         UserMailer.announcement_notification(f, @announce).deliver
@@ -31,6 +37,12 @@ class AnnouncesController < ApplicationController
       flash[:alert] = @announce.errors
       render 'new'
     end
+  end
+
+  def mark_announcement_as_read
+    @announce = Announce.find(params[:id])
+    @announce.announcement_viewed.update!(viewed:true)
+    redirect_to :back
   end
 
   private
@@ -55,4 +67,5 @@ class AnnouncesController < ApplicationController
       redirect_to root_path
     end
   end
+
 end

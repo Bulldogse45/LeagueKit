@@ -1,0 +1,3 @@
+class AnnouncementViewedsController < ApplicationController
+
+end
