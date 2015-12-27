@@ -1,19 +1,32 @@
 Rails.application.routes.draw do
 
   resources :games do
-    resources :announces
+    resources :announces do
+      get 'mark_announcement_as_read' => 'announces#mark_announcement_as_read', as: :mark_announcement_as_read
+    end
   end
   resources :users do
-    resources :announces
+    resources :announces do
+      get 'mark_announcement_as_read' => 'announces#mark_announcement_as_read', as: :mark_announcement_as_read
+    end
   end
   resources :teams do
-    resources :announces
+    resources :announces do
+      get 'mark_announcement_as_read' => 'announces#mark_announcement_as_read', as: :mark_announcement_as_read
+    end
   end
   resources :tournaments do
-    resources :announces
+    resources :announces do
+      get 'mark_announcement_as_read' => 'announces#mark_announcement_as_read', as: :mark_announcement_as_read
+    end
   end
   resources :leagues do
-    resources :announces
+    resources :announces do
+      get 'mark_announcement_as_read' => 'announces#mark_announcement_as_read', as: :mark_announcement_as_read
+    end
+  end
+  resources :announces do
+    get 'mark_announcement_as_read' => 'announces#mark_announcement_as_read', as: :mark_announcement_as_read
   end
   resources :user_sessions
   resources :players
@@ -44,6 +57,8 @@ Rails.application.routes.draw do
   get 'landing' => 'welcome#landing', as: :landing
 
   get 'volunteer' => 'tournaments#volunteer', as: :volunteer
+
+  get 'announce/:id' => 'announces#mark_announcement_as_read', as: :mark_announcement_as_read
 
 
   # Example resource route (maps HTTP verbs to controller actions automatically):

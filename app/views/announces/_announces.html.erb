@@ -7,8 +7,8 @@
         <div class="panel-body">
             <div class="list-group">
               <% @announces.each do |a| %>
-                <a href="#" class="list-group-item">
-                    <span class="badge"><%= a.content %></span>
+                <div class="list-group-item">
+
 
                     <% if a.announcable_type == "Team" %>
                       <i class="fa fa-fw fa-calendar"></i> <%=a.announcable.name %>
@@ -22,7 +22,11 @@
                       <div class="panel panel-red">
                     <% end %>
 
-                </a>
+                    <%= a.content %>
+                    <% unless a.read? %>
+                      <%= link_to "Mark as Read", mark_announcement_as_read_path(id:a.id), class:"btn btn-primary pull-right" %>
+                    <% end %>
+                </div>
                 <% end %>
             </div>
             <div class="text-right">
