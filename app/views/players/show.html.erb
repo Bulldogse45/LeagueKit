@@ -1,12 +1,17 @@
 
 <div class="container-fluid  body-container">
-  <h1><%= "#{@player.first_name} #{@player.last_name}" %> </h1>
-  <p>Jersey: <%= @player.jersey_number %></p>
-  <p>Guardian: <%= link_to @player.user.first_name + " " + @player.user.last_name, @player.user %></p>
+  <h1><%= "#{@player.first_name} #{@player.last_name}" + if @player.suffix then ", #{@player.suffix}" end %> </h1>
+  <p>Guardian: <%= link_to @player.user.first_name + " " + @player.user.last_name + " ", @player.user %></p>
   <h5>Teams:</h5>
   <ul>
     <% @teams.each do |t| %>
-      <li><%= t.display_name %> </li>
+      <li><%= t.name %> </li>
+    <% end %>
+  </ul>
+  <h5>Tournaments:</h5>
+  <ul>
+    <% @tournament_teams.each do |t| %>
+      <li><%= t.tournament.name %> </li>
     <% end %>
   </ul>
   <% if @player.user == current_user %>

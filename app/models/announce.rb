@@ -6,4 +6,5 @@ class Announce < ActiveRecord::Base
   def read?
     self.announcement_viewed.viewed
   end
+
 end
