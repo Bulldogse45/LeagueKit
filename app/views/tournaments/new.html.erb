@@ -4,7 +4,7 @@
       <%= f.text_field :name %>
       <%= f.datetime_select :start_time %>
       <%= f.datetime_select :end_time %>
-      <%= f.collection_select(:league_id ,@leagues, :id, :name, {:prompt => "League(optional)"}) %>
+      <%= f.collection_select(:league_id ,@leagues, :id, :name, {:prompt => "None"}) %>
 
 
       <%= f.submit %>
