@@ -1,14 +1,14 @@
 <div class="container-fluid">
   <% @related_messages.each do |m| %>
     <div class="message-container">
-      <h3>From: <%= m.from.username %> </h3>
+      <h3>From: <%= m.from.username %> at <%= m.created_at.strftime('%a %b %e, %l:%M %P ') %> </h3>
       <h3>To: <%= m.to.username %> </h3>
       <h5>Subject:<%= m.subject %></h5>
       <p><%= simple_format(m.content) %></p>
     </div>
   <% end %>
   <div class="message-container">
-    <h3>From: <%= @message.from.username %> </h3>
+    <h3>From: <%= @message.from.username %> at <%= @message.created_at.strftime('%a %b %e, %l:%M %P ') %>  </h3>
     <h3>To: <%= @message.to.username %> </h3>
     <h5>Subject:<%= @message.subject %></h5>
     <p><%= simple_format(@message.content) %></p>
