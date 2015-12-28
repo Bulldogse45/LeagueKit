@@ -1,0 +1,20 @@
+<div class="container-fluid  body-container">
+  <% if @reply_message %>
+    <div class="row message-row"
+      <h3>From: <%= @reply_message.from.username %> </h3>
+      <h3>To: <%= @reply_message.to.username %> </h3>
+      <h5>Subject:<%= @reply_message.subject %></h5>
+      <p><%= simple_format(@reply_message.content) %></p>
+    </div>
+  <% end %>
+  <div class="col-lg-6 col-lg-offset-3">
+    <%= bootstrap_form_for(@message) do |f| %>
+      <%= f.text_field :to_user_id %>
+      <%= f.text_field :subject %>
+      <%= f.text_area :content %>
+      <%= f.hidden_field :index_message_id, :value => @reply_message.id %>
+
+      <%= f.submit %>
+    <% end %>
+  </div>
+</div>

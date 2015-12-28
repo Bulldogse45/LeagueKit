@@ -1,0 +1,19 @@
+<h1>Inbox</h1>
+<div class="container-fluid">
+  <% @messages.each do |m| %>
+    <%= link_to m do %>
+      <div class="row message-row">
+        <div class="col-xs-3">
+          From: <%= m.from.username %><br>
+          To: <%= m.to.username %>
+        </div>
+        <div class="col-xs-3">
+          Subject: <%= m.subject %>
+        </div>
+        <div class="col-xs-3">
+          Sent on: <%= m.created_at.strftime('%a %b %e, %l:%M %P ') %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
