@@ -9,3 +9,48 @@
 .panel-footer-front{
   height:100%;
 }
+
+.btn-tournament {
+  border-color: #5cb85c;
+  color: #fff;
+  background-color: #5cb85c;
+}
+.btn-game {
+  border-color: #d9534f;
+  color: #fff;
+  background-color: #d9534f;
+}
+.btn-league {
+  border-color: #f0ad4e;
+  color: #fff;
+  background-color: #f0ad4e;
+}
+.btn-team {
+  border-color: #337ab7;
+  color: #fff;
+  background-color: #337ab7;
+}
+.btn-tournament:hover {
+  border-color: #3d8b3d;
+  color: #fff;
+  background-color: #3d8b3d;
+}
+.btn-game:hover {
+  border-color: #b52b27;
+  color: #fff;
+  background-color: #b52b27;
+}
+.btn-league:hover {
+  border-color: #df8a13;
+  color: #fff;
+  background-color: #df8a13;
+}
+.btn-team:hover {
+  border-color: #337ab7;
+  color: #fff;
+  background-color: #337ab7;
+}
+.list-group-item{
+  background-color: #eee;
+  margin-top: 5px;
+}

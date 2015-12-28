@@ -22,7 +22,8 @@ class PlayersController < ApplicationController
 
   def show
     @player = Player.find(params['id'])
-    @teams = Team.joins(:player_participants).where("player_id = #{@player.id}")
+    @teams = Team.joins(:player_participants).where("team_id = original_id AND player_id = #{@player.id}")
+    @tournament_teams = Team.joins(:player_participants).where("team_id != original_id AND player_id = #{@player.id}")
   end
 
   def create

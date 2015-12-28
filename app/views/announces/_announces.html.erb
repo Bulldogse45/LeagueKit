@@ -7,25 +7,36 @@
         <div class="panel-body">
             <div class="list-group">
               <% @announces.each do |a| %>
-                <div class="list-group-item">
 
-
+                <div class="list-group-item row">
+                  <div class="col-xs-12 col-sm-3">
                     <% if a.announcable_type == "Team" %>
-                      <i class="fa fa-fw fa-calendar"></i> <%=a.announcable.name %>
+                      <%= link_to a.announcable, class:"btn btn-primary" do %>
+                        <i class="fa fa-fw fa-calendar"></i> <%=a.announcable.name %>
+                      <% end %>
                     <% elsif a.announcable_type == "Tournament" %>
-                      <i class="fa fa-fw fa-calendar"></i> <%=a.announcable.name %>
+                      <%= link_to a.announcable, class:"btn btn-tournament" do %>
+                        <i class="fa fa-fw fa-calendar"></i> <%=a.announcable.name %>
+                      <% end %>
                     <% elsif a.announcable_type == "League" %>
-                      <i class="fa fa-fw fa-calendar"></i> <%=a.announcable.name %>
+                      <%= link_to a.announcable, class:"btn btn-league" do %>
+                        <i class="fa fa-fw fa-calendar"></i> <%=a.announcable.name %>
+                      <% end %>
                     <% elsif a.announcable_type == "Game" %>
-                      <i class="fa fa-fw fa-calendar"></i> <%=a.announcable.name %>
+                      <%= link_to a.announcable, class:"btn btn-game" do %>
+                        <i class="fa fa-fw fa-calendar"></i> <%=a.announcable.name %>
+                      <% end %>
                     <% else %>
-                      <div class="panel panel-red">
                     <% end %>
-
-                    <%= a.content %>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <p class="text-center"><%= simple_format(a.content) %></p>
+                  </div>
+                  <div class="col-xs-12 col-sm-3">
                     <% unless a.read? %>
-                      <%= link_to "Mark as Read", mark_announcement_as_read_path(id:a.id), class:"btn btn-primary pull-right" %>
+                      <%= link_to "Mark as Read", mark_announcement_as_read_path(id:a.id), class:"pull-right" %>
                     <% end %>
+                  </div>
                 </div>
                 <% end %>
             </div>
