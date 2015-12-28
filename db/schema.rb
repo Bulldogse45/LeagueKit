@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151227022322) do
+ActiveRecord::Schema.define(version: 20151228035002) do
 
   create_table "announcement_vieweds", force: :cascade do |t|
     t.integer  "announce_id"
@@ -61,6 +61,17 @@ ActiveRecord::Schema.define(version: 20151227022322) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.string   "name"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer  "to_user_id"
+    t.integer  "from_user_id"
+    t.text     "subject"
+    t.text     "content"
+    t.integer  "message_status_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "index_message_id"
   end
 
   create_table "player_participants", force: :cascade do |t|
@@ -136,6 +147,7 @@ ActiveRecord::Schema.define(version: 20151227022322) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.boolean  "email_optout"
+    t.string   "username"
   end
 
 end

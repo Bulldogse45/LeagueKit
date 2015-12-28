@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :messages
   resources :games do
     resources :announces do
       get 'mark_announcement_as_read' => 'announces#mark_announcement_as_read', as: :mark_announcement_as_read
