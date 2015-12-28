@@ -10,10 +10,10 @@ class WelcomeController < ApplicationController
         follower_ids = follower_ids +", "+ f.id.to_s
       end
       @announces = Announce.joins(:announcement_viewed).where("viewed = 'false' AND announcable_id IN (" + current_user.id.to_s + follower_ids+")").order(:created_at.to_s + " DESC").page(params['page']).per(5)
-      @team_announces = Announce.where("announcable_type = 'Team' AND announcable_id IN (" + current_user.id.to_s + follower_ids+")")
-      @tournament_announces = Announce.where("announcable_type = 'Tournament' AND announcable_id IN (" + current_user.id.to_s + follower_ids+")")
-      @league_announces = Announce.where("announcable_type = 'League' AND announcable_id IN (" + current_user.id.to_s + follower_ids+")")
-      @game_announces = Announce.where("announcable_type = 'Game' AND announcable_id IN (" + current_user.id.to_s + follower_ids+")")
+      @team_announces = Announce.joins(:announcement_viewed).where("viewed = 'false' AND announcable_type = 'Team' AND announcable_id IN (" + current_user.id.to_s + follower_ids+")")
+      @tournament_announces = Announce.joins(:announcement_viewed).where("viewed = 'false' AND announcable_type = 'Tournament' AND announcable_id IN (" + current_user.id.to_s + follower_ids+")")
+      @league_announces = Announce.joins(:announcement_viewed).where("viewed = 'false' AND announcable_type = 'League' AND announcable_id IN (" + current_user.id.to_s + follower_ids+")")
+      @game_announces = Announce.joins(:announcement_viewed).where("viewed = 'false' AND announcable_type = 'Game' AND announcable_id IN (" + current_user.id.to_s + follower_ids+")")
       respond_to do |format|
         format.json{
           render json: @announces, serializer: AnnounceSerializer

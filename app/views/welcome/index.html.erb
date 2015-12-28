@@ -9,6 +9,28 @@
 
 <div class="row">
     <div class="col-lg-3 col-md-6">
+        <div class="panel panel-red">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-dribbble fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge"><%= @game_announces.count %></div>
+                        <div>Game Alerts!</div>
+                    </div>
+                </div>
+            </div>
+            <%= link_to games_path do %>
+                <div class="panel-footer">
+                    <span class="pull-left">Upcoming Games</span>
+                    <span class="pull-right"><i class="fa fa-dribbble"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <div class="row">
@@ -17,13 +39,13 @@
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge"><%= @team_announces.count %></div>
-                        <div>Team Alerts</div>
+                        <div>Team Alerts!</div>
                     </div>
                 </div>
             </div>
             <%= link_to teams_path do %>
                 <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
+                    <span class="pull-left">My Teams</span>
                     <span class="pull-right"><i class="fa fa-users -right"></i></span>
                     <div class="clearfix"></div>
                 </div>
@@ -45,7 +67,7 @@
             </div>
             <%= link_to tournaments_path do %>
                 <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
+                    <span class="pull-left">My Tournaments</span>
                     <span class="pull-right"><i class="fa fa-list-ol"></i></span>
                     <div class="clearfix"></div>
                 </div>
@@ -67,35 +89,14 @@
             </div>
             <%= link_to leagues_path do %>
                 <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
+                    <span class="pull-left">My Leagues</span>
                     <span class="pull-right"><i class="fa fa-university"></i></span>
                     <div class="clearfix"></div>
                 </div>
             <% end %>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-red">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-dribbble fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge"><%= @game_announces.count %></div>
-                        <div>Game Alerts!</div>
-                    </div>
-                </div>
-            </div>
-            <%= link_to games_path do %>
-                <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-dribbble"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            <% end %>
-        </div>
-    </div>
+
 
 </div>
 
