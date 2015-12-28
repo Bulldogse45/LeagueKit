@@ -1,5 +1,5 @@
 <div class="container-fluid  body-container">
-  <h1>Announcements!</h1>
+  <h1>Announcements for <%= @announcable.name %></h1>
     <%= render "announces/announces" %>
   <p>
     <%= link_to "New Announcement", [:new, @announcable, :announce], class:"btn-primary btn" %>
