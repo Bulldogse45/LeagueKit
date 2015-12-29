@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151228035002) do
+ActiveRecord::Schema.define(version: 20151229040000) do
 
   create_table "announcement_vieweds", force: :cascade do |t|
     t.integer  "announce_id"
@@ -148,6 +148,7 @@ ActiveRecord::Schema.define(version: 20151228035002) do
     t.datetime "updated_at",        null: false
     t.boolean  "email_optout"
     t.string   "username"
+    t.string   "suffix"
   end
 
 end
