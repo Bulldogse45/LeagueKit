@@ -19,7 +19,11 @@ class User < ActiveRecord::Base
   has_many :games, through: :referees
 
   def full_name
-    return "#{self.last_name}, #{self.first_name}"
+    suffix = ""
+    if self.suffix != nil
+      suffix = ", #{self.suffix}"
+    end
+    return "#{self.first_name} #{self.last_name}#{suffix}"
   end
 
 end
