@@ -1,13 +1,21 @@
 <div class="container-fluid  body-container">
-  <div class="col-lg-6 col-lg-offset-3">
+  <div class="col-lg-6 col-lg-offset-1">
     <%= bootstrap_form_for(@player) do |f| %>
       <%= f.text_field :first_name %>
       <%= f.text_field :last_name %>
       <%= f.text_field :suffix %>
       <%= f.date_field :date_of_birth %>
-      <%= f.number_field :jersey_number %>
 
-      <%= f.submit %>
+      <%= f.submit "Update Player", class:"btn btn-primary" %>
     <% end %>
   </div>
+  <% if @player.persisted? %>
+    <div class="col-lg-4 col-lg-offset-1">
+      <%= bootstrap_form_for(@player) do |f| %>
+        <%= f.text_field :username, label: "Guardian Username", :value => @player.user.username  if @player.persisted? %>
+
+        <%= f.submit "Update Guardian", class:"btn btn-primary" %>
+      <% end %>
+    </div>
+  <% end %>
 </div>

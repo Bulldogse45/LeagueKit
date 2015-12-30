@@ -38,6 +38,7 @@ class PlayersController < ApplicationController
 
   def update
     @player = Player.find(params[:id])
+    @player.user = User.where("username = '#{params[:player].delete(:username)}'").first
     if @player.update(player_params)
       flash[:notice] = "Your information was updated!"
       redirect_to @player
@@ -49,7 +50,7 @@ class PlayersController < ApplicationController
   private
 
   def player_params
-    params.require(:player).permit(:first_name, :last_name, :suffix, :jersey_number, :date_of_birth )
+    params.require(:player).permit(:first_name, :last_name, :suffix, :jersey_number, :date_of_birth, :username )
   end
 
   def team(team)
