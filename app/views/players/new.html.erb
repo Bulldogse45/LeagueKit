@@ -1,6 +1,7 @@
 <div class="container-fluid  body-container">
   <div class="col-lg-6 col-lg-offset-3">
     <%= bootstrap_form_for(@player) do |f| %>
+      <%= f.text_field :username, :value => @player.user.username  if @player.persisted? %>
       <%= f.text_field :first_name %>
       <%= f.text_field :last_name %>
       <%= f.text_field :suffix %>
