@@ -47,6 +47,7 @@ class GamesController < ApplicationController
     if @game.update(game_params)
       flash[:notice] = "Your game was updated!"
       team_members_follow_game(@game)
+      create_announce
       redirect_to game_path(@game)
     else
       flash[:alert] = @game.errors
@@ -99,6 +100,24 @@ class GamesController < ApplicationController
         flash[:alert]= "You must be the Tournament's owner to access this page!"
         redirect_to root_path
       end
+    end
+  end
+
+  def create_announce
+    @announce = Announce.new
+    @announce.announcable = @game;
+    @announce.content = "#{@announce.announcable.name} was updated!  The game is now on #{@game.begin_time.strftime("%b %e, at %l:%M %p")} between #{@game.home_team.name} vs #{@game.away_team.name}.  "
+    if @game.location_id
+      @announce.content += "The game will be played at #{game.location.name}"
+    end
+    if @announce.save
+      AnnouncementViewed.create(user_id:current_user.id, announce_id:@announce.id, viewed:false)
+      flash[:notice] = "Announcement successful!"
+      @game.followers.each do |f|
+        UserMailer.announcement_notification(f, @announce).deliver
+      end
+    else
+      flash[:alert] = "There was an error and an announcement was not sent out!  Please report to MyLeagueKit@gmail.com.  Thank you!"
     end
   end
 
