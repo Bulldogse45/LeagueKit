@@ -49,6 +49,10 @@ gem 'active_model_serializers'
 
 gem 'font-awesome-rails'
 
+gem "refile", require: "refile/rails"
+gem "refile-mini_magick"
+gem "refile-s3"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

@@ -4,6 +4,7 @@ class Team < ActiveRecord::Base
   has_many :announces, as: :announcable
   validates_presence_of :name
 
+  attachment :team_logo, content_type: ["image/jpeg", "image/png", "image/gif"]
   belongs_to :tournament
   belongs_to :user
   has_many :player_participants

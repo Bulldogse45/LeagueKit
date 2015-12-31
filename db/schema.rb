@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151229040000) do
+ActiveRecord::Schema.define(version: 20151230190117) do
 
   create_table "announcement_vieweds", force: :cascade do |t|
     t.integer  "announce_id"
@@ -58,9 +58,10 @@ ActiveRecord::Schema.define(version: 20151229040000) do
     t.integer  "tournament_id"
     t.integer  "season_id"
     t.integer  "user_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.string   "name"
+    t.string   "league_logo_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -89,8 +90,9 @@ ActiveRecord::Schema.define(version: 20151229040000) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "suffix"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "player_photo_id"
   end
 
   create_table "referees", force: :cascade do |t|
@@ -109,17 +111,19 @@ ActiveRecord::Schema.define(version: 20151229040000) do
     t.datetime "updated_at",    null: false
     t.integer  "tournament_id"
     t.integer  "original_id"
+    t.string   "team_logo_id"
   end
 
   create_table "tournaments", force: :cascade do |t|
     t.datetime "start_time"
     t.datetime "end_time"
     t.integer  "location_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.string   "name"
     t.integer  "user_id"
     t.integer  "league_id"
+    t.string   "tournament_logo_id"
   end
 
   create_table "user_sessions", force: :cascade do |t|

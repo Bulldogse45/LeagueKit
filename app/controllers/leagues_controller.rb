@@ -42,7 +42,7 @@ class LeaguesController < ApplicationController
   private
 
   def league_params
-    params.require(:league).permit(:name)
+    params.require(:league).permit(:name, :league_logo)
   end
 
   def check_user_is_owner

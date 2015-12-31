@@ -1,20 +1,29 @@
 
 <div class="container-fluid  body-container">
-  <h1><%= @player.full_name %> </h1>
-  <p>Guardian: <%= link_to @player.user.full_name, @player.user %></p>
-  <h5>Teams:</h5>
-  <ul>
-    <% @teams.each do |t| %>
-      <li><%= t.name %> </li>
+  <div class="col-xs-12 col-md-4">
+    <% if @player.player_photo %>
+      <%= image_tag attachment_url(@player, :player_photo), class:"img-responsive center-block player-logo" %>
+    <% else %>
+      <%= image_tag "player-default", class:"img-responsive center-block player-logo" %>
     <% end %>
-  </ul>
-  <h5>Tournaments:</h5>
-  <ul>
-    <% @tournament_teams.each do |t| %>
-      <li><%= t.tournament.name %> </li>
+  </div>
+  <div class="col-xs-12 col-md-8"
+    <h1><%= @player.full_name %> </h1>
+    <p>Guardian: <%= link_to @player.user.full_name, @player.user %></p>
+    <h5>Teams:</h5>
+    <ul>
+      <% @teams.each do |t| %>
+        <li><%= t.name %> </li>
+      <% end %>
+    </ul>
+    <h5>Tournaments:</h5>
+    <ul>
+      <% @tournament_teams.each do |t| %>
+        <li><%= t.tournament.name %> </li>
+      <% end %>
+    </ul>
+    <% if @player.user == current_user %>
+      <%= link_to "Update Player", edit_player_path(@player), class:"btn-primary btn" %>
     <% end %>
-  </ul>
-  <% if @player.user == current_user %>
-    <%= link_to "Update Player", edit_player_path(@player), class:"btn-primary btn" %>
-  <% end %>
+  </div>
 </div>

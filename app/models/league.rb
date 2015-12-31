@@ -4,6 +4,7 @@ class League < ActiveRecord::Base
   validates_presence_of :name
 
   belongs_to :user
+  attachment :league_logo, content_type: ["image/jpeg", "image/png", "image/gif"]
   has_many :tournaments
 
 end

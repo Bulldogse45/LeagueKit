@@ -1,16 +1,26 @@
 
 <div class="container-fluid  body-container">
-  <h1>Team: <%= "#{@team.name}" %> </h1>
-  <h4>Coach: <%= link_to "#{@team.user.last_name}, #{@team.user.first_name}" , @team.user %> </h4>
-  <h4>Players:</h4>
-  <ul>
-    <% @team.players.each do |p| %>
-      <li><%= link_to p.full_name, p %></li>
+  <div class="col-xs-12 col-md-4">
+    <% if @team.team_logo %>
+      <%= image_tag attachment_url(@team, :team_logo), class:"img-responsive center-block team-logo" %>
+    <% else %>
+      <%= image_tag "team-default", class:"img-responsive center-block team-logo" %>
     <% end %>
-  </ul>
-  <%= link_to "Add Player", all_players_path, class:"btn btn-primary" %>
-  <%= link_to "Announcements", team_announces_path(@team), class:"btn btn-primary" %>
-  <% if current_user == @team.user %>
-    <%= link_to "Update Team", edit_team_path(@team), class:"btn btn-primary" %>
-  <% end %>
+  </div>
+  <div class="col-xs-12 col-md-8"
+    <h1>Team: <%= "#{@team.name}" %> </h1>
+    <h4>Coach: <%= link_to "#{@team.user.last_name}, #{@team.user.first_name}" , @team.user %> </h4>
+    <h4>Players:</h4>
+    <ul>
+      <% @team.players.each do |p| %>
+        <li><%= link_to p.full_name, p %></li>
+      <% end %>
+    </ul>
+    <%= link_to "Add Player", all_players_path, class:"btn btn-primary" %>
+    <%= link_to "Announcements", team_announces_path(@team), class:"btn btn-primary" %>
+    <% if current_user == @team.user %>
+      <%= link_to "Update Team", edit_team_path(@team), class:"btn btn-primary" %>
+    <% end %>
+  </div>
+
 </div>
