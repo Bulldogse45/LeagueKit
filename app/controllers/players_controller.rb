@@ -50,7 +50,7 @@ class PlayersController < ApplicationController
   private
 
   def player_params
-    params.require(:player).permit(:first_name, :last_name, :suffix, :jersey_number, :date_of_birth, :username )
+    params.require(:player).permit(:first_name, :last_name, :suffix, :jersey_number, :date_of_birth, :username, :player_photo )
   end
 
   def team(team)

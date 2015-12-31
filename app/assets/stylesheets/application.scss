@@ -16,6 +16,7 @@
  @import "rails_bootstrap_forms";
  @import "user_sessions";
  @import "players";
+ @import "teams";
  @import "font-awesome";
  @import "bootstrap";
  @import "sb-admin";
@@ -126,4 +127,46 @@ ul{
 
 .footer p {
   vertical-align: bottom;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    background-color: #890000;
+}
+
+.btn-file:hover {
+    color: #fff;
+    background-color: #520000;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+
+}
+
+.label-info{
+  background-color: white;
+  color: black;
+  font-weight: normal;
+  float: left;
+  font-size: 1em;
+  margin: 10px 0;
+}
+
+.margin-10{
+  margin-bottom: 10px;
 }

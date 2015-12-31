@@ -10,5 +10,6 @@ class Tournament < ActiveRecord::Base
   belongs_to :user
   has_many :referees
   has_many :users, through: :referees
+  attachment :tournament_logo, content_type: ["image/jpeg", "image/png", "image/gif"]
 
 end

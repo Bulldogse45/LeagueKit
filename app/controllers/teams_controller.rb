@@ -69,7 +69,7 @@ class TeamsController < ApplicationController
   private
 
   def team_params
-    params.require(:team).permit(:name, :original_id, :tournament_id )
+    params.require(:team).permit(:name, :original_id, :tournament_id, :team_logo )
   end
 
   def team_members_follow_tournament(tournament_id, team_id)

@@ -6,8 +6,18 @@
       <%= f.datetime_select :end_time %>
       <%= f.collection_select(:league_id ,@leagues, :id, :name, {:prompt => "None"}) %>
 
-
-      <%= f.submit %>
+      <div style="position:relative;" class="col-xs-5 margin-10">
+        <div class="btn btn-default btn-file">
+        <%= f.attachment_field :tournament_logo, href:'javascript:;', style:'position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;', size:"40", onchange:'$("#upload-file-info").html($(this).val());' %>
+            Upload Tournament Logo
+        </div>
+      </div>
+      <div class="col-xs-7">
+        <span class='label label-info' id="upload-file-info"></span>
+      </div>
+      <div class="col-xs-12">
+        <%= f.submit %>
+      </div>
     <% end %>
   </div>
 </div>
