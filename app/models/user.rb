@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  attr_accessor :password
   has_many :announces, as: :announcable
   acts_as_followable
   acts_as_follower
