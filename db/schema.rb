@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151231035058) do
+ActiveRecord::Schema.define(version: 20160102203700) do
 
   create_table "announcement_vieweds", force: :cascade do |t|
     t.integer  "announce_id"
@@ -62,6 +62,19 @@ ActiveRecord::Schema.define(version: 20151231035058) do
     t.datetime "updated_at",     null: false
     t.string   "name"
     t.string   "league_logo_id"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string   "name"
+    t.string   "address_line_1"
+    t.string   "address_line_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.text     "notes"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "league_id"
   end
 
   create_table "messages", force: :cascade do |t|

@@ -4,7 +4,9 @@ class Game < ActiveRecord::Base
   has_many :announces, as: :announcable
   has_many :referees
   has_many :users, through: :referees
+  belongs_to :location
   acts_as_followable
+  validates_presence_of :home_team_id, :begin_time, :away_team_id
 
   def name
     return "#{self.tournament.name} - Game #{self.tournament.games.index(self) + 1}"

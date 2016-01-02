@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :locations
   resources :messages
   resources :games do
     resources :announces do

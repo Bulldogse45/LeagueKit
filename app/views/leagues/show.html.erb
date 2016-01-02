@@ -10,5 +10,6 @@
   <%= link_to "Announcements", league_announces_path(@league), class:"btn btn-primary" %>
   <% if current_user == @league.user %>
     <%= link_to "Update League", edit_league_path(@league), class:"btn btn-primary" %>
+    <%= link_to "Add Locations", new_location_path, class:"btn btn-primary" %>
   <% end %>
 </div>

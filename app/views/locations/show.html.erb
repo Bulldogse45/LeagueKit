@@ -1,0 +1,13 @@
+<div class="container-fluid  body-container">
+  <div class="col-xs-12 col-md-4">
+    <%= link_to image_tag("https://maps.googleapis.com/maps/api/staticmap?center=#{@location.google_address}&zoom=14&size=300x300&markers=#{@location.google_address}&sensor=false"), "https://maps.googleapis.com/maps/api/staticmap?center=#{@location.google_address}&zoom=14&size=300x300&markers=#{@location.google_address}&sensor=false" %>
+  </div>
+  <div class="col-xs-12 col-md-8"
+    <h1><%= @location.name %> </h1>
+    <p><%= @location.address_line_1 %></p>
+    <% if @location.address_line_2 %>
+      <p><%= @location.address_line_2 %></p>
+    <% end %>
+    <p><%= "#{@location.city}, #{@location.state}  #{@location.zip}"  %></p>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+<div class="container-fluid  body-container">
+  <ul>
+    <% @locations.each do |l| %>
+      <li><%= link_to l.name, l %></li>
+    <% end %>
+  </ul>
+</div>
