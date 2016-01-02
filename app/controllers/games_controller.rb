@@ -5,7 +5,8 @@ class GamesController < ApplicationController
 
   def index
     team_ids = "(" + current_user.teams.collect{|t| t.id}.join(",") +")"
-    @games = Game.where("home_team_id IN #{team_ids} OR away_team_id IN #{team_ids}"  )
+    time_range = (Time.now.midnight - 1.day)..Time.now.midnight
+    @games = Game.where("begin_time > '#{Time.now - 1.day}' AND (home_team_id IN #{team_ids} OR away_team_id IN #{team_ids})")
   end
 
   def new
@@ -20,7 +21,7 @@ class GamesController < ApplicationController
       flash[:alert] = "You must create a tournament to add a game"
       redirect_to tournaments_path
     end
-    @locations = []
+    @locations = @game.tournament.league.locations
     @teams = @game.tournament.teams
   end
 
@@ -62,6 +63,12 @@ class GamesController < ApplicationController
       team_members_follow_game(@game)
       redirect_to @game
     else
+      @locations = @game.tournament.league.locations
+      @teams = @game.tournament.teams
+      @referees = []
+      @game.tournament.referees.each do |r|
+        @referees << User.find(r.user_id)
+      end
       render 'new'
     end
   end

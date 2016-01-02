@@ -1,0 +1,16 @@
+<div class="container-fluid  body-container">
+  <div class="col-lg-6 col-lg-offset-3">
+    <%= bootstrap_form_for(@location) do |f| %>
+      <%= f.text_field :name %>
+      <%= f.text_field :address_line_1 %>
+      <%= f.text_field :address_line_2 %>
+      <%= f.text_field :city %>
+      <%= f.text_field :state %>
+      <%= f.text_field :zip %>
+      <%= f.collection_select(:league_id ,@leagues, :id, :name) %>
+      <%= f.text_area :notes, label:"Location Notes" %>
+
+      <%= f.submit %>
+    <% end %>
+
+</div>

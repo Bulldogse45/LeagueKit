@@ -1,6 +1,32 @@
-<h1><%= @game.tournament.name %></h1>
-
-<h3><%= @game.name %></h3>
-
-<p>Home Team: <%= @home_team.name %></p>
-<p>Away Team: <%= @away_team.name %></p>
+<dic class="container-fluid">
+  <div class="col-xs-12">
+    <h1><%= @game.tournament.name %></h1>
+  </div>
+  <div class="col-xs-12">
+    <h3><%= @game.name %></h3>
+  </div>
+  <div class="col-xs-3">
+    <p>Home Team: </p>
+  </div>
+  <div class="col-xs-9">
+    <p><%= @home_team.name %></p>
+  </div>
+  <div class="col-xs-3">
+    <p>Away Team: </p>
+  </div>
+  <div class="col-xs-9">
+    <p><%= @away_team.name %></p>
+  </div>
+  <div class="col-xs-3">
+    <p>Location: </p>
+  </div>
+  <div class="col-xs-9">
+    <% if @game.location %>
+      <%= link_to @game.location do %>
+        <p><%= @game.location.address_line_1 %></p>
+        <p><%= @game.location.address_line_2 %></p>
+        <p><%= "#{@game.location.city}, #{@game.location.state}  #{@game.location.zip}" %></p>
+      <% end %>
+    <% end %>
+  </div>
+</div>

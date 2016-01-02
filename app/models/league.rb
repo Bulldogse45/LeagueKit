@@ -6,5 +6,6 @@ class League < ActiveRecord::Base
   belongs_to :user
   attachment :league_logo, content_type: ["image/jpeg", "image/png", "image/gif"]
   has_many :tournaments
+  has_many :locations
 
 end
