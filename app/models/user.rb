@@ -17,6 +17,8 @@ class User < ActiveRecord::Base
   has_many :referees
   has_many :tournaments, through: :referees
   has_many :games, through: :referees
+  has_many :to_users
+  has_many :messages, through: :to_users
 
   def full_name
     suffix = ""

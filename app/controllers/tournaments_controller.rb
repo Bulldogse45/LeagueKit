@@ -41,6 +41,7 @@ class TournamentsController < ApplicationController
   end
 
   def edit
+    @leagues = League.where("user_id = " + current_user.id.to_s)
     @tournament = Tournament.find(params[:id])
     render 'new'
   end
