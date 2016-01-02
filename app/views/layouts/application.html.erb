@@ -87,6 +87,7 @@
                     </li>
                 </ul>
               <% end %>
+
               <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
               <% if current_user_session %>
               <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -159,6 +160,9 @@
           <div id="page-wrapper">
 
               <div class="container-fluid">
+                <% flash.each do |key, value| %>
+                  <div class="col-xs-12 alert alert-<%= key %>"><%= flash[key.to_sym] %></div>
+                <% end %>
                 <%= yield %>
                   <!-- Page Heading -->
                                     <!-- /.row -->

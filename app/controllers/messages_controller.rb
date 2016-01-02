@@ -2,7 +2,7 @@ class MessagesController < ApplicationController
   before_action :require_user
 
   def index
-    @messages = Message.where("to_user_id = #{current_user.id}")
+    @messages = Message.all.select{|l| l.to_users_ids.include?(current_user.id.to_s)}
   end
 
   def show
@@ -17,30 +17,71 @@ class MessagesController < ApplicationController
 
   def new
     @message = Message.new
-    if params['id'] && Message.find(params['id']).to == current_user
+    if params['id'] && Message.find(params['id']).to_users_ids.split(",").include?(current_user.id.to_s)
       @reply_message = Message.find(params['id'])
-      @message.to_user_id = @reply_message.from.id
+      to_users = @reply_message.to_users_list.split(", ")
+      unless to_users.include?(User.find(@reply_message.from_user_id).username)
+        to_users = to_users.join(", ") + ", #{User.find(@reply_message.from_user_id).username}"
+      else
+        to_users = to_users.join(", ")
+      end
+      @message.to_users_list = to_users
+      @message.subject = "Re: "+ @reply_message.subject
     end
   end
 
   def create
-
-    @message = Message.new(message_params_less_index)
-    if Message.find(params[:message][:index_message_id]).to == current_user
-      @message.index_message_id = params[:message][:index_message_id]
-    end
-    @message.from_user_id = current_user.id
-    if @message.save
-      redirect_to message_path(@message)
+    if all_to_users_exist == ""
+      @message = Message.new(message_params)
+      if params[:message][:index_message_id] && Message.find(params[:message][:index_message_id]).to_users_ids.include?(current_user.id.to_s)
+        @message.index_message_id = params[:message][:index_message_id]
+      end
+      @message.from_user_id = current_user.id
+      if @message.save
+        redirect_to message_path(@message)
+      else
+        render 'new'
+      end
     else
+
+      flash[:danger] = all_to_users_exist
+      remove_nonexistent_users
+      @message = Message.new(message_params)
       render 'new'
     end
   end
 
   private
 
-  def message_params_less_index
-    params.require(:message).permit(:to_user_id, :subject, :content, :index_message)
+  def message_params
+    params.require(:message).permit(:to_users_list, :subject, :content, :index_message)
+  end
+
+  def all_to_users_exist
+    alert = ""
+    users = params[:message][:to_users_list].split(",")
+    users.each do |u|
+      unless username_lookup(u)
+        alert += "#{u} is not a user in our database.  "
+      end
+    end
+    alert
+  end
+
+  def remove_nonexistent_users
+    users = params[:message][:to_users_list].split(",")
+    users_to_remove =[]
+    users.each do |u|
+      unless username_lookup(u)
+        users_to_remove << u
+      end
+    end
+    users = users - users_to_remove
+    params[:message][:to_users_list] = users.join(", ")
+  end
+
+  def username_lookup(username)
+    User.where("username = '#{username.strip}'").first
   end
 
 end
