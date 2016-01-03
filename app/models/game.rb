@@ -7,7 +7,7 @@ class Game < ActiveRecord::Base
   belongs_to :location
   acts_as_followable
   validates_presence_of :home_team_id, :begin_time, :away_team_id
-  before_save :ref_check
+  before_save :location_check, :ref_check
 
   def name
     return "#{self.tournament.name} - Game #{self.tournament.games.index(self) + 1}"
@@ -55,6 +55,23 @@ class Game < ActiveRecord::Base
     if ref_not_available.length > 0
       ref_not_available.each do |r|
         errors.add(:list_referees, "#{r[0].user.username} is unavailable for this game because they have a game at #{r[1].strftime("%l:%M %p")}.")
+      end
+      false
+    else
+      true
+    end
+  end
+
+  def location_check
+    location_not_available = []
+    self.location.games.each do |g|
+      if self.begin_time <= g.begin_time + self.tournament.location_buffer.minutes && self.begin_time >= g.begin_time - self.tournament.location_buffer.minutes
+        location_not_available << [self.location.name, g.begin_time]
+      end
+    end
+    if location_not_available.length > 0
+      location_not_available.each do |r|
+        errors.add(:location_id, "#{r[0]} is unavailable for this game because a game is already scheduled for #{r[1].strftime("%l:%M %p")}.")
       end
       false
     else

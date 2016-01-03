@@ -60,7 +60,7 @@ class TournamentsController < ApplicationController
   private
 
   def tournament_params
-    params.require(:tournament).permit(:name, :start_time, :end_time, :league_id, :tournament_logo, :ref_buffer )
+    params.require(:tournament).permit(:name, :start_time, :end_time, :league_id, :tournament_logo, :ref_buffer, :location_buffer )
   end
 
   def check_user_is_owner
