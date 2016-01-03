@@ -115,7 +115,7 @@ class GamesController < ApplicationController
     @announce.announcable = @game;
     @announce.content = "#{@announce.announcable.name} was updated!  The game is now on #{@game.begin_time.strftime("%b %e, at %l:%M %p")} between #{@game.home_team.name} vs #{@game.away_team.name}.  "
     if @game.location_id
-      @announce.content += "The game will be played at #{game.location.name}"
+      @announce.content += "The game will be played at #{@game.location.name}"
     end
     if @announce.save
       AnnouncementViewed.create(user_id:current_user.id, announce_id:@announce.id, viewed:false)
