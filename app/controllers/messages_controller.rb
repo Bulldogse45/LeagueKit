@@ -28,6 +28,14 @@ class MessagesController < ApplicationController
       @message.to_users_list = to_users
       @message.subject = "Re: "+ @reply_message.subject
     end
+    if params['user_id']
+      @message.to_users << ToUser.new(user_id:params['user_id'])
+    end
+    if params['coaches']
+      params['coaches'].each do |c|
+        @message.to_users << ToUser.new(user_id:c)
+      end
+    end
   end
 
   def create

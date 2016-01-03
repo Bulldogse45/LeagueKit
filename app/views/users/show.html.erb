@@ -1,6 +1,7 @@
 <div class="container-fluid  body-container">
 
   <h1 class=""><%= @user.full_name %></h1>
+  <%= link_to "Send a Message to #{@user.first_name}", new_message_path(user_id:@user.id), class:"btn-primary btn" %>
 
 
 </div>

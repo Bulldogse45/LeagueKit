@@ -12,4 +12,11 @@ class Tournament < ActiveRecord::Base
   has_many :users, through: :referees
   attachment :tournament_logo, content_type: ["image/jpeg", "image/png", "image/gif"]
 
+  def coaches
+    coaches = []
+    self.teams.each do |t|
+      coaches << t.user
+    end
+    coaches
+  end
 end
