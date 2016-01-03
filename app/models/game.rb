@@ -47,7 +47,7 @@ class Game < ActiveRecord::Base
     ref_not_available = []
     self.referees.each do |r|
       r.user.referees.each do |g|
-        if g.game && self.begin_time <= g.game.begin_time + self.tournament.ref_buffer && self.begin_time >= g.game.begin_time - self.tournament.ref_buffer
+        if g.game && self.begin_time <= g.game.begin_time + self.tournament.ref_buffer.minutes && self.begin_time >= g.game.begin_time - self.tournament.ref_buffer.minutes
           ref_not_available << [r, g.game.begin_time]
         end
       end
