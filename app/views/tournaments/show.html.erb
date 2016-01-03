@@ -11,5 +11,6 @@
     <%= link_to "Add Game", new_game_path(tournament_id:@tournament.id), class:"btn btn-primary" %>
     <%= link_to "Announcements", tournament_announces_path(@tournament), class:"btn btn-primary" %>
     <%= link_to "Message All Coaches", new_message_path(coaches:@tournament.coaches), class:"btn btn-primary" %>
+    <%= link_to "Message All Referees", new_message_path(referees:@tournament.id), class:"btn btn-primary" %>
   <% end %>
 </div>

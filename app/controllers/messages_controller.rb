@@ -36,6 +36,11 @@ class MessagesController < ApplicationController
         @message.to_users << ToUser.new(user_id:c)
       end
     end
+    if params['referees']
+      Tournament.find(params['referees']).referees.each do |c|
+        @message.to_users << ToUser.new(user_id:c.user_id)
+      end
+    end
   end
 
   def create
