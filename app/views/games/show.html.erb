@@ -18,6 +18,12 @@
     <p><%= @away_team.name %></p>
   </div>
   <div class="col-xs-3">
+    <p>Tipoff: </p>
+  </div>
+  <div class="col-xs-9">
+    <p><%= @game.begin_time.strftime('%a %b %e, %l:%M %P ') %></p>
+  </div>
+  <div class="col-xs-3">
     <p>Location: </p>
   </div>
   <div class="col-xs-9">
