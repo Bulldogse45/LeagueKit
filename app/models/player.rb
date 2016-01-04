@@ -1,6 +1,6 @@
 class Player < ActiveRecord::Base
 
-  validates_presence_of :date_of_birth, :jersey_number, :user_id, :first_name, :last_name
+  validates_presence_of :date_of_birth, :user_id, :first_name, :last_name
 
   attachment :player_photo, content_type: ["image/jpeg", "image/png", "image/gif"]
   belongs_to :user
