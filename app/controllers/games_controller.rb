@@ -6,7 +6,7 @@ class GamesController < ApplicationController
   def index
     team_ids = "(" + current_user.teams.collect{|t| t.id}.join(",") +")"
     time_range = (Time.now.midnight - 1.day)..Time.now.midnight
-    @games = Game.where("begin_time > '#{Time.now - 1.day}' AND (home_team_id IN #{team_ids} OR away_team_id IN #{team_ids})")
+    @games = Game.where("begin_time > '#{Time.now - 1.day}' AND (home_team_id IN #{team_ids} OR away_team_id IN #{team_ids})").order("begin_time ASC")
   end
 
   def new
