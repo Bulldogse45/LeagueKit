@@ -7,7 +7,7 @@ class Game < ActiveRecord::Base
   belongs_to :location
   acts_as_followable
   validates_presence_of :home_team_id, :begin_time, :away_team_id
-  before_save :location_check, :ref_check
+  before_save :check_all
 
   def name
     return "#{self.tournament.name} - Game #{self.tournament.games.index(self) + 1}"
@@ -56,9 +56,7 @@ class Game < ActiveRecord::Base
       ref_not_available.each do |r|
         errors.add(:list_referees, "#{r[0].user.username} is unavailable for this game because they have a game at #{r[1].strftime("%l:%M %p")}.")
       end
-      false
-    else
-      true
+      @checker = false
     end
   end
 
@@ -73,10 +71,55 @@ class Game < ActiveRecord::Base
       location_not_available.each do |r|
         errors.add(:location_id, "#{r[0]} is unavailable for this game because a game is already scheduled for #{r[1].strftime("%l:%M %p")}.")
       end
-      false
-    else
-      true
+      @checker = false
     end
+  end
+
+  def playing_self_check
+    if self.home_team_id == self.away_team_id
+      errors.add(:away_team_id, "A team cannot play itself.")
+      @checker = false
+    end
+  end
+
+  def home_team_check
+    team_not_available = []
+    self.home_team.games.each do |g|
+      if self.begin_time <= g.begin_time + self.tournament.team_buffer.minutes && self.begin_time >= g.begin_time - self.tournament.team_buffer.minutes
+        team_not_available << [self.home_team.name, g.begin_time]
+      end
+    end
+    if team_not_available.length > 0
+      team_not_available.each do |r|
+        errors.add(:home_team_id, "#{r[0]} are unavailable for this game because they have a game scheduled for #{r[1].strftime("%l:%M %p")}.")
+      end
+      @checker = false
+    end
+  end
+
+  def away_team_check
+    team_not_available = []
+    self.away_team.games.each do |g|
+      if self.begin_time <= g.begin_time + self.tournament.team_buffer.minutes && self.begin_time >= g.begin_time - self.tournament.team_buffer.minutes
+        team_not_available << [self.away_team.name, g.begin_time]
+      end
+    end
+    if team_not_available.length > 0
+      team_not_available.each do |r|
+        errors.add(:away_team_id, "#{r[0]} are unavailable for this game because they have a game scheduled for #{r[1].strftime("%l:%M %p")}.")
+      end
+      @checker = false
+    end
+  end
+
+  def check_all
+    @checker = true
+      home_team_check
+      away_team_check
+      location_check
+      ref_check
+      playing_self_check
+    @checker
   end
 
 end
