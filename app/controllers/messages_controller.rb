@@ -12,7 +12,7 @@ class MessagesController < ApplicationController
 
   def show
     @message = Message.find(params['id'])
-    if @message.to_users_ids.split(", ").include?(current_user.id.to_s) || @message.from_user_id == current_user.id
+    if @message.to_users_ids.split(",").include?(current_user.id.to_s) || @message.from_user_id == current_user.id
       @related_messages = []
       start_message = @message
       while start_message.index_message_id

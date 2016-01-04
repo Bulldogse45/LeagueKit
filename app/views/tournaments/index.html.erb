@@ -1,52 +1,16 @@
 <div class="container-fluid  body-container">
-  <ul>
-    <% @tournaments.each do |t| %>
-      <div class="col-lg-3 col-md-6">
-          <div class="panel panel-green">
-              <div class="panel-heading">
-
-                  <div class="row">
-                      <div class="col-xs-3">
-                          <i class="fa fa-list-ol fa-3x"></i>
-                      </div>
-                      <div class="col-xs-9 text-right">
-                          <div class="huge"><%= t.announces.count %></div>
-                      </div>
-                  </div>
-                <div class="row"><h4 class="text-center"><%= t.name %></h4></div>
-              </div>
-              <%= link_to tournament_path(t) do %>
-                  <div class="panel-footer">
-                      <span class="pull-left">View Details</span>
-                      <span class="pull-right"><i class="fa fa-list-ol"></i></span>
-                      <div class="clearfix"></div>
-                  </div>
-              <% end %>
-          </div>
-      </div>
-
-    <% end %>
-    <%= link_to new_tournament_path do %>
-      <div class="col-lg-3 col-md-6">
-          <div class="panel panel-green">
-              <div class="panel-heading">
-                  <div class="row">
-                      <div class="col-xs-3">
-                          <i class="fa fa-list-ol fa-3x"></i>
-                      </div>
-                      <div class="col-xs-9 text-right">
-                      </div>
-                  </div>
-                  <div class="row"><h4 class="text-center">New Tournament</h4></div>
-              </div>
-              <div class="panel-footer">
-                  <span class="pull-left"></span>
-                  <span class="pull-right"><i class="fa fa-list-ol"></i></span>
-                  <div class="clearfix"></div>
-              </div>
-          </div>
-      </div>
-    <% end %>
-  </ul>
+  <h2>Tournaments</h2>
+  <div class="title-team-row row hidden-xs">
+    <div class="col-sm-3 hidden-xs">Tournament Name</div>
+    <div class="col-sm-3 hidden-xs">Tournament Start Date</div>
+    <div class="col-sm-3 hidden-xs">Tourn. Director</div>
+  </div>
+  <% @tournaments.each do |t| %>
+    <div class="team-row row">
+      <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Tournament Name</div><div class="col-sm-3 col-xs-6"><%= link_to "#{t.name}", t %></div>
+      <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Tournament Start Date</div><div class="col-sm-3 col-xs-6"><%= "#{t.start_time.strftime("%b %d, %Y")}" %></div>
+      <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Tourn. Director</div><div class="col-sm-3 col-xs-6"><%= link_to "#{t.user.username}", t.user %></div>
+    </div>
+  <% end %>
 
 </div>

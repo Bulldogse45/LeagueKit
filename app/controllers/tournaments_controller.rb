@@ -3,7 +3,12 @@ class TournamentsController < ApplicationController
   before_action :check_user_is_owner, only: [:edit, :update]
 
   def index
-    @tournaments = Tournament.where("user_id = " + current_user.id.to_s)
+    @tournaments = []
+    Tournament.where("start_time > '#{(Time.now-72.hours).to_s}'").order("start_time ASC").each do |t|
+      if current_user.following?(t)
+        @tournaments << t
+      end
+    end
   end
 
   def volunteer
