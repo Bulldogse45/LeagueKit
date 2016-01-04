@@ -112,6 +112,24 @@ class Game < ActiveRecord::Base
     end
   end
 
+  def check_coach_not_ref
+    ref_not_available = []
+    self.referees.each do |r|
+      if r.user == self.home_team.user
+        ref_not_available << [r.user.full_name, self.home_team.name]
+      elsif r.user == self.away_team.user
+        ref_not_available << [r.user.full_name, self.away_team.name]
+      end
+    end
+    if ref_not_available.length > 0
+      ref_not_available.each do |r|
+        errors.add(:list_referees, "#{r[0]} is unavailable for this game because they are the coach of #{r[1]}.")
+      end
+      @checker = false
+    end
+
+  end
+
   def check_all
     @checker = true
       home_team_check
@@ -119,6 +137,7 @@ class Game < ActiveRecord::Base
       location_check
       ref_check
       playing_self_check
+      check_coach_not_ref
     @checker
   end
 
