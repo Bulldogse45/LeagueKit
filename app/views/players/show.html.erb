@@ -4,7 +4,7 @@
     <% if @player.player_photo %>
       <%= image_tag attachment_url(@player, :player_photo), class:"img-responsive center-block player-logo" %>
     <% else %>
-      <%= image_tag("player-default", class:"img-responsive center-block player-logo") %>
+      <%= image_tag("player-default.png", class:"img-responsive center-block player-logo") %>
     <% end %>
   </div>
   <div class="col-xs-12 col-md-8"
