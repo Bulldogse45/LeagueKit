@@ -7,13 +7,15 @@ class TournamentsController < ApplicationController
   end
 
   def volunteer
-    if current_user.referees
+    if current_user.referees.length > 0
       referee_tourny = "( #{current_user.referees.collect{|r| r.tournament_id}.compact.join(", ")} )"
       @referee_tournaments = Tournament.where("id IN #{referee_tourny}")
+      @tournaments = Tournament.where("id NOT IN #{referee_tourny}")
     else
       @referee_tournaments = []
+      @tournaments =Tournament.all
     end
-    @tournaments = Tournament.where("id NOT IN #{referee_tourny}")
+
   end
 
   def referee
