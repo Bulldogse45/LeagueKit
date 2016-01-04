@@ -5,13 +5,23 @@ class MessagesController < ApplicationController
     @messages = Message.all.select{|l| l.to_users_ids.include?(current_user.id.to_s)}
   end
 
+  def sent
+    @messages = Message.where("from_user_id = #{current_user.id}")
+    render 'index'
+  end
+
   def show
     @message = Message.find(params['id'])
-    @related_messages = []
-    start_message = @message
-    while start_message.index_message_id
-      @related_messages.prepend(Message.find(start_message.index_message_id))
-      start_message = Message.find(start_message.index_message_id)
+    if @message.to_users_ids.split(", ").include?(current_user.id.to_s) || @message.from_user_id == current_user.id
+      @related_messages = []
+      start_message = @message
+      while start_message.index_message_id
+        @related_messages.prepend(Message.find(start_message.index_message_id))
+        start_message = Message.find(start_message.index_message_id)
+      end
+    else
+      flash[:alert] = "This message is not yours to see!"
+      redirect_to :root
     end
   end
 
