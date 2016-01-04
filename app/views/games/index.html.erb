@@ -1,31 +1,17 @@
-<h1 class="text-center"> Upcoming Games</h1>
-<ul>
-  <div class="container-fluid  body-container">
-    <% @games.each do |g| %>
-      <div class="col-lg-3 col-md-6">
-          <div class="panel panel-red">
-              <div class="panel-heading">
-                  <div class="row">
-                      <div class="col-xs-3">
-                          <i class="fa fa-dribbble fa-3x"></i>
-                      </div>
-                      <div class="col-xs-9 text-right">
-                          <div class="huge"><%= g.announces.count %></div>
-                      </div>
-                  </div>
-                  <div class="row"><h4 class="text-center"><%= g.name %></h4></div>
-                  <div class="row"><h6 class="text-center"><%= "#{Team.find(g.away_team_id).name.split.map(&:capitalize).join(' ')} at #{Team.find(g.home_team_id).name.capitalize.split.map(&:capitalize).join(' ') }" %></h6></div>
-                  <div class="row"><h6 class="text-center"><%= g.begin_time.strftime("%b %e, %l:%M %p") %></h6></div>
-              </div>
-              <%= link_to game_path(g) do %>
-                  <div class="panel-footer">
-                      <span class="pull-left">View Details</span>
-                      <span class="pull-right"><i class="fa fa-dribbble"></i></span>
-                      <div class="clearfix"></div>
-                  </div>
-              <% end %>
-          </div>
-      </div>
-    <% end %>
+
+<div class="container-fluid  body-container">
+  <h2 class="text-center"> Upcoming Games</h2>
+  <div class="title-team-row row hidden-xs">
+    <div class="col-sm-3 hidden-xs">Game Start</div>
+    <div class="col-sm-3 hidden-xs">Tournament Name</div>
+    <div class="col-sm-3 hidden-xs">Location</div>
   </div>
-</ul>
+  <% @games.each do |g| %>
+    <div class="team-row row">
+      <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Game Start</div><div class="col-sm-3 col-xs-6"><%= "#{g.begin_time.strftime("%b %d, %Y at %l:%M %p")}" %></div>
+      <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Tournament Name</div><div class="col-sm-3 col-xs-6"><%= link_to "#{g.tournament.name}", g.tournament %></div>
+      <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Location</div><div class="col-sm-3 col-xs-6"><%= link_to "#{g.location.name}", g.location %></div>
+    </div>
+  <% end %>
+
+</div>
