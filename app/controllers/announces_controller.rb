@@ -5,7 +5,7 @@ class AnnouncesController < ApplicationController
   before_action :require_user
 
   def index
-    @announces = @announcable.announces.order('created_at DESC')
+    @announces = @announcable.announces.order('created_at DESC').page(params['page']).per(10)
     respond_to do |format|
       format.json{
         render json: @announces

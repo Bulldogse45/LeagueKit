@@ -54,7 +54,7 @@ class LocationsController < ApplicationController
   private
 
   def location_params
-    params.require(:location).permit(:name, :league_id, :address_line_1, :address_line_2, :city, :state, :zip )
+    params.require(:location).permit(:name, :league_id, :address_line_1, :address_line_2, :city, :state, :zip, :notes )
   end
 
   def check_user_is_owner
