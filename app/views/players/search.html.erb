@@ -1,6 +1,13 @@
-<%= form_tag all_players_path, :method => 'get' do %>
-  <p>
-    <%= text_field_tag :search, params[:search] %>
-    <%= submit_tag "Search Players by Last Name", :name => nil %>
-  </p>
-<% end %>
+<h2 class="text-center"> Search for Player </h2>
+<dic class="container">
+  <%= form_tag all_players_path, :method => 'get' do %>
+
+    <div class="col-xs-6 col-xs-offset-3">
+      <%= text_field_tag :search, params[:search] %>
+    </div>
+    <div class="col-xs-6 col-xs-offset-3">
+      <%= submit_tag "Search Players by Last Name", :name => nil, class:"btn-primary btn btn-search" %>
+    </div>
+
+  <% end %>
+</div>
