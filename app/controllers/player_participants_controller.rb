@@ -11,7 +11,7 @@ class PlayerParticipantsController < ApplicationController
       end
       redirect_to team_path(@player.team)
     else
-      flash[:notice] = @player.errors
+      flash.now[:notice] = @player.errors
       redirect_to root_path
     end
   end
@@ -43,7 +43,7 @@ class PlayerParticipantsController < ApplicationController
 
   def check_user_is_owner
     unless current_user == Player.find(params['id'].to_i).user
-      flash[:alert]= "You must be the player's guardian to access this page!"
+      flash.now[:alert]= "You must be the player's guardian to access this page!"
       redirect_to root_path
     end
   end

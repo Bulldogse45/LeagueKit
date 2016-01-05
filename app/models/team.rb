@@ -34,4 +34,5 @@ class Team < ActiveRecord::Base
   def games
     Game.where("home_team_id = #{self.id} OR away_team_id = #{self.id}")
   end
+
 end

@@ -94,19 +94,21 @@
                             </li>
                           </ul>
                       </li>
-                      <li>
-                          <a href="javascript:;" data-toggle="collapse" data-target="#tournaments"><i class="fa fa-fw fa-arrows-v"></i> Tournaments <i class="fa fa-fw fa-caret-down"></i></a>
-                          <ul id="tournaments" class="collapse">
-                            <% @my_tournaments.each do |t| %>
+                      <% if current_user.leagues.length > 0 %>
+                        <li>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#tournaments"><i class="fa fa-fw fa-arrows-v"></i> Tournaments <i class="fa fa-fw fa-caret-down"></i></a>
+                            <ul id="tournaments" class="collapse">
+                              <% @my_tournaments.each do |t| %>
+                                <li>
+                                    <%= link_to t.name, t %>
+                                </li>
+                              <% end %>
                               <li>
-                                  <%= link_to t.name, t %>
+                                  <%= link_to "New Tournament", new_tournament_path %>
                               </li>
-                            <% end %>
-                            <li>
-                                <%= link_to "New Tournament", new_tournament_path %>
-                            </li>
-                          </ul>
-                      </li>
+                            </ul>
+                        </li>
+                      <% end %>
                       <li>
                           <a href="javascript:;" data-toggle="collapse" data-target="#leagues"><i class="fa fa-fw fa-arrows-v"></i> Leagues <i class="fa fa-fw fa-caret-down"></i></a>
                           <ul id="leagues" class="collapse">
@@ -137,7 +139,7 @@
 
               <div class="container-fluid">
                 <% flash.each do |key, value| %>
-                  <div class="col-xs-12 alert alert-<%= key %>"><%= flash[key.to_sym] %></div>
+                  <div class="col-xs-12 alert alert-<%= key %>"><%= flash.now[key.to_sym] %></div>
                 <% end %>
                 <%= yield %>
                   <!-- Page Heading -->

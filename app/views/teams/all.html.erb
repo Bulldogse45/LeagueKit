@@ -1,21 +1,11 @@
 <div class="container-fluid  body-container">
-  <h1>Which Team would you like to add?</h1>
-  <div class="all-teams-rows row">
-    <% @teams.each do |t| %>
-      <% unless t.tournaments.length >= Tournament.all.length %>
-        <div class="team-row row">
-          <div class="col-xs-3">
-            <%= link_to "#{t.name}", t %></p>
-          </div>
-          <%= form_for @team, url: clone_team_path do |f| %>
-            <%= f.hidden_field :original_id, value:t.id %>
-            <%= f.collection_select(:tournament_id ,@tournaments - t.tournaments, :id, :name, {:prompt => 'Please select a Tournament'}) %>
-            <%= f.submit "Add Team", class:"btn btn-primary" %>
-          <% end %>
-        </div>
-      <% end %>
-    <% end %>
-  </div>
-  </ul>
-  <%= link_to "New Team", new_team_path, class:"btn btn-primary" %>
+  <h1>Which Teams would you like to add to <%= @tournament.name %>?</h1>
+
+  <%= bootstrap_form_for(@tournament) do |f| %>
+    <%= f.collection_select(:collect_team_ids ,@teams, :id, :name, {:include_blank =>  "N/A", :selected => @tournament.teams.collect{|r| r.id}}, {:multiple => true}) %>
+
+    <%= f.submit %>
+  <% end %>
+
+
 </div>

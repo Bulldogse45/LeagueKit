@@ -17,9 +17,9 @@ class TeamsController < ApplicationController
   end
 
   def all
-    @teams = Team.where("id = original_id")
+    @tournament = Tournament.find(params[:tournament_id])
+    @teams = Team.where("id = original_id AND original_id NOT IN (#{@tournament.teams.collect{|t| t.original_id}.join(",")})")
     @team = Team.new
-    @tournaments = Tournament.where("user_id = " + current_user.id.to_s)
   end
 
   def show
@@ -38,7 +38,7 @@ class TeamsController < ApplicationController
       team_members_follow_tournament(@team.tournament_id, @team.id)
       redirect_to @team.tournament
     else
-      flash[:alert] = @team.errors
+      flash.now[:alert] = @team.errors
       redirect_back_or_default root_path
     end
   end
@@ -51,10 +51,10 @@ class TeamsController < ApplicationController
   def update
     @team = Team.find(params[:id])
     if @team.update(team_params)
-      flash[:notice] = "Your team was updated!"
+      flash.now[:notice] = "Your team was updated!"
       redirect_to team_path(@team)
     else
-      flash[:alert] = @team.errors
+      flash.now[:alert] = @team.errors
       render 'new'
     end
   end
@@ -69,6 +69,15 @@ class TeamsController < ApplicationController
     else
       render 'new'
     end
+  end
+
+  def destroy
+    @team = Team.find(params[:id])
+    @team.games.each do |g|
+      g.destroy
+    end
+    @team.destroy
+    redirect_to :back
   end
 
   private
@@ -88,14 +97,14 @@ class TeamsController < ApplicationController
 
   def check_user_is_owner
     unless current_user == Team.find(params['id']).user
-      flash[:alert]= "You must be the Team's owner to access this page!"
+      flash.now[:alert]= "You must be the Team's owner to access this page!"
       redirect_to root_path
     end
   end
 
   def check_user_is_tournament_owner
     unless current_user == Tournament.find(params[:team][:tournament_id]).user
-      flash[:alert]= "You must be the Tournament's owner to access this page!"
+      flash.now[:alert]= "You must be the Tournament's owner to access this page!"
       redirect_to root_path
     end
   end

@@ -61,17 +61,19 @@ class Game < ActiveRecord::Base
   end
 
   def location_check
-    location_not_available = []
-    self.location.games.each do |g|
-      if self.begin_time <= g.begin_time + self.tournament.location_buffer.minutes && self.begin_time >= g.begin_time - self.tournament.location_buffer.minutes
-        location_not_available << [self.location.name, g.begin_time]
+    if self.location
+      location_not_available = []
+      self.location.games.each do |g|
+        if self.begin_time <= g.begin_time + self.tournament.location_buffer.minutes && self.begin_time >= g.begin_time - self.tournament.location_buffer.minutes
+          location_not_available << [self.location.name, g.begin_time]
+        end
       end
-    end
-    if location_not_available.length > 0
-      location_not_available.each do |r|
-        errors.add(:location_id, "#{r[0]} is unavailable for this game because a game is already scheduled for #{r[1].strftime("%l:%M %p")}.")
+      if location_not_available.length > 0
+        location_not_available.each do |r|
+          errors.add(:location_id, "#{r[0]} is unavailable for this game because a game is already scheduled for #{r[1].strftime("%l:%M %p")}.")
+        end
+        @checker = false
       end
-      @checker = false
     end
   end
 

@@ -32,7 +32,7 @@ class LeaguesController < ApplicationController
   def update
     @league = League.find(params['id'])
     if @league.update(league_params)
-      flash[:notice] = "Your League was updated!"
+      flash.now[:notice] = "Your League was updated!"
       redirect_to @league
     else
       render 'new'
@@ -47,7 +47,7 @@ class LeaguesController < ApplicationController
 
   def check_user_is_owner
     unless current_user == League.find(params['id'].to_i).user
-      flash[:alert]= "You must be the Leagues's owner to access this page!"
+      flash.now[:alert]= "You must be the Leagues's owner to access this page!"
       redirect_to root_path
     end
   end

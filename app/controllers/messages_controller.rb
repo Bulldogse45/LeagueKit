@@ -20,7 +20,7 @@ class MessagesController < ApplicationController
         start_message = Message.find(start_message.index_message_id)
       end
     else
-      flash[:alert] = "This message is not yours to see!"
+      flash.now[:alert] = "This message is not yours to see!"
       redirect_to :root
     end
   end
@@ -61,13 +61,16 @@ class MessagesController < ApplicationController
       end
       @message.from_user_id = current_user.id
       if @message.save
+        @message.to_users_ids.split(",").each do |u|
+          UserMailer.message_notification(User.find(u.to_i), @message).deliver
+        end
         redirect_to message_path(@message)
       else
         render 'new'
       end
     else
 
-      flash[:danger] = all_to_users_exist
+      flash.now[:danger] = all_to_users_exist
       remove_nonexistent_users
       @message = Message.new(message_params)
       render 'new'

@@ -1,13 +1,28 @@
 
 <div class="container-fluid  body-container">
   <h1><%= "#{@tournament.name}" %> </h1>
+  <h4>Participating Teams</h4>
   <ul>
     <% @tournament.teams.each do |t| %>
-      <li><%= link_to "#{t.name}", t %></li>
+      <div class="row location-row">
+        <div class="col-xs-3">
+          <%= link_to "#{t.name}", t %>
+        </div>
+        <div class="col-xs-3">
+          <%= link_to "Remove", t, method:'delete', class:"btn-sm btn-danger" %>
+        </div>
+      </div>
     <% end %>
   </ul>
+  <h4>Games</h4>
+  <ul>
+    <% @tournament.games.each do |g| %>
+      <li><%= link_to "#{g.name}", g %></li>
+    <% end %>
+  </ul>
+
   <% if @tournament.user == current_user %>
-    <%= link_to "Add Team", all_teams_path, class:"btn btn-primary" %>
+    <%= link_to "Add Team", all_teams_path(tournament_id:@tournament.id), class:"btn btn-primary" %>
     <%= link_to "Add Game", new_game_path(tournament_id:@tournament.id), class:"btn btn-primary" %>
     <%= link_to "Announcements", tournament_announces_path(@tournament), class:"btn btn-primary" %>
     <%= link_to "Message All Coaches", new_message_path(coaches:@tournament.coaches), class:"btn btn-primary" %>

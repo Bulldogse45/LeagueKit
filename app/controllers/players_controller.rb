@@ -38,11 +38,17 @@ class PlayersController < ApplicationController
 
   def update
     @player = Player.find(params[:id])
-    @player.user = User.where("username = '#{params[:player].delete(:username)}'").first
-    if @player.update(player_params)
-      flash[:notice] = "Your information was updated!"
-      redirect_to @player
+    if username_lookup(params[:player][:username])
+      @player.user = User.where("username = '#{params[:player].delete(:username)}'").first
+      if @player.update(player_params)
+        flash.now[:notice] = "Your information was updated!"
+        redirect_to @player
+      else
+        render 'new'
+      end
     else
+      params[:player].delete(:username)
+      flash.now[:alert] = "That is not a user in our database!"
       render 'new'
     end
   end
@@ -60,9 +66,13 @@ class PlayersController < ApplicationController
 
   def check_user_is_owner
     unless current_user == Player.find(params['id'].to_i).user
-      flash[:alert]= "You must be the player's guardian to access this page!"
+      flash.now[:alert]= "You must be the player's guardian to access this page!"
       redirect_to root_path
     end
+  end
+
+  def username_lookup(username)
+    User.where("username = '#{username.strip}'").first
   end
 
 end
