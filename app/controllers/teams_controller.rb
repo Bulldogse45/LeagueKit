@@ -11,7 +11,7 @@ class TeamsController < ApplicationController
       end
     end
     @teams =[]
-    Team.where("teams.id == original_id").each do |t|
+    Team.where("teams.id = original_id").each do |t|
       if current_user.following?(t)
         @teams << t
       end
