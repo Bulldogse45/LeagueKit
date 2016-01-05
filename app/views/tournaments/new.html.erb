@@ -7,10 +7,10 @@
       <%= f.text_field :ref_buffer, label:"Time allowed between referee start times(minutes)" %>
       <%= f.text_field :location_buffer, label:"Time allowed between game start times on the same court(minutes)" %>
       <%= f.text_field :team_buffer, label:"Time allowed between game start times for a team(minutes)" %>
-      <%= f.collection_select(:collect_team_ids ,@teams, :id, :name, {:include_blank =>  "N/A", :selected => @tournament.teams.collect{|r| r.id}}, {:multiple => true}) %>
+      <%= f.collection_select(:collect_team_ids ,@teams, :id, :name, {:include_blank =>  "N/A", :selected => @tournament.teams.collect{|r| r.id}, label:"Select Teams" }, {:multiple => true})%>
 
 
-      <%= f.collection_select(:league_id ,@leagues, :id, :name) %>
+      <%= f.collection_select(:league_id ,@leagues, :id, :name, label:"Select a League") %>
 
       <div style="position:relative;" class="col-xs-5 margin-10">
         <div class="btn btn-default btn-file">
