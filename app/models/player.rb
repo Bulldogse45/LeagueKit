@@ -19,4 +19,14 @@ class Player < ActiveRecord::Base
     User.where("username = '#{username.strip}'").first
   end
 
+  def games
+    games = []
+    self.teams.each do |t|
+      t.games.each do |g|
+        games << g
+      end
+    end
+    games.uniq.sort_by{|g| g.begin_time}
+  end
+
 end

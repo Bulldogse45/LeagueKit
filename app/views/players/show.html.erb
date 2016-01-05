@@ -13,17 +13,27 @@
     <h5>Teams:</h5>
     <ul>
       <% @teams.each do |t| %>
-        <li><%= t.name %> </li>
+        <li><%= link_to t.name, t %> </li>
       <% end %>
     </ul>
     <h5>Tournaments:</h5>
     <ul>
       <% @tournament_teams.each do |t| %>
-        <li><%= t.tournament.name %> </li>
+        <% if t.tournament %>
+          <li><%= link_to t.tournament.name, t.tournament %> </li>
+        <% end %>
+      <% end %>
+    </ul>
+    <h5>Upcoming Games:</h5>
+    <ul>
+      <% @player.games.take(5).each do |g| %>
+        <li><%= link_to "#{g.name} on #{g.begin_time.strftime('%a %b %e, %l:%M %P ')}", g %> </li>
       <% end %>
     </ul>
     <% if @player.user == current_user %>
       <%= link_to "Update Player", edit_player_path(@player), class:"btn-primary btn" %>
     <% end %>
   </div>
+
+
 </div>
