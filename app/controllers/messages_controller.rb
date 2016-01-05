@@ -2,7 +2,7 @@ class MessagesController < ApplicationController
   before_action :require_user
 
   def index
-    @messages = Message.all.select{|l| l.to_users_ids.include?(current_user.id.to_s)}
+    @messages = Message.all.order("created_at DESC").select{|l| l.to_users_ids.include?(current_user.id.to_s)}
   end
 
   def sent
@@ -19,6 +19,7 @@ class MessagesController < ApplicationController
         @related_messages.prepend(Message.find(start_message.index_message_id))
         start_message = Message.find(start_message.index_message_id)
       end
+      MessageRead.where("message_id = #{@message.id} AND user_id = #{current_user.id}").first.update(read:true)
     else
       flash.now[:alert] = "This message is not yours to see!"
       redirect_to :root
@@ -62,9 +63,10 @@ class MessagesController < ApplicationController
       @message.from_user_id = current_user.id
       if @message.save
         @message.to_users_ids.split(",").each do |u|
+          MessageRead.create(user_id:u.to_i,message_id:@message.id)
           UserMailer.message_notification(User.find(u.to_i), @message).deliver
         end
-        redirect_to message_path(@message)
+        redirect_to messages_path
       else
         render 'new'
       end

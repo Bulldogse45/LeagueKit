@@ -1,11 +1,16 @@
 <div class="container-fluid  body-container">
   <% if @reply_message %>
-    <div class="row message-row"
-      <h3>From: <%= @reply_message.from.username %> </h3>
-      <h3>To: <%= @reply_message.to_users_list %> </h3>
-      <h5>Subject:<%= @reply_message.subject %></h5>
-      <p><%= simple_format(@reply_message.content) %></p>
+  <div class="message-container">
+    <div class="row message-header">
+      <div class="col-xs-5">
+        <h3 class="text-left"><%= @reply_message.subject %></h3><p>To: <%= @reply_message.to_users_list %> </p>
+      </div>
+      <div class="col-xs-7">
+        <p class="sent-time text-right"><%= @reply_message.created_at.strftime('%a %b %e, %l:%M %P ') %></p>
+      </div>
     </div>
+      <h5><%= simple_format(@reply_message.content) %></h5>
+  </div>
   <% end %>
   <div class="col-lg-6 col-lg-offset-3">
     <%= bootstrap_form_for(@message) do |f| %>
