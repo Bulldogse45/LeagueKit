@@ -29,4 +29,12 @@ class Player < ActiveRecord::Base
     games.uniq.sort_by{|g| g.begin_time}
   end
 
+  def self.search(search)
+  if search
+    Player.where('last_name LIKE ?', "%#{search}%")
+  else
+    Player.where(:all)
+  end
+end
+
 end
