@@ -2,16 +2,19 @@
 <div class="container-fluid">
   <% @messages.each do |m| %>
     <%= link_to m do %>
-      <div class="row message-row">
+      <% unless m.message_reads.where("user_id = #{current_user.id}").first.read %>
+        <div class="row message-row-unread">
+      <% else %>
+        <div class="row message-row-read">
+      <% end %>
         <div class="col-xs-3">
-          From: <%= m.from.username %><br>
-          To: <%= m.to_users_list %>
+          <%= m.from.username %><br>
+        </div>
+        <div class="col-xs-6">
+          <%= m.subject %>
         </div>
         <div class="col-xs-3">
-          Subject: <%= m.subject %>
-        </div>
-        <div class="col-xs-3">
-          Sent on: <%= m.created_at.strftime('%a %b %e, %l:%M %P ') %>
+          <%= m.created_at.strftime('%a %b %e, %l:%M %P ') %>
         </div>
       </div>
     <% end %>

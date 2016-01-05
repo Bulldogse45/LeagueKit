@@ -1,5 +1,5 @@
 class Message < ActiveRecord::Base
-
+  has_many :message_reads
   has_many :to_users
   has_many :users, through: :to_users
 

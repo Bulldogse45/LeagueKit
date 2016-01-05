@@ -2,12 +2,41 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.message-row{
+.message-row-unread{
   background-color: #eee;
-  margin-top: 5px;
+  font-weight: bold;
+  margin-top: 0px;
+  border-bottom: 1px solid #444;
+  color: #000;
+}
+.message-row-read{
+  background-color: #fff;
+  margin-top: 0px;
+  border-bottom: 1px solid #444;
+  color: #000;
+}
+.message-container{
+  background-color: #eee;
+  font-weight: bold;
+  margin-top: 0px;
+  border-bottom: 1px solid #444;
+  color: #000;
+}
+.message-container:nth-child(even) {
+  background-color: #eee;
+  border-radius: 5px;
 
 }
-.message-container:nth-child(odd) {
-  background-color: #ddd;
-  border-radius: 5px;
+
+.message-container{
+  padding-left: 10px;
+  margin-bottom: 35px;
+}
+
+.sent-time{
+  margin-top:25px;
+}
+
+.message-header{
+  border-bottom: solid black 1px;
 }
