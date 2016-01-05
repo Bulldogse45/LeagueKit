@@ -32,7 +32,17 @@ class Team < ActiveRecord::Base
   end
 
   def games
-    Game.where("home_team_id = #{self.id} OR away_team_id = #{self.id}")
+    games = []
+    if self.original_id != self.id
+      games = Game.where("home_team_id = #{self.id} OR away_team_id = #{self.id}")
+    else
+      Team.where("original_id = #{self.id}").each do |t|
+        Game.where("home_team_id = #{t.id} OR away_team_id = #{t.id}").each do |g|
+          games << g
+        end
+      end
+    end
+    games.sort_by{|g| g.begin_time}
   end
 
 end

@@ -1,10 +1,19 @@
 class GamesController < ApplicationController
 
-  before_action :check_user_is_tournament_owner, only: [:edit, :update, :create]
+  before_action :check_user_is_tournament_owner, only: [:edit, :update, :create, :destroy]
   before_action :require_user
 
   def index
-    team_ids = "(" + current_user.teams.collect{|t| t.id}.join(",") +")"
+    all_ids = []
+    current_user.players.each do |p|
+      p.teams.each do |t|
+        all_ids << t.id.to_s
+      end
+    end
+    current_user.teams.each do |t|
+      all_ids << t.id.to_s
+    end
+    team_ids = "(" + all_ids.join(",") +")"
     time_range = (Time.now.midnight - 1.day)..Time.now.midnight
     @games = Game.where("begin_time > '#{Time.now - 1.day}' AND (home_team_id IN #{team_ids} OR away_team_id IN #{team_ids})").order("begin_time ASC")
   end
@@ -37,7 +46,7 @@ class GamesController < ApplicationController
     @game.tournament.referees.each do |r|
       @referees << User.find(r.user_id)
     end
-    @locations = []
+    @locations = @game.tournament.league.locations
     @teams = @game.tournament.teams
 
     render 'new'
@@ -45,13 +54,18 @@ class GamesController < ApplicationController
 
   def update
     @game = Game.find(params[:id])
+    @locations = @game.tournament.league.locations
+    @teams = @game.tournament.teams
+    @referees = []
+    @game.tournament.referees.each do |r|
+      @referees << User.find(r.user_id)
+    end
     if @game.update(game_params)
       flash.now[:notice] = "Your game was updated!"
       team_members_follow_game(@game)
       create_announce
       redirect_to game_path(@game)
     else
-      flash.now[:alert] = @game.errors
       render 'new'
     end
   end
@@ -69,6 +83,19 @@ class GamesController < ApplicationController
       @game.tournament.referees.each do |r|
         @referees << User.find(r.user_id)
       end
+      render 'new'
+    end
+  end
+
+  def destroy
+    @game = Game.find(params[:id])
+    tournament = @game.tournament
+    create_announce_cancelled
+    if @game.destroy
+      flash.now[:notice] = "Your game was updated!"
+      redirect_to tournament_path(tournament)
+    else
+      flash.now[:alert] = @game.errors
       render 'new'
     end
   end
@@ -128,5 +155,18 @@ class GamesController < ApplicationController
     end
   end
 
-
+  def create_announce_cancelled
+    @announce = Announce.new
+    @announce.announcable = @game.tournament;
+    @announce.content = "Your Game on #{@game.begin_time.strftime("%b %e, at %l:%M %p")} between #{@game.home_team.name} vs #{@game.away_team.name} was Cancelled!"
+    if @announce.save
+      AnnouncementViewed.create(user_id:current_user.id, announce_id:@announce.id, viewed:false)
+      flash.now[:notice] = "Announcement successful!"
+      @game.followers.each do |f|
+        UserMailer.announcement_notification(f, @announce).deliver
+      end
+    else
+      flash.now[:alert] = "There was an error and an announcement was not sent out!  Please report to MyLeagueKit@gmail.com.  Thank you!"
+    end
+  end
 end

@@ -4,12 +4,19 @@ class TeamsController < ApplicationController
   before_action :check_user_is_tournament_owner, only: [:clone]
 
   def index
-    @teams = []
+    @tournament_teams = []
     Team.joins(:tournament).where("teams.id != original_id AND tournaments.start_time > '#{(Time.now-72.hours).to_s}'").order("tournaments.start_time ASC").each do |t|
+      if current_user.following?(t)
+        @tournament_teams << t
+      end
+    end
+    @teams =[]
+    Team.where("teams.id == original_id").each do |t|
       if current_user.following?(t)
         @teams << t
       end
     end
+
   end
 
   def new

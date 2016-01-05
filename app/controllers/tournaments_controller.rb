@@ -47,6 +47,7 @@ class TournamentsController < ApplicationController
     if @tournament.save
       current_user.follow(@tournament)
       @tournament.teams.each do |t|
+        t.user.follow(@tournament)
         team_members_follow_tournament(@tournament.id, t.id)
       end
       redirect_to @tournament
@@ -70,6 +71,10 @@ class TournamentsController < ApplicationController
     if @tournament.update(tournament_params)
       flash.now[:notice] = "Your tournament was updated!"
       redirect_to tournament_path(@tournament)
+      @tournament.teams.each do |t|
+        t.user.follow(@tournament)
+        team_members_follow_tournament(@tournament.id, t.id)
+      end
     else
       flash.now[:alert] = @tournament.errors
       render 'new'

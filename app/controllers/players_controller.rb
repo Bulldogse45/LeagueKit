@@ -12,7 +12,12 @@ class PlayersController < ApplicationController
 
   def all
     @player_participant = PlayerParticipant.new
-    @players = Player.all
+    @players = Player.search(params[:search])
+    @teams = Team.where("user_id = #{current_user.id.to_s} AND id = original_id")
+  end
+
+  def search
+
   end
 
   def edit

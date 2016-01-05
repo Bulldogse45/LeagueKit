@@ -16,9 +16,29 @@
         <li><%= link_to p.full_name, p %></li>
       <% end %>
     </ul>
-    <%= link_to "Add Player", all_players_path, class:"btn btn-primary" %>
+    <% if @team.id == @team.original_id %>
+      <h4>Tournaments:</h4>
+      <ul>
+        <% @team.tournaments.each do |t| %>
+          <li><%= link_to t.name, t %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <h4>Games:</h4>
+    <ul>
+      <% if @team.id == @team.original_id %>
+        <% @team.games.take(5).each do |g| %>
+          <li><%= link_to "#{g.name} on #{g.begin_time.strftime('%a %b %e, %l:%M %P ')}", g %></li>
+        <% end %>
+      <% else %>
+        <% @team.games.take(5).each do |g| %>
+          <li><%= link_to "#{g.name} on #{g.begin_time.strftime('%a %b %e, %l:%M %P ')}", g %></li>
+        <% end %>
+      <% end %>
+    </ul>
     <%= link_to "Announcements", team_announces_path(@team), class:"btn btn-primary" %>
     <% if current_user == @team.user %>
+      <%= link_to "Add Player", search_all_players_path, class:"btn btn-primary" %>
       <%= link_to "Update Team", edit_team_path(@team), class:"btn btn-primary" %>
     <% end %>
   </div>

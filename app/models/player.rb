@@ -19,4 +19,22 @@ class Player < ActiveRecord::Base
     User.where("username = '#{username.strip}'").first
   end
 
+  def games
+    games = []
+    self.teams.each do |t|
+      t.games.each do |g|
+        games << g
+      end
+    end
+    games.uniq.sort_by{|g| g.begin_time}
+  end
+
+  def self.search(search)
+  if search
+    Player.where('last_name LIKE ?', "%#{search}%")
+  else
+    Player.where(:all)
+  end
+end
+
 end

@@ -6,13 +6,13 @@
     <p class="text-right">Home Team: </p>
   </div>
   <div class="col-xs-8">
-    <p><%= @home_team.name %></p>
+    <p><%= link_to @home_team.name, @home_team %></p>
   </div>
   <div class="col-xs-4">
     <p class="text-right">Away Team: </p>
   </div>
   <div class="col-xs-8">
-    <p><%= @away_team.name %></p>
+    <p><%= link_to @away_team.name, @away_team %></p>
   </div>
   <div class="col-xs-4">
     <p class="text-right">Tipoff: </p>
@@ -31,6 +31,14 @@
         <p><%= @game.location.address_line_2 %></p>
         <p><%= "#{@game.location.city}, #{@game.location.state}  #{@game.location.zip}" %></p>
       <% end %>
+    <% end %>
+  </div>
+  <div>
+    <% if @game.tournament.user == current_user %>
+      <div class="col-xs-offset-4">
+        <%= link_to "Edit Game", edit_game_path(@game), class:"btn btn-warning" %>
+        <%= link_to "Cancel Game", game_path(@game), method:'delete', class:"btn btn-danger" %>
+      </div>
     <% end %>
   </div>
 </div>

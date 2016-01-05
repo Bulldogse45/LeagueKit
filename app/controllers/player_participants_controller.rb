@@ -6,9 +6,6 @@ class PlayerParticipantsController < ApplicationController
     @player = PlayerParticipant.new(player_participant_params)
     if @player.save
       player_follows_team(@player.team_id, @player.player_id)
-      if @player.team.tournament
-        player_follows_tournament(@player.team.tournament_id, @player.player_id)
-      end
       redirect_to team_path(@player.team)
     else
       flash.now[:notice] = @player.errors
@@ -28,10 +25,17 @@ class PlayerParticipantsController < ApplicationController
   end
 
   def player_follows_team(team_id, player_id)
-    team = Team.find(team_id)
+    teams = Team.where("original_id = #{team_id}")
     user = User.find(Player.find(player_id).user_id)
-    user.follow(team)
-    UserMailer.new_follow(user, team).deliver
+    teams.each do |t|
+      PlayerParticipant.create(team_id:t.id, player_id:player_id)
+      user.follow(t)
+      if t.tournament
+        player_follows_tournament(t.tournament_id, player_id)
+      end
+    end
+    team1 = Team.find(team_id)
+    UserMailer.new_follow(user, team1).deliver
   end
 
   def player_follows_tournament(tournament_id, player_id)

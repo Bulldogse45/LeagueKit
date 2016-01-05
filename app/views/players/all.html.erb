@@ -8,12 +8,12 @@
         </div>
         <%= form_for @player_participant do |f| %>
           <%= f.hidden_field :player_id, value: p.id %>
-          <%= f.collection_select(:team_id ,Team.where("user_id= "+current_user.id.to_s), :id, :display_name, {:prompt => 'Please select a Team'}) %>
-          <%= f.submit "Add To Team" %>
+          <%= f.collection_select(:team_id ,@teams, :id, :name, {:prompt => 'Please select a Team'}) %>
+          <%= f.submit "Add To Team", class:"btn-sm btn-primary" %>
         <% end %>
       </div>
     <% end %>
   </div>
   </ul>
-  <%= link_to "Add New Player", new_player_path, class:"btn btn-primary" %>
+  <%= link_to "Create New Player", new_player_path, class:"btn btn-warning" %>
 </div>
