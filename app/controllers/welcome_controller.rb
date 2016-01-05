@@ -5,10 +5,10 @@ class WelcomeController < ApplicationController
 
   def index
     if current_user_session
-      team_follower_ids = []
-      tournament_follower_ids = []
-      game_follower_ids = []
-      league_follower_ids = []
+      team_follower_ids = [0]
+      tournament_follower_ids = [0]
+      game_follower_ids = [0]
+      league_follower_ids = [0]
       current_user.all_following.each do |f|
         if f.class.to_s == "Game"
           game_follower_ids <<  f.id.to_s
