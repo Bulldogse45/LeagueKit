@@ -1,9 +1,7 @@
 <h1>You have an Message from <%= @message.from.username %> in LeagueKit!</h1>
 
-<p>
-  <%= @message.content %>
+<%= simple_format(@message.content) %>
 
-  Thank you!
+<p><%= @message.from.username %></p>
 
-  <%= @message.from.username %>
-</p>
+<%= link_to "View Message Here" ,message_url(@message) %>

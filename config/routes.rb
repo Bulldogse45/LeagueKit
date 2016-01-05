@@ -66,6 +66,8 @@ Rails.application.routes.draw do
 
   get 'announce/:id' => 'announces#mark_announcement_as_read', as: :mark_announcement_as_read
 
+  get 'allannounces' => 'announces#all', as: :all_announces
+
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
