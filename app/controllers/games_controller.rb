@@ -18,7 +18,7 @@ class GamesController < ApplicationController
     if params[:tournament_id]
       @game.tournament = Tournament.find(params[:tournament_id])
     else
-      flash[:alert] = "You must create a tournament to add a game"
+      flash.now[:alert] = "You must create a tournament to add a game"
       redirect_to tournaments_path
     end
     @locations = @game.tournament.league.locations
@@ -46,12 +46,12 @@ class GamesController < ApplicationController
   def update
     @game = Game.find(params[:id])
     if @game.update(game_params)
-      flash[:notice] = "Your game was updated!"
+      flash.now[:notice] = "Your game was updated!"
       team_members_follow_game(@game)
       create_announce
       redirect_to game_path(@game)
     else
-      flash[:alert] = @game.errors
+      flash.now[:alert] = @game.errors
       render 'new'
     end
   end
@@ -99,12 +99,12 @@ class GamesController < ApplicationController
   def check_user_is_tournament_owner
     if params[:game]
       unless current_user == Tournament.find(params[:game][:tournament_id]).user
-        flash[:alert]= "You must be the Tournament's owner to access this page!"
+        flash.now[:alert]= "You must be the Tournament's owner to access this page!"
         redirect_to root_path
       end
     else
       unless current_user == Game.find(params[:id]).tournament.user
-        flash[:alert]= "You must be the Tournament's owner to access this page!"
+        flash.now[:alert]= "You must be the Tournament's owner to access this page!"
         redirect_to root_path
       end
     end
@@ -119,12 +119,12 @@ class GamesController < ApplicationController
     end
     if @announce.save
       AnnouncementViewed.create(user_id:current_user.id, announce_id:@announce.id, viewed:false)
-      flash[:notice] = "Announcement successful!"
+      flash.now[:notice] = "Announcement successful!"
       @game.followers.each do |f|
         UserMailer.announcement_notification(f, @announce).deliver
       end
     else
-      flash[:alert] = "There was an error and an announcement was not sent out!  Please report to MyLeagueKit@gmail.com.  Thank you!"
+      flash.now[:alert] = "There was an error and an announcement was not sent out!  Please report to MyLeagueKit@gmail.com.  Thank you!"
     end
   end
 

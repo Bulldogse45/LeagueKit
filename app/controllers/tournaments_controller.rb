@@ -30,6 +30,7 @@ class TournamentsController < ApplicationController
 
   def new
     @tournament = Tournament.new
+    @teams = Team.where("id = original_id AND original_id NOT IN (#{@tournament.teams.collect{|t| t.original_id}.join(",")})")
     @leagues = League.where("user_id = " + current_user.id.to_s)
   end
 
@@ -45,25 +46,32 @@ class TournamentsController < ApplicationController
     end
     if @tournament.save
       current_user.follow(@tournament)
+      @tournament.teams.each do |t|
+        team_members_follow_tournament(@tournament.id, t.id)
+      end
       redirect_to @tournament
     else
+      @leagues = League.where("user_id = " + current_user.id.to_s)
+      @teams = Team.all
       render 'new'
     end
   end
 
   def edit
+
     @leagues = League.where("user_id = " + current_user.id.to_s)
     @tournament = Tournament.find(params[:id])
+    @teams = Team.where("id = original_id AND original_id NOT IN (#{@tournament.teams.collect{|t| t.original_id}.join(",")})")
     render 'new'
   end
 
   def update
     @tournament = Tournament.find(params[:id])
     if @tournament.update(tournament_params)
-      flash[:notice] = "Your tournament was updated!"
+      flash.now[:notice] = "Your tournament was updated!"
       redirect_to tournament_path(@tournament)
     else
-      flash[:alert] = @tournament.errors
+      flash.now[:alert] = @tournament.errors
       render 'new'
     end
   end
@@ -71,19 +79,29 @@ class TournamentsController < ApplicationController
   private
 
   def tournament_params
-    params.require(:tournament).permit(:name, :start_time, :end_time, :league_id, :tournament_logo, :team_buffer, :ref_buffer, :location_buffer )
+    params.require(:tournament).permit(:name, :start_time, :end_time, :league_id, :tournament_logo, :team_buffer, :ref_buffer, :location_buffer, :collect_team_ids => [])
   end
 
   def check_user_is_owner
     unless current_user == Tournament.find(params[:id]).user
-      flash[:alert]= "You must be the Tournament's owner to access this page!"
+      flash.now[:alert]= "You must be the Tournament's owner to access this page!"
       redirect_to root_path
     end
   end
+
   def check_user_is_league_owner
     unless current_user == League.find(params[:tournament][:league_id]).user
-      flash[:alert]= "You must be the Tournament's owner to access this page!"
+      flash.now[:alert]= "You must be the Tournament's owner to access this page!"
       redirect_to root_path
+    end
+  end
+
+  def team_members_follow_tournament(tournament_id, team_id)
+    tournament = Tournament.find(tournament_id)
+    Team.find(team_id).players.each do |p|
+      user = User.find(p.user_id)
+      user.follow(tournament)
+      UserMailer.new_follow(user, tournament).deliver
     end
   end
 end

@@ -11,7 +11,7 @@ class RefereesController < ApplicationController
     @tournament = Tournament.find(params[:referee][:tournament_id])
     @referee.user_id = current_user.id
     if @referee.save
-      flash[:alert] = "Thank you for volunteering!"
+      flash.now[:alert] = "Thank you for volunteering!"
       redirect_to @tournament
     else
       render 'new'

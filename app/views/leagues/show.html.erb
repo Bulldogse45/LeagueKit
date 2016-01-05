@@ -1,11 +1,30 @@
 
 <div class="container-fluid  body-container">
   <h1><%= "#{@league.name}" %> </h1>
+  <h3>Tournaments</h3>
   <ul>
     <% @league.tournaments.each do |t| %>
       <%= link_to "#{t.name}", t %>
     <% end %>
   </ul>
+  <h3>Locations</h3>
+  <% if @league.locations.length > 0 %>
+    <ul>
+      <% @league.locations.each do |t| %>
+      <div class="row location-row">
+        <div class="col-sm-4 col-xs-12">
+          <%= link_to "#{t.name}", t %>
+        </div>
+          <% if current_user == @league.user %>
+            <%= link_to "Edit", edit_location_path(t), class:"btn-sm btn-warning"  %>
+            <%= link_to "Remove", location_path(t), method:'delete', class:"btn-sm btn-danger" %>
+          <% end %>
+      </div>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>  Adding locations allows the App to check if a court is being used when you create a game.  It also creates a link to the site in Google maps for users.  Alhthough not required, it is highly recommended to create locations!</p>
+  <% end %>
   <%= link_to "Add Tournament", new_tournament_path, class:"btn btn-primary" %>
   <%= link_to "Announcements", league_announces_path(@league), class:"btn btn-primary" %>
   <% if current_user == @league.user %>

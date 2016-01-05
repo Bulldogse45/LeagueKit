@@ -28,13 +28,13 @@ class AnnouncesController < ApplicationController
     @announce = @announcable.announces.new(announce_params)
     if @announce.save
       AnnouncementViewed.create(user_id:current_user.id, announce_id:@announce.id, viewed:false)
-      flash[:notice] = "Announcement successful!"
+      flash.now[:notice] = "Announcement successful!"
       @announcable.followers.each do |f|
         UserMailer.announcement_notification(f, @announce).deliver
       end
       redirect_to [@announcable, :announces]
     else
-      flash[:alert] = @announce.errors
+      flash.now[:alert] = @announce.errors
       render 'new'
     end
   end
@@ -59,11 +59,11 @@ class AnnouncesController < ApplicationController
   def check_user_is_affiliated
     if current_user_session
       unless @announcable.followers.include?(current_user.id) || @announcable.user == current_user
-        flash[:alert]= "You are not permitted to view this page."
+        flash.now[:alert]= "You are not permitted to view this page."
         redirect_to root_path
       end
     else
-      flash[:notice]= "You must be logged and allowed to view this page."
+      flash.now[:notice]= "You must be logged and allowed to view this page."
       redirect_to root_path
     end
   end
