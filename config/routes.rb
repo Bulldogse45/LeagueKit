@@ -50,6 +50,8 @@ Rails.application.routes.draw do
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
+  get 'leave_team' => 'player_participants#leave_team', as: :leave_team
+
   get 'listallteams' => 'teams#all', as: :all_teams
 
   get 'listallplayers' => 'players#all', as: :all_players

@@ -5,11 +5,11 @@
   <div class="row">
     <ul>
       <% @tournament.teams.each do |t| %>
-        <div class="location-row">
-          <div class="col-xs-3">
+        <div class="">
+          <div class="col-md-4 col-xs-8 teams-row">
             <%= link_to "#{t.name}", t %>
           </div>
-          <div class="col-xs-3">
+          <div class="col-md-2 col-xs-4 teams-row">
             <%= link_to "Remove", t, method:'delete', class:"btn-sm btn-danger" %>
           </div>
         </div>
