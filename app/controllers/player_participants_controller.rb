@@ -1,5 +1,6 @@
 class PlayerParticipantsController < ApplicationController
   before_action :check_user_is_owner, only: [:edit, :update]
+  before_action :check_user_is_owner_or_coach, only: [:leave_team]
   before_action :require_user
 
   def create
@@ -11,6 +12,26 @@ class PlayerParticipantsController < ApplicationController
       flash.now[:notice] = @player.errors
       redirect_to root_path
     end
+  end
+
+  def leave_team
+    @player_participant = PlayerParticipant.find(params[:id])
+    pteam = @player_participant.team
+    user = @player_participant.player.user
+    original_team_id = @player_participant.team.original_id
+    @player_participant.player.player_participants.each do |p|
+      if p.team.original_id == original_team_id
+        team = p.team
+        p.destroy
+        unless team.players.collect{|pl| pl.user_id}.include?(user.id) || team.user == user.id
+          user.stop_following(team)
+          if team.tournament
+            user.stop_following(team.tournament)
+          end
+        end
+      end
+    end
+    redirect_to team_path(pteam)
   end
 
   def destroy
@@ -48,6 +69,13 @@ class PlayerParticipantsController < ApplicationController
   def check_user_is_owner
     unless current_user == Player.find(params['id'].to_i).user
       flash.now[:alert]= "You must be the player's guardian to access this page!"
+      redirect_to root_path
+    end
+  end
+
+  def check_user_is_owner_or_coach
+    unless current_user == PlayerParticipant.find(params['id']).player.user || current_user == PlayerParticipant.find(params['id']).team.user
+      flash.now[:alert]= "You must be the player's guardian or coach to access this page!"
       redirect_to root_path
     end
   end
