@@ -17,7 +17,7 @@
       <%= f.text_field :to_users_list, label:"To" %>
       <%= f.text_field :subject %>
       <% if @team_request %>
-        <%= f.text_area :content, value:"#{@player.full_name} would like to join #{@team.name}.  You can click on the button below to accept or decline the request.  Thank you!" %>
+        <%= f.text_area :content, value:"#{@player.full_name} would like to join #{@team.name}.  You can click on the link below to accept or view the player.  Thank you!" %>
         <%= f.hidden_field :player_id, :value => @player.id %>
         <%= f.hidden_field :team_id, :value => @team.id %>
         <%= f.hidden_field :team_request, :value => true %>
