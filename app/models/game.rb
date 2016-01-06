@@ -47,7 +47,7 @@ class Game < ActiveRecord::Base
     ref_not_available = []
     self.referees.each do |r|
       r.user.referees.each do |g|
-        if g.game && self.begin_time <= g.game.begin_time + self.tournament.ref_buffer.minutes && self.begin_time >= g.game.begin_time - self.tournament.ref_buffer.minutes
+        if g.game && g.game != self && self.begin_time <= g.game.begin_time + self.tournament.ref_buffer.minutes && self.begin_time >= g.game.begin_time - self.tournament.ref_buffer.minutes
           ref_not_available << [r, g.game.begin_time]
         end
       end
@@ -63,7 +63,8 @@ class Game < ActiveRecord::Base
   def location_check
     if self.location && self.tournament.location_buffer
       location_not_available = []
-      self.location.games.each do |g|
+      games = self.location.games - [self]
+      games.each do |g|
         if self.begin_time <= g.begin_time + self.tournament.location_buffer.minutes && self.begin_time >= g.begin_time - self.tournament.location_buffer.minutes
           location_not_available << [self.location.name, g.begin_time]
         end
@@ -87,7 +88,8 @@ class Game < ActiveRecord::Base
   def home_team_check
     if self.tournament.team_buffer
       team_not_available = []
-      self.home_team.games.each do |g|
+      games = self.home_team.games - [self]
+      games.each do |g|
         if self.begin_time <= g.begin_time + self.tournament.team_buffer.minutes && self.begin_time >= g.begin_time - self.tournament.team_buffer.minutes
           team_not_available << [self.home_team.name, g.begin_time]
         end
@@ -104,7 +106,8 @@ class Game < ActiveRecord::Base
   def away_team_check
     if self.tournament.team_buffer
       team_not_available = []
-      self.away_team.games.each do |g|
+      games = self.away_team.games - [self]
+      games.each do |g|
         if self.begin_time <= g.begin_time + self.tournament.team_buffer.minutes && self.begin_time >= g.begin_time - self.tournament.team_buffer.minutes
           team_not_available << [self.away_team.name, g.begin_time]
         end
