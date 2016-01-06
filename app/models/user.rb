@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
     c.login_field = :email
   end
 
-  validates_presence_of :first_name, :last_name, :address_1, :city, :state, :zip, :phone1
+  validates_presence_of :first_name, :last_name, :username
+  validates :username, uniqueness: true
 
   has_many :leagues
   has_many :message_reads

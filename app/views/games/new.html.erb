@@ -6,7 +6,7 @@
       <%= f.collection_select(:home_team_id ,@teams, :id, :name, {:prompt => "Home Team"}) %>
       <%= f.collection_select(:away_team_id ,@teams, :id, :name, {:prompt => "Away Team"}) %>
       <%= f.collection_select(:location_id ,@locations, :id, :name, {:include_blank => "N/A"}) %>
-      <%= f.collection_select(:list_referees ,@referees, :id, :full_name, {:include_blank =>  "N/A", :selected => @game.list_referees.collect{|r| r.id}}, {:multiple => true}) %>
+      <!-- <#%= f.collection_select(:list_referees ,@referees, :id, :full_name, {:include_blank =>  "N/A", :selected => @game.list_referees.collect{|r| r.id}}, {:multiple => true}) %> -->
       <%= f.hidden_field :tournament_id, :value => @game.tournament_id %>
 
       <%= f.submit %>
