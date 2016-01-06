@@ -15,6 +15,7 @@
       <% @teams.each do |t| %>
         <li><%= link_to t.name, t %> </li>
       <% end %>
+        <li><%= link_to "Search for Team to Join", search_teams_path %> </li>
     </ul>
     <h5>Tournaments:</h5>
     <ul>
