@@ -16,6 +16,14 @@ class PlayersController < ApplicationController
     @teams = Team.where("user_id = #{current_user.id.to_s} AND id = original_id")
   end
 
+  def add_to_team
+    @player_participant = PlayerParticipant.new
+    @team = Team.find(params['team_id'])
+    @teams = Team.where("user_id = #{current_user.id.to_s} AND id = original_id")
+    @players = [Player.find(params['player_id'])]
+    render 'all'
+  end
+
   def search
 
   end

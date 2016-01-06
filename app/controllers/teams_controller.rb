@@ -23,6 +23,20 @@ class TeamsController < ApplicationController
     @team = Team.new
   end
 
+  def search
+    if params[:player_id]
+      @player=Player.find(params[:player_id])
+    end
+  end
+
+  def search_results
+    if params[:player_id]
+      @player=Player.find(params[:player_id])
+    end
+    @teams = Team.search(params[:search])
+    @tournament_teams = []
+  end
+
   def all
     @tournament = Tournament.find(params[:tournament_id])
     @teams = Team.where("id = original_id AND original_id NOT IN (#{@tournament.teams.collect{|t| t.original_id}.join(",")})")

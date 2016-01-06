@@ -45,4 +45,12 @@ class Team < ActiveRecord::Base
     games.sort_by{|g| g.begin_time}
   end
 
+  def self.search(search)
+    if search
+      Team.where('id = original_id AND name LIKE ?', "%#{search}%")
+    else
+      Team.where(:all)
+    end
+  end
+
 end

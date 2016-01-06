@@ -14,9 +14,6 @@
 
  @import "bootstrap-sprockets";
  @import "rails_bootstrap_forms";
- @import "user_sessions";
- @import "players";
- @import "teams";
  @import "font-awesome";
  @import "bootstrap";
  @import "sb-admin";
@@ -25,6 +22,9 @@
  @import "welcome";
  @import "leagues";
  @import "tournaments";
+ @import "user_sessions";
+ @import "players";
+ @import "teams";
 
 .pagination {
  font-size:.9em;
@@ -176,4 +176,13 @@ ul{
 
 .body-container-new{
   padding:0;
+}
+.btn-team-search  {
+  margin-top: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+
+}
+.margin-bottom-15{
+  margin-bottom: 15px;
 }
