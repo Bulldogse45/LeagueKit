@@ -80,7 +80,10 @@ class TournamentsController < ApplicationController
         team_members_follow_tournament(@tournament.id, t.id)
       end
     else
-      flash.now[:alert] = @tournament.errors
+      @leagues = League.where("user_id = " + current_user.id.to_s)
+      team_ids = [0]
+      team_ids += @tournament.teams.collect{|t| t.original_id}
+      @teams = Team.where("id = original_id AND original_id NOT IN (#{team_ids.join(",")})")
       render 'new'
     end
   end

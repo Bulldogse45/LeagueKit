@@ -85,6 +85,13 @@ class Game < ActiveRecord::Base
     end
   end
 
+  def check_game_during_tournament
+    unless self.begin_time > self.tournament.start_time && self.begin_time < self.tournament.end_time
+      errors.add(:begin_time, "The game must occur during the tournament starting and ending time.")
+      @checker = false
+    end
+  end
+
   def home_team_check
     if self.tournament.team_buffer
       team_not_available = []
@@ -147,6 +154,7 @@ class Game < ActiveRecord::Base
       ref_check
       playing_self_check
       check_coach_not_ref
+      check_game_during_tournament
     @checker
   end
 

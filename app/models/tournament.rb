@@ -58,11 +58,10 @@ class Tournament < ActiveRecord::Base
 
   def end_after_begin
     if self.end_time < self.start_time
-        errors.add(:end_time, "A tournament cannot end before it begins.")
+      errors.add(:end_time, "A tournament cannot end before it begins.")
       false
     else
       true
     end
-
   end
 end
