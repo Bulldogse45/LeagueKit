@@ -1,5 +1,16 @@
 <h1>Inbox</h1>
-<div class="container-fluid">
+<div class="container-fluid inbox-container">
+  <div class="row message-row-header">
+    <div class="col-xs-3">
+      From<br>
+    </div>
+    <div class="col-xs-6">
+      Subject
+    </div>
+    <div class="col-xs-3">
+      sent
+  </div>
+</div>
   <% @messages.each do |m| %>
     <%= link_to m do %>
       <% unless m.message_reads.where("user_id = #{current_user.id}").first.read %>
