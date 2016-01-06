@@ -2,6 +2,7 @@ class Tournament < ActiveRecord::Base
   has_many :announces, as: :announcable
   acts_as_followable
   validates_presence_of :name, :start_time, :end_time, :league_id
+  before_save :end_after_begin
 
   has_many :teams
   has_many :games
@@ -53,5 +54,15 @@ class Tournament < ActiveRecord::Base
       user.follow(tournament)
       UserMailer.new_follow(user, tournament).deliver
     end
+  end
+
+  def end_after_begin
+    if self.end_time < self.start_time
+        errors.add(:end_time, "A tournament cannot end before it begins.")
+      false
+    else
+      true
+    end
+
   end
 end
