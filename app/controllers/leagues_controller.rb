@@ -12,6 +12,7 @@ class LeaguesController < ApplicationController
 
   def show
     @league = League.find(params['id'])
+    @announces = @league.announces.page(params['page']).per(5)
   end
 
   def create

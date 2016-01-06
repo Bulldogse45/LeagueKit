@@ -47,6 +47,7 @@ class TeamsController < ApplicationController
 
   def show
     @team = Team.find(params['id'])
+    @announces = @team.announces.page(params['page']).per(5)
   end
 
   def clone
