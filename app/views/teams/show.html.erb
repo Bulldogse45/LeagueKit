@@ -45,11 +45,13 @@
         <% end %>
       <% end %>
     </ul>
-    <%= link_to "Announcements", team_announces_path(@team), class:"btn btn-primary" %>
-    <% if current_user == @team.user %>
-      <%= link_to "Add Player", search_all_players_path, class:"btn btn-primary" %>
-      <%= link_to "Update Team", edit_team_path(@team), class:"btn btn-primary" %>
-    <% end %>
+
   </div>
+  <%= render "announces/announces" %>
+  <%= link_to "Announcements", team_announces_path(@team), class:"btn btn-primary" %>
+  <% if current_user == @team.user %>
+    <%= link_to "Add Player", search_all_players_path, class:"btn btn-primary" %>
+    <%= link_to "Update Team", edit_team_path(@team), class:"btn btn-primary" %>
+  <% end %>
 
 </div>

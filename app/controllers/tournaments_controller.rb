@@ -38,6 +38,7 @@ class TournamentsController < ApplicationController
 
   def show
     @tournament = Tournament.find(params['id'])
+    @announces = @tournament.announces.page(params['page']).per(5)
   end
 
   def create
