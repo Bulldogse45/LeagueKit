@@ -9,7 +9,7 @@
     <%= bootstrap_form_for(@referee) do |f| %>
       <%= f.hidden_field :tournament_id, :value => @tournament.id %>
       <%= f.text_field :notes %>
-      <%= f.submit "Voluneer for #{@tournament.name}"%>
+      <%= f.submit "Volunteer for #{@tournament.name}"%>
       <%= link_to "Nevermind", root_path%>
     <% end %>
   </div>
