@@ -30,7 +30,9 @@ class TournamentsController < ApplicationController
 
   def new
     @tournament = Tournament.new
-    @teams = Team.where("id = original_id AND original_id NOT IN (#{@tournament.teams.collect{|t| t.original_id}.join(",")})")
+    team_ids = [0]
+    team_ids += @tournament.teams.collect{|t| t.original_id}
+    @teams = Team.where("id = original_id AND original_id NOT IN (#{team_ids.join(",")})")
     @leagues = League.where("user_id = " + current_user.id.to_s)
   end
 
@@ -62,7 +64,9 @@ class TournamentsController < ApplicationController
 
     @leagues = League.where("user_id = " + current_user.id.to_s)
     @tournament = Tournament.find(params[:id])
-    @teams = Team.where("id = original_id AND original_id NOT IN (#{@tournament.teams.collect{|t| t.original_id}.join(",")})")
+    team_ids = [0]
+    team_ids += @tournament.teams.collect{|t| t.original_id}
+    @teams = Team.where("id = original_id AND original_id NOT IN (#{team_ids.join(",")})")
     render 'new'
   end
 
