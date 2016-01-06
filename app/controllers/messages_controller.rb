@@ -37,8 +37,10 @@ class MessagesController < ApplicationController
     if params['id'] && Message.find(params['id']).to_users_ids.split(",").include?(current_user.id.to_s)
       @reply_message = Message.find(params['id'])
       to_users = @reply_message.to_users_list.split(", ")
+      to_users -= [@reply_message.to_users.where("user_id = #{current_user.id}").first.user.username]
+      to_users << User.find(@reply_message.from_user_id).username
       unless to_users.include?(User.find(@reply_message.from_user_id).username)
-        to_users = to_users.join(", ") + ", #{User.find(@reply_message.from_user_id).username}"
+        to_users = to_users.join(", ")
       else
         to_users = to_users.join(", ")
       end
