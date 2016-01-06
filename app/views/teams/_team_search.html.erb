@@ -1,0 +1,28 @@
+
+<h2>Teams</h2>
+<div class="title-team-row row hidden-xs">
+  <div class="col-sm-3 hidden-xs">Team Name</div>
+  <div class="col-sm-3 hidden-xs">Coach</div>
+  <div class="col-sm-3 hidden-xs">Player</div>
+</div>
+
+<% @teams.each do |t| %>
+  <div class="team-row row">
+    <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Team Name</div><div class="col-sm-3 col-xs-6"><%= link_to "#{t.name}", t %></div>
+    <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Coach</div><div class="col-sm-3 col-xs-6"><%= link_to "#{t.user.username}", t.user %></div>
+    <%= form_tag new_message_path, :method => 'get' do %>
+    <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Player</div>
+    <%= hidden_field(nil, :team_id, :value => t.id) %>
+      <div class="col-sm-3 col-xs-6">
+        <% if @player %>
+          <%= collection_select(nil ,:player_id ,@current_user.players, :id, :full_name, {:selected => @player.id, :prompt => 'Select a Player'}) %>
+        <% else %>
+          <%= collection_select(nil ,:player_id ,@current_user.players, :id, :full_name, {:prompt => 'Select a Player'}) %>
+        <% end %>
+      </div>
+      <div class="col-sm-3 col-xs-12">
+        <%= submit_tag "Request to join #{t.name}", :name => nil, class:"btn-primary btn-sm btn-search btn-team-search" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

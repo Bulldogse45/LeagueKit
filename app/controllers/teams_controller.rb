@@ -24,12 +24,17 @@ class TeamsController < ApplicationController
   end
 
   def search
-
+    if params[:player_id]
+      @player=Player.find(params[:player_id])
+    end
   end
 
   def search_results
+    if params[:player_id]
+      @player=Player.find(params[:player_id])
+    end
     @teams = Team.search(params[:search])
-    render 'index'
+    @tournament_teams = []
   end
 
   def all

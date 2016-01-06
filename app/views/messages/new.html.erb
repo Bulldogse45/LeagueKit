@@ -16,7 +16,14 @@
     <%= bootstrap_form_for(@message) do |f| %>
       <%= f.text_field :to_users_list, label:"To" %>
       <%= f.text_field :subject %>
-      <%= f.text_area :content %>
+      <% if @team_request %>
+        <%= f.text_area :content, value:"#{@player.full_name} would like to join #{@team.name}.  You can click on the button below to accept or decline the request.  Thank you!" %>
+        <%= f.hidden_field :player_id, :value => @player.id %>
+        <%= f.hidden_field :team_id, :value => @team.id %>
+        <%= f.hidden_field :team_request, :value => true %>
+      <% else %>
+        <%= f.text_area :content %>
+      <% end %>
       <% if @reply_message %>
         <%= f.hidden_field :index_message_id, :value => @reply_message.id %>
       <% end %>

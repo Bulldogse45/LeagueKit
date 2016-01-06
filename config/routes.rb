@@ -56,9 +56,13 @@ Rails.application.routes.draw do
 
   get 'listallplayers' => 'players#all', as: :all_players
 
+  get 'addplayer' => 'players#add_to_team', as: :add_player
+
   get 'searchplayers' => 'players#search', as: :search_all_players
 
-  get 'searchteamss' => 'teams#search', as: :search_all_teams
+  get 'searchteams' => 'teams#search', as: :search_all_teams
+
+  get 'searchresultsteams' => 'teams#search_results', as: :team_search_results
 
   post 'team/clone' => 'teams#clone', as: :clone_team
 

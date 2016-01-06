@@ -12,6 +12,12 @@ class MessagesController < ApplicationController
 
   def show
     @message = Message.find(params['id'])
+    if @message.player_id
+      @player = Player.find(@message.player_id)
+    end
+    if @message.team_id
+      @team = Team.find(@message.team_id)
+    end
     if @message.to_users_ids.split(",").include?(current_user.id.to_s) || @message.from_user_id == current_user.id
       @related_messages = []
       start_message = @message
@@ -52,6 +58,13 @@ class MessagesController < ApplicationController
         @message.to_users << ToUser.new(user_id:c.user_id)
       end
     end
+    if params['team_id'] && params['player_id'] && current_user == Player.find(params['player_id']).user
+      @team = Team.find(params['team_id'])
+      @player = Player.find(params['player_id'])
+      @message.to_users << ToUser.new(user_id:@team.user_id)
+      @message.subject = "#{@player.full_name} would like to join #{@team.name}"
+      @team_request = true
+    end
   end
 
   def create
@@ -82,7 +95,7 @@ class MessagesController < ApplicationController
   private
 
   def message_params
-    params.require(:message).permit(:to_users_list, :subject, :content, :index_message)
+    params.require(:message).permit(:to_users_list, :subject, :content, :index_message, :team_id, :player_id, :team_request)
   end
 
   def all_to_users_exist

@@ -30,11 +30,11 @@ class Player < ActiveRecord::Base
   end
 
   def self.search(search)
-  if search
-    Player.where('last_name LIKE ?', "%#{search}%")
-  else
-    Player.where(:all)
+    if search
+      Player.where('last_name LIKE ?', "%#{search}%")
+    else
+      Player.where(:all)
+    end
   end
-end
 
 end
