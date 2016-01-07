@@ -1,3 +1,7 @@
 <div class="container-fluid  body-container">
+  <% if @player %>
     <%= render 'team_search' %>
+  <% elsif @league %>
+    <%= render 'league_search' %>
+  <% end %>
 </div>

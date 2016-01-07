@@ -4,9 +4,30 @@
   <h3>Tournaments</h3>
   <ul>
     <% @league.tournaments.each do |t| %>
-      <%= link_to "#{t.name}", t %>
+      <li><%= link_to "#{t.name}", t %></li>
     <% end %>
   </ul>
+  <h3>Teams</h3>
+  <% if @league.teams.length > 0 %>
+    <div>
+      <% @league.league_ties.each do |t| %>
+        <div class="row margin-bottom-15">
+          <div class="col-xs-4">
+            <%= link_to "#{t.team.name}", t.team %>
+          </div>
+          <div class="col-xs-4">
+            <%= link_to "#{t.team.user.full_name}", t.team.user %>
+          </div>
+          <div class="col-xs-4">
+            <%= link_to "Remove Team from League", league_ty_path(t), method:'delete', class:"btn-sm btn-danger" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p>  Adding Teams makes them available to be added to your tournaments. </p>
+  <% end %>
+
   <h3>Locations</h3>
   <% if @league.locations.length > 0 %>
     <ul>
@@ -31,6 +52,7 @@
   <% if current_user == @league.user %>
     <%= link_to "Update League", edit_league_path(@league), class:"btn btn-primary" %>
     <%= link_to "Add Locations", new_location_path, class:"btn btn-primary" %>
+    <%= link_to "Add Team", search_all_teams_path(league_id:@league.id), class:"btn btn-primary" %>
   <% end %>
 
 </div>

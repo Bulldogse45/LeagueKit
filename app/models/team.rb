@@ -10,6 +10,8 @@ class Team < ActiveRecord::Base
   has_many :player_participants
   has_many :games
   has_many :players, through: :player_participants
+  has_many :league_ties
+  has_many :leagues, through: :league_ties
 
   def display_name
     if self.tournament

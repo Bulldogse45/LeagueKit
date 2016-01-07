@@ -25,7 +25,7 @@ class Tournament < ActiveRecord::Base
   def collect_team_ids=(arr)
     tournament_id = self.id
     arr.each do |t|
-      if t != ""
+      if t != "" && !self.teams.collect{|team| team.original_id}.include?(Team.find(t).original_id)
         team2 = Team.find(t.to_i)
         team = Team.new()
         team.original_id = team2.id
