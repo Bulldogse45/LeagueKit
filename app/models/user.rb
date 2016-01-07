@@ -13,11 +13,9 @@ class User < ActiveRecord::Base
   has_many :leagues
   has_many :message_reads
   has_many :teams
-  has_many :games
   has_many :players
   has_many :tournaments
   has_many :referees
-  has_many :tournaments, through: :referees
   has_many :games, through: :referees
   has_many :to_users
   has_many :messages, through: :to_users
