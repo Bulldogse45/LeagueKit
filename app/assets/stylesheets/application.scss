@@ -252,3 +252,31 @@ a div:hover .panel-yellow .panel-heading {
 a div:hover .panel-primary .panel-heading {
   background-color: #286090;
 }
+
+footer a{
+  color: #ddd;
+}
+
+footer{
+  color: #ddd;
+}
+
+footer a:hover{
+  color: #fff;
+  text-decoration: none;
+}
+
+.all-announcements-link a{
+  color:#fff;
+  background-color: #d9534f;
+  border-radius: 5px;
+  padding:5px;
+  margin-bottom: 15px;
+}
+.all-announcements-link a:hover{
+  text-decoration: none;
+  background-color: #b52b27;
+}
+.all-announcements-link{
+  margin-bottom: 15px;
+}

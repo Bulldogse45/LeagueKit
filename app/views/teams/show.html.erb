@@ -7,7 +7,7 @@
       <%= image_tag("team-default.png", class:"img-responsive center-block team-logo") %>
     <% end %>
   </div>
-  <div class="col-xs-12 col-md-8"
+  <div class="col-xs-12 col-md-8">
     <h1>Team: <%= "#{@team.name}" %> </h1>
     <h4>Coach: <%= link_to "#{@team.user.last_name}, #{@team.user.first_name}" , @team.user %> </h4>
     <h4>Players:</h4>

@@ -41,6 +41,8 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
+  get 'about' => 'welcome#about', as: :about
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
   get 'user_session/destroy' => 'user_sessions#destroy', as: :logout
