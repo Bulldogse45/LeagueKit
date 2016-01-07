@@ -12,7 +12,7 @@ class PlayerParticipantsController < ApplicationController
       else
         flash[:notice] = "There was an error adding this player.  Please try again later"
         redirect_to root_path
-      end  
+      end
     else
       flash[:notice] = "You are not the coach of this team.  Please submit a request to the coach.  Thanks!"
       redirect_to root_path
@@ -25,13 +25,18 @@ class PlayerParticipantsController < ApplicationController
     user = @player_participant.player.user
     original_team_id = @player_participant.team.original_id
     @player_participant.player.player_participants.each do |p|
-      if p.team.original_id == original_team_id
+      if p.team && p.team.original_id == original_team_id
         team = p.team
         p.destroy
         unless team.players.collect{|pl| pl.user_id}.include?(user.id) || team.user == user.id
           user.stop_following(team)
           if team.tournament
             user.stop_following(team.tournament)
+          end
+          if team.games
+            team.games.each do |g|
+              user.stop_following(g)
+            end
           end
         end
       end
