@@ -40,6 +40,21 @@ class WelcomeController < ApplicationController
     def landing
 
     end
+
+    def about
+      if current_user_session
+        assign_teams_tournaments_leagues
+      end
+
+    end
+  end
+  private
+
+  def assign_teams_tournaments_leagues
+    @my_teams = Team.where("id = original_id AND user_id = #{current_user.id.to_s}")
+    @my_tournaments = Tournament.where("user_id = "+ current_user.id.to_s)
+    @my_leagues = League.where("user_id = #{current_user.id.to_s}")
+    @my_players = current_user.players
   end
 
 end

@@ -32,13 +32,13 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"> <%= current_user.message_reads.where("read = 'false'").count %></i> <b class="caret"></b></a>
                         <ul class="dropdown-menu message-dropdown">
-
-                          <li class="message-footer">
-                              <%= link_to "New Message", new_message_path %>
-                          </li>
                           <li class="message-footer">
                               <%= link_to "Inbox", messages_path %>
                           </li>
+                          <li class="message-footer">
+                              <%= link_to "New Message", new_message_path %>
+                          </li>
+
                           <li class="message-footer">
                               <%= link_to "Sent Messages", messages_sent_path %>
                           </li>
@@ -100,7 +100,7 @@
                       </li>
                       <% if current_user.leagues.length > 0 %>
                         <li>
-                            <a href="javascript:;" data-toggle="collapse" data-target="#tournaments"> Tourn Dir <i class="fa fa-fw fa-caret-down"></i></a>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#tournaments"> Tournament Director <i class="fa fa-fw fa-caret-down"></i></a>
                             <ul id="tournaments" class="collapse">
                               <% @my_tournaments.each do |t| %>
                                 <li>
@@ -114,7 +114,7 @@
                         </li>
                       <% end %>
                       <li>
-                          <a href="javascript:;" data-toggle="collapse" data-target="#leagues"></i> League Dir <i class="fa fa-fw fa-caret-down"></i></a>
+                          <a href="javascript:;" data-toggle="collapse" data-target="#leagues"></i> League Director <i class="fa fa-fw fa-caret-down"></i></a>
                           <ul id="leagues" class="collapse">
                             <% unless @my_leagues.empty?  %>
                                 <% @my_leagues.each do |l| %>
@@ -166,6 +166,9 @@
       <script src="js/bootstrap.min.js"></script>
 
       <!-- Morris Charts JavaScript -->
+      <footer class="text-center">
+        <a href="http://www.matthewjfair.com/about">About the Designer</a> | <%= link_to "About LeagueKit", about_path %> | <a href="https://github.com/Bulldogse45/LeagueKit">SourceCode</a>
+      </footer>
 
   </body>
 
