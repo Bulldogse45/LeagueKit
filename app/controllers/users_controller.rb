@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params['id'].to_i)
+    @user = current_user
     @teams = Team.where('user_id = '+ @user.id.to_s).where('id = original_id')
     @players = Player.where("user_id = " + @user.id.to_s)
     @tournaments = Team.where('user_id = '+ @user.id.to_s).where('id != original_id')
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(current_user.id)
+    @user = current_user
     if @user.update(user_params)
       flash.now[:notice] = "Update Successful!"
       redirect_to root_path
