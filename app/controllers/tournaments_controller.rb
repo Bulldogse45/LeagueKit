@@ -103,14 +103,14 @@ class TournamentsController < ApplicationController
 
   def check_user_is_owner
     unless current_user == Tournament.find(params[:id]).user
-      flash.now[:alert]= "You must be the Tournament's owner to access this page!"
+      flash[:alert]= "You must be the Tournament's owner to access this page!"
       redirect_to root_path
     end
   end
 
   def check_user_is_league_owner
     unless current_user == League.find(params[:tournament][:league_id]).user
-      flash.now[:alert]= "You must be the Tournament's owner to access this page!"
+      flash[:alert]= "You must be the Tournament's owner to access this page!"
       redirect_to root_path
     end
   end

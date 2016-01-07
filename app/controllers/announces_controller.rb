@@ -6,13 +6,11 @@ class AnnouncesController < ApplicationController
 
   def index
     @announces = @announcable.announces.order('created_at DESC').page(params['page']).per(10)
-    respond_to do |format|
-      format.json{
-        render json: @announces
-      }
-      format.html{
-
-      }
+    if @announcable.class.to_s == "Team"
+      unless current_user.following?(@announcable)
+        flash[:alert]= "You are not authorized to view this page"
+        redirect_to user_path(current_user)
+      end
     end
   end
 
@@ -85,12 +83,12 @@ class AnnouncesController < ApplicationController
 
   def check_user_is_affiliated
     if current_user_session
-      unless @announcable.followers.include?(current_user.id) || @announcable.user == current_user
-        flash.now[:alert]= "You are not permitted to view this page."
+      unless current_user.following?(@announcable) || @announcable.user == current_user
+        flash[:alert]= "You are not permitted to view this page."
         redirect_to root_path
       end
     else
-      flash.now[:notice]= "You must be logged and allowed to view this page."
+      flash[:notice]= "You must be logged and allowed to view this page."
       redirect_to root_path
     end
   end
