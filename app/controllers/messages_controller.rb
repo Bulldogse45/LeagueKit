@@ -25,7 +25,9 @@ class MessagesController < ApplicationController
         @related_messages.prepend(Message.find(start_message.index_message_id))
         start_message = Message.find(start_message.index_message_id)
       end
-      MessageRead.where("message_id = #{@message.id} AND user_id = #{current_user.id}").first.update(read:true)
+      unless @message.from == current_user && !@message.to_users_ids.include?(current_user.id.to_s)
+        MessageRead.where("message_id = #{@message.id} AND user_id = #{current_user.id}").first.update(read:true)
+      end
     else
       flash.now[:alert] = "This message is not yours to see!"
       redirect_to :root
