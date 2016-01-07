@@ -10,7 +10,11 @@
     <div class="team-row row">
       <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Game Start</div><div class="col-sm-3 col-xs-6"><%= "#{g.begin_time.strftime("%b %d, %Y at %l:%M %p")}" %></div>
       <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Tournament Name</div><div class="col-sm-3 col-xs-6"><%= link_to "#{g.tournament.name}", g.tournament %></div>
-      <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Location</div><div class="col-sm-3 col-xs-6"><%= link_to "#{g.location.name}", g.location %></div>
+      <% if g.location %>
+        <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Location</div><div class="col-sm-3 col-xs-6"><%= link_to "#{g.location.name}", g.location %></div>
+      <% else %>
+      <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Location</div><div class="col-sm-3 col-xs-6">Not Specified</div>
+    <% end %>
     </div>
   <% end %>
 
