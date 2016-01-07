@@ -6,7 +6,7 @@
 
 <% if @message.team_request %>
   <%= link_to "View Player", player_url(id:@message.player_id), class:"btn btn-warning" %>
-  <%= link_to "Accept Player", add_player_url(player_id:@message.player_id, team_id:@team_id), class:"btn btn-success" %>
+  <%= link_to "Accept Player", add_player_url(player_id:@message.player_id, team_id:@message.team_id), class:"btn btn-success" %>
 <% end %>
 
 <%= link_to "View Message Here" ,message_url(@message) %>

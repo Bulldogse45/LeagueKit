@@ -81,6 +81,7 @@ class MessagesController < ApplicationController
       @message.from_user_id = current_user.id
       if @message.save
         @message.to_users_ids.split(",").each do |u|
+          @player_participant = PlayerParticipant.new
           MessageRead.create(user_id:u.to_i,message_id:@message.id)
           UserMailer.message_notification(User.find(u.to_i), @message).deliver
         end
