@@ -19,7 +19,9 @@
             <%= link_to "#{t.team.user.full_name}", t.team.user %>
           </div>
           <div class="col-xs-4">
-            <%= link_to "Remove Team from League", league_ty_path(t), method:'delete', class:"btn-sm btn-danger" %>
+            <% if current_user == @league.user %>
+              <%= link_to "Remove Team from League", league_ty_path(t), method:'delete', class:"btn-sm btn-danger" %>
+            <% end %>  
           </div>
         </div>
       <% end %>
