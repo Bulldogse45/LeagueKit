@@ -74,11 +74,26 @@ class TeamsController < ApplicationController
 
   def update
     @team = Team.find(params[:id])
-    if @team.update(team_params)
-      flash.now[:notice] = "Your team was updated!"
-      redirect_to team_path(@team)
+    original_coach = @team.user
+    if username_lookup(params[:team][:username])
+      @team.user = User.where("username = '#{params[:team].delete(:username)}'").first
+      if @team.update(team_params)
+        new_coach = @team.user
+        new_coach.follow(@team)
+        message = Message.create(to_users_list:new_coach.username,from_user_id:original_coach.id, subject:"You are now the coach of #{@team.name}", content:"You were made the coach of #{@team.name}.  This decision was made by the user #{original_coach.username}.  If there are any questions you can reply to this message.  Thanks!")
+        message.to_users_ids.split(",").each do |u|
+          MessageRead.create(user_id:u.to_i,message_id:message.id)
+          UserMailer.message_notification(User.find(u.to_i), message).deliver
+        end
+        flash.now[:notice] = "Your team was updated!"
+        redirect_to team_path(@team)
+      else
+        flash.now[:alert] = @team.errors
+        render 'new'
+      end
     else
-      flash.now[:alert] = @team.errors
+      params[:team].delete(:username)
+      flash.now[:alert] = "That is not a user in our database!"
       render 'new'
     end
   end
@@ -107,7 +122,7 @@ class TeamsController < ApplicationController
   private
 
   def team_params
-    params.require(:team).permit(:name, :original_id, :tournament_id, :team_logo )
+    params.require(:team).permit(:name, :original_id, :tournament_id, :team_logo, :username )
   end
 
   def team_members_follow_tournament(tournament_id, team_id)
@@ -131,5 +146,9 @@ class TeamsController < ApplicationController
       flash.now[:alert]= "You must be the Tournament's owner to access this page!"
       redirect_to root_path
     end
+  end
+
+  def username_lookup(username)
+    User.where("username = '#{username.strip}'").first
   end
 end

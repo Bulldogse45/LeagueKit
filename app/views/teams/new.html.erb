@@ -2,6 +2,12 @@
   <h1 class="text-center">New Team</h1>
   <div class="col-lg-6 col-lg-offset-3">
     <%= bootstrap_form_for(@team) do |f| %>
+      <% if @team.persisted? %>
+        <%= f.text_field :username, label: "Coach Username", :value => @team.user.username  if @team.persisted? %>
+        <div class="col-xs-12">
+          <%= f.submit "Update Coach", class:"btn btn-primary margin-10" %>
+        </div>
+      <% end %>
       <%= f.text_field :name %>
       <div style="position:relative;" class="col-xs-5 margin-10">
         <div class="btn btn-default btn-file">

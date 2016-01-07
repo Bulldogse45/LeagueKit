@@ -13,7 +13,7 @@
 </div>
   <% @messages.each do |m| %>
     <%= link_to m do %>
-      <% unless m.message_reads.where("user_id = #{current_user.id}").first.read %>
+      <% unless m.message_reads.where("user_id = #{current_user.id}").length > 0 && m.message_reads.where("user_id = #{current_user.id}").first.read %>
         <div class="row message-row-unread">
       <% else %>
         <div class="row message-row-read">
