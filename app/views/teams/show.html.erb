@@ -33,22 +33,26 @@
         <% end %>
       </ul>
     <% end %>
-    <h4>Games:</h4>
-    <ul>
-      <% if @team.id == @team.original_id %>
-        <% @team.games.take(5).each do |g| %>
-          <li><%= link_to "#{g.name} on #{g.begin_time.strftime('%a %b %e, %l:%M %P ')}", g %></li>
+    <% if current_user.following?(@team) %>
+      <h4>Games:</h4>
+      <ul>
+        <% if @team.id == @team.original_id %>
+          <% @team.games.take(5).each do |g| %>
+            <li><%= link_to "#{g.name} on #{g.begin_time.strftime('%a %b %e, %l:%M %P ')}", g %></li>
+          <% end %>
+        <% else %>
+          <% @team.games.take(5).each do |g| %>
+            <li><%= link_to "#{g.name} on #{g.begin_time.strftime('%a %b %e, %l:%M %P ')}", g %></li>
+          <% end %>
         <% end %>
-      <% else %>
-        <% @team.games.take(5).each do |g| %>
-          <li><%= link_to "#{g.name} on #{g.begin_time.strftime('%a %b %e, %l:%M %P ')}", g %></li>
-        <% end %>
-      <% end %>
-    </ul>
+      </ul>
 
-  </div>
-  <%= render "announces/announces" %>
-  <%= link_to "Announcements", team_announces_path(@team), class:"btn btn-primary" %>
+    </div>
+
+      <%= render "announces/announces" %>
+      <%= link_to "Announcements", team_announces_path(@team), class:"btn btn-primary" %>
+    <% end %>
+
   <% if current_user == @team.user %>
     <%= link_to "Add Player", search_all_players_path, class:"btn btn-primary" %>
     <%= link_to "Update Team", edit_team_path(@team), class:"btn btn-primary" %>
