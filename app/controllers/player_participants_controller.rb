@@ -5,11 +5,16 @@ class PlayerParticipantsController < ApplicationController
 
   def create
     @player = PlayerParticipant.new(player_participant_params)
-    if @player.save
-      player_follows_team(@player.team_id, @player.player_id)
-      redirect_to team_path(@player.team)
+    if @player.team.user == current_user
+      if @player.save
+        player_follows_team(@player.team_id, @player.player_id)
+        redirect_to team_path(@player.team)
+      else
+        flash[:notice] = "There was an error adding this player.  Please try again later"
+        redirect_to root_path
+      end  
     else
-      flash.now[:notice] = @player.errors
+      flash[:notice] = "You are not the coach of this team.  Please submit a request to the coach.  Thanks!"
       redirect_to root_path
     end
   end
