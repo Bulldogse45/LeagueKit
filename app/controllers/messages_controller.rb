@@ -6,7 +6,7 @@ class MessagesController < ApplicationController
   end
 
   def sent
-    @messages = Message.where("from_user_id = #{current_user.id}")
+    @messages = Message.where("from_user_id = #{current_user.id}").order("created_at DESC")
     render 'index'
   end
 
