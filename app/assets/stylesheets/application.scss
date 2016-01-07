@@ -225,14 +225,30 @@ a div .panel-yellow .panel-footer {
   color: #f0ad4e;
 }
 
-a div .panel-red .panel-footer:hover {
+a div:hover .panel-red .panel-footer {
   color: #b52b27;
 }
 
-a div .panel-green .panel-footer:hover {
+a div:hover .panel-green .panel-footer {
   color: #3d8b3d;
 }
 
-a div .panel-yellow .panel-footer:hover {
+a div:hover .panel-yellow .panel-footer {
   color: #df8a13;;
+}
+
+a div:hover .panel-red .panel-heading {
+  background-color: #b52b27;
+}
+
+a div:hover .panel-green .panel-heading {
+  background-color: #3d8b3d;
+}
+
+a div:hover .panel-yellow .panel-heading {
+  background-color: #df8a13;;
+}
+
+a div:hover .panel-primary .panel-heading {
+  background-color: #286090;
 }
