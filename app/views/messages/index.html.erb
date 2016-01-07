@@ -1,4 +1,4 @@
-<h1>Inbox</h1>
+<h1>Messages</h1>
 <div class="container-fluid inbox-container">
   <div class="row message-row-header">
     <div class="col-xs-3">
@@ -13,10 +13,10 @@
 </div>
   <% @messages.each do |m| %>
     <%= link_to m do %>
-      <% unless m.message_reads.where("user_id = #{current_user.id}").length > 0 && m.message_reads.where("user_id = #{current_user.id}").first.read %>
-        <div class="row message-row-unread">
-      <% else %>
+      <% unless m.message_reads.where("user_id = #{current_user.id}").length > 0 && !m.message_reads.where("user_id = #{current_user.id}").first.read %>
         <div class="row message-row-read">
+      <% else %>
+        <div class="row message-row-unread">
       <% end %>
         <div class="col-xs-3">
           <%= m.from.username %><br>
