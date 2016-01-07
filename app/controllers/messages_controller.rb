@@ -42,11 +42,8 @@ class MessagesController < ApplicationController
       to_users = @reply_message.to_users_list.split(", ")
       to_users -= [@reply_message.to_users.where("user_id = #{current_user.id}").first.user.username]
       to_users << User.find(@reply_message.from_user_id).username
-      unless to_users.include?(User.find(@reply_message.from_user_id).username)
-        to_users = to_users.join(", ")
-      else
-        to_users = to_users.join(", ")
-      end
+      to_users = to_users.join(", ")
+
       @message.to_users_list = to_users
       @message.subject = "Re: "+ @reply_message.subject
     end
