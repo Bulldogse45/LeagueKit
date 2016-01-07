@@ -73,7 +73,7 @@
               <div class="collapse navbar-collapse navbar-ex1-collapse">
                   <ul class="nav navbar-nav side-nav">
                       <li>
-                          <a href="javascript:;" data-toggle="collapse" data-target="#players"><i class="fa fa-fw fa-arrows-v"></i> Players <i class="fa fa-fw fa-caret-down"></i></a>
+                          <a href="javascript:;" data-toggle="collapse" data-target="#players"> Guardian <i class="fa fa-fw fa-caret-down"></i></a>
                           <ul id="players" class="collapse">
                             <% @my_players.each do |p| %>
                               <li>
@@ -86,7 +86,7 @@
                           </ul>
                       </li>
                       <li>
-                          <a href="javascript:;" data-toggle="collapse" data-target="#teams"><i class="fa fa-fw fa-arrows-v"></i> Teams <i class="fa fa-fw fa-caret-down"></i></a>
+                          <a href="javascript:;" data-toggle="collapse" data-target="#teams"> Coach <i class="fa fa-fw fa-caret-down"></i></a>
                           <ul id="teams" class="collapse">
                             <% @my_teams.each do |t| %>
                               <li>
@@ -94,13 +94,13 @@
                               </li>
                             <% end %>
                             <li>
-                                <%= link_to "New Team", new_team_path %>
+                                <%= link_to "Create New Team", new_team_path %>
                             </li>
                           </ul>
                       </li>
                       <% if current_user.leagues.length > 0 %>
                         <li>
-                            <a href="javascript:;" data-toggle="collapse" data-target="#tournaments"><i class="fa fa-fw fa-arrows-v"></i> Tournaments <i class="fa fa-fw fa-caret-down"></i></a>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#tournaments"> Tourn Dir <i class="fa fa-fw fa-caret-down"></i></a>
                             <ul id="tournaments" class="collapse">
                               <% @my_tournaments.each do |t| %>
                                 <li>
@@ -108,13 +108,13 @@
                                 </li>
                               <% end %>
                               <li>
-                                  <%= link_to "New Tournament", new_tournament_path %>
+                                  <%= link_to "Create New Tournament", new_tournament_path %>
                               </li>
                             </ul>
                         </li>
                       <% end %>
                       <li>
-                          <a href="javascript:;" data-toggle="collapse" data-target="#leagues"><i class="fa fa-fw fa-arrows-v"></i> Leagues <i class="fa fa-fw fa-caret-down"></i></a>
+                          <a href="javascript:;" data-toggle="collapse" data-target="#leagues"></i> League Dir <i class="fa fa-fw fa-caret-down"></i></a>
                           <ul id="leagues" class="collapse">
                             <% unless @my_leagues.empty?  %>
                                 <% @my_leagues.each do |l| %>
@@ -124,7 +124,7 @@
                                 <% end %>
                             <% end %>
                             <li>
-                                <%= link_to "New League", new_league_path %>
+                                <%= link_to "Create New League", new_league_path %>
                             </li>
                           </ul>
                       </li>

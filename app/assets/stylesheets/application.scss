@@ -136,13 +136,13 @@ ul{
 }
 .text-logo a{
   font-family: chalkboard;
-  color:white;
+  color:#bbb;
   font-size: 30px;
 }
 
 .text-logo a:hover{
   font-family: chalkboard;
-  color:#ddd;
+  color:#fff;
   background-color: #000;
   text-decoration: none;
 }
@@ -211,4 +211,44 @@ ul{
 
 .left-margin-5{
   margin-left: 5px;
+}
+
+a div .panel-red .panel-footer {
+  color: #d9534f;
+}
+
+a div .panel-green .panel-footer {
+  color: #5cb85c;
+}
+
+a div .panel-yellow .panel-footer {
+  color: #f0ad4e;
+}
+
+a div:hover .panel-red .panel-footer {
+  color: #b52b27;
+}
+
+a div:hover .panel-green .panel-footer {
+  color: #3d8b3d;
+}
+
+a div:hover .panel-yellow .panel-footer {
+  color: #df8a13;;
+}
+
+a div:hover .panel-red .panel-heading {
+  background-color: #b52b27;
+}
+
+a div:hover .panel-green .panel-heading {
+  background-color: #3d8b3d;
+}
+
+a div:hover .panel-yellow .panel-heading {
+  background-color: #df8a13;;
+}
+
+a div:hover .panel-primary .panel-heading {
+  background-color: #286090;
 }
