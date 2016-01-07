@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   resources :locations
+  resources :league_ties
   resources :messages
   resources :games do
     resources :announces do
@@ -61,6 +62,8 @@ Rails.application.routes.draw do
   get 'searchplayers' => 'players#search', as: :search_all_players
 
   get 'searchteams' => 'teams#search', as: :search_all_teams
+
+  get 'addleagueteams' => 'teams#league_add', as: :league_add
 
   get 'searchresultsteams' => 'teams#search_results', as: :team_search_results
 

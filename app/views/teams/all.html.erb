@@ -2,9 +2,10 @@
   <h1>Which Teams would you like to add to <%= @tournament.name %>?</h1>
 
   <%= bootstrap_form_for(@tournament) do |f| %>
-    <%= f.collection_select(:collect_team_ids ,@teams, :id, :name, {:include_blank =>  "N/A", :selected => @tournament.teams.collect{|r| r.id}}, {:multiple => true}) %>
+    <%= f.collection_check_boxes(:collect_team_ids ,@teams, :id, :name, {:selected => @tournament.teams.collect{|r| r.id}, label:"Teams to Add"}) %>
 
-    <%= f.submit %>
+    <%= f.submit "Add Selected Teams to Tournament", class:"btn btn-success" %>
+    <%= link_to "Add Team to #{@tournament.league.name}", search_all_teams_path(league_id:@tournament.league.id), class:"btn btn-primary" %>
   <% end %>
 
 

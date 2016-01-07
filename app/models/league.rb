@@ -7,5 +7,7 @@ class League < ActiveRecord::Base
   attachment :league_logo, content_type: ["image/jpeg", "image/png", "image/gif"]
   has_many :tournaments
   has_many :locations
+  has_many :league_ties
+  has_many :teams, through: :league_ties
 
 end

@@ -26,6 +26,22 @@ class TeamsController < ApplicationController
   def search
     if params[:player_id]
       @player=Player.find(params[:player_id])
+    elsif params[:league_id]
+      @league=League.find(params[:league_id])
+      @leagues = League.where("user_id = #{current_user.id}")
+    end
+  end
+
+  def league_add
+    league = League.find(params[:league_id])
+    team = Team.find(params[:team_id])
+    if LeagueTy.where("team_id = #{team.id} AND league_id = #{league.id}").length == 0
+      LeagueTy.create(team_id:team.original_id, league_id:league.id)
+      flash[:success] = "#{team.name} was successfully added to #{league.name}"
+      redirect_to league
+    else
+      flash[:alert] = "#{team.name} is already part of #{league.name}"
+      redirect_to :back
     end
   end
 
@@ -33,15 +49,35 @@ class TeamsController < ApplicationController
     if params[:player_id]
       @player=Player.find(params[:player_id])
     end
+    if params[:league_id]
+      @league=League.find(params[:league_id])
+    end
     @teams = Team.search(params[:search])
     @tournament_teams = []
   end
 
   def all
-    @tournament = Tournament.find(params[:tournament_id])
-    team_ids = [0]
-    team_ids += @tournament.teams.collect{|t| t.original_id}
-    @teams = Team.where("id = original_id AND original_id NOT IN (#{team_ids.join(",")})")
+    if params[:tournament_id] && Tournament.find(params[:tournament_id]).user == current_user
+      @tournament = Tournament.find(params[:tournament_id])
+      teams = []
+      @tournament.league.teams.each do |t|
+        teams << Team.find(t.original_id)
+      end
+      tournament_teams = []
+      @tournament.teams.each do |t|
+        tournament_teams << Team.find(t.original_id)
+      end
+      @teams = teams - tournament_teams
+    elsif params[:league_id] && League.find(params[:league_id]).user == current_user
+      @league = League.find(params[:league_id])
+      team_ids = [0]
+      team_ids += @league.league_ties.teams.collect{|t| t.original_id}
+      @teams = Team.where("id = original_id AND original_id NOT IN (#{team_ids.join(",")})")
+    else
+      flash[:warning] = "You are not permitted to view that page."
+      redirect_to root_path
+    end
+
     @team = Team.new
   end
 
@@ -62,7 +98,7 @@ class TeamsController < ApplicationController
       team_members_follow_tournament(@team.tournament_id, @team.id)
       redirect_to @team.tournament
     else
-      flash.now[:alert] = @team.errors
+      flash[:alert] = @team.errors
       redirect_back_or_default root_path
     end
   end
@@ -85,7 +121,7 @@ class TeamsController < ApplicationController
           MessageRead.create(user_id:u.to_i,message_id:message.id)
           UserMailer.message_notification(User.find(u.to_i), message).deliver
         end
-        flash.now[:notice] = "Your team was updated!"
+        flash[:notice] = "Your team was updated!"
         redirect_to team_path(@team)
       else
         flash.now[:alert] = @team.errors
@@ -136,14 +172,14 @@ class TeamsController < ApplicationController
 
   def check_user_is_owner
     unless current_user == Team.find(params['id']).user
-      flash.now[:alert]= "You must be the Team's owner to access this page!"
+      flash[:alert]= "You must be the Team's owner to access this page!"
       redirect_to root_path
     end
   end
 
   def check_user_is_tournament_owner
     unless current_user == Tournament.find(params[:team][:tournament_id]).user
-      flash.now[:alert]= "You must be the Tournament's owner to access this page!"
+      flash[:alert]= "You must be the Tournament's owner to access this page!"
       redirect_to root_path
     end
   end
