@@ -131,6 +131,28 @@ ul{
     background-color: #890000;
 }
 
+.top-logo{
+  height: 50px;
+}
+.text-logo a{
+  font-family: chalkboard;
+  color:white;
+  font-size: 30px;
+}
+
+.text-logo a:hover{
+  font-family: chalkboard;
+  color:#ddd;
+  background-color: #000;
+  text-decoration: none;
+}
+.text-logo:hover{
+  background-color: #000;
+}
+.text-logo{
+  padding-right: 16px;  
+}
+
 .btn-file:hover {
     color: #fff;
     background-color: #520000;

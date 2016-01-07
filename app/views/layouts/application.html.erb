@@ -20,7 +20,11 @@
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                   </button>
-                  <%= link_to "Home", root_url, class:"navbar-brand" %>
+                  <div class="text-logo">
+                    <%= link_to root_url do %>
+                      <%= image_tag("icon.png", class:"top-logo" )  %> League Kit
+                    <% end %>
+                  </div>
               </div>
               <!-- Top Menu Items -->
               <% if current_user_session %>
