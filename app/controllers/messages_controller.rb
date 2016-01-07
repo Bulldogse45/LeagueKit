@@ -14,6 +14,7 @@ class MessagesController < ApplicationController
     @message = Message.find(params['id'])
     if @message.player_id
       @player = Player.find(@message.player_id)
+      @player_participant = PlayerParticipant.new
     end
     if @message.team_id
       @team = Team.find(@message.team_id)

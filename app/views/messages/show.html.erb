@@ -25,11 +25,15 @@
 
   </div>
   <div class="reply-row">
-    <%= link_to "Reply", new_message_path(id:@message.id), class:"btn btn-primary" %>
+    <%= link_to "Reply", new_message_path(id:@message.id), class:"btn btn-primary pull-left left-margin-5" %>
     <% if @message.team_request %>
-      <%= link_to "View Player", player_path(@player), class:"btn btn-warning" %>
-      <%= link_to "Accept Player", add_player_path(player_id:@player.id, team_id:@team.id), class:"btn btn-success" %>
+      <%= link_to "View Player", player_path(@player), class:"btn btn-warning pull-left left-margin-5" %>
+      <%= form_for @player_participant do |f| %>
+        <%= f.hidden_field :player_id, value: @player.id %>
+        <%= f.hidden_field :team_id, value: @team.original_id %>
+        <%= f.submit "Add To Team", class:"btn btn-success pull-left left-margin-5" %>
+      <% end %>
     <% end %>
-    <%= link_to "Back to Inbox", messages_path, class:"btn btn-primary" %>
+    <%= link_to "Back to Inbox", messages_path, class:"btn btn-primary pull-left left-margin-5" %>
   </div>
 </div>
