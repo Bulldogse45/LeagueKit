@@ -31,11 +31,11 @@ class AnnouncesController < ApplicationController
           league_follower_ids  <<  f.id.to_s
         end
       end
-      @team_announces = Announce.joins(:announcement_viewed).where("announcable_type = 'Team' AND announcable_id IN (" + team_follower_ids.join(",")+")")
-      @tournament_announces = Announce.joins(:announcement_viewed).where("announcable_type = 'Tournament' AND announcable_id IN (" + tournament_follower_ids.join(",")+")")
-      @league_announces = Announce.joins(:announcement_viewed).where("announcable_type = 'League' AND announcable_id IN (" + league_follower_ids.join(",")+")")
-      @game_announces = Announce.joins(:announcement_viewed).where("announcable_type = 'Game' AND announcable_id IN (" +game_follower_ids.join(",")+")")
-      @announces = Announce.joins(:announcement_viewed).where("announcable_type = 'Game' AND announcable_id IN (" + game_follower_ids.join(",")+") OR announcable_type = 'Team' AND announcable_id IN (" + team_follower_ids.join(",")+") OR announcable_type = 'Tournament' AND announcable_id IN (" + tournament_follower_ids.join(",") + ") OR announcable_type = 'League' AND announcable_id IN (" + league_follower_ids.join(",")+")").order('created_at DESC').page(params['page']).per(10)
+      @team_announces = Announce.where("announcable_type = 'Team' AND announcable_id IN (" + team_follower_ids.join(",")+")")
+      @tournament_announces = Announce.where("announcable_type = 'Tournament' AND announcable_id IN (" + tournament_follower_ids.join(",")+")")
+      @league_announces = Announce.where("announcable_type = 'League' AND announcable_id IN (" + league_follower_ids.join(",")+")")
+      @game_announces = Announce.where("announcable_type = 'Game' AND announcable_id IN (" +game_follower_ids.join(",")+")")
+      @announces = Announce.where("announcable_type = 'Game' AND announcable_id IN (" + game_follower_ids.join(",")+") OR announcable_type = 'Team' AND announcable_id IN (" + team_follower_ids.join(",")+") OR announcable_type = 'Tournament' AND announcable_id IN (" + tournament_follower_ids.join(",") + ") OR announcable_type = 'League' AND announcable_id IN (" + league_follower_ids.join(",")+")").order('created_at DESC').page(params['page']).per(10)
 
       render 'welcome/index'
     end
