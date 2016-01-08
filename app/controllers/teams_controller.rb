@@ -27,14 +27,14 @@ class TeamsController < ApplicationController
       @player=Player.find(params[:player_id])
     elsif params[:league_id]
       @league=League.find(params[:league_id])
-      @leagues = League.where("user_id = #{current_user.id}")
+      @leagues = League.where("user_id = ?", current_user.id)
     end
   end
 
   def league_add
     league = League.find(params[:league_id])
     team = Team.find(params[:team_id])
-    if LeagueTy.where("team_id = #{team.id} AND league_id = #{league.id}").length == 0
+    if LeagueTy.where("team_id = ? AND league_id = ?", team.id, league.id).length == 0
       LeagueTy.create(team_id:team.original_id, league_id:league.id)
       flash[:success] = "#{team.name} was successfully added to #{league.name}"
       redirect_to league
@@ -71,7 +71,7 @@ class TeamsController < ApplicationController
       @league = League.find(params[:league_id])
       team_ids = [0]
       team_ids += @league.league_ties.teams.collect{|t| t.original_id}
-      @teams = Team.where("id = original_id AND original_id NOT IN (#{team_ids.join(",")})")
+      @teams = Team.where("id = original_id AND original_id NOT IN (?)", team_ids.join(","))
     else
       flash[:warning] = "You are not permitted to view that page."
       redirect_to root_path
@@ -111,7 +111,7 @@ class TeamsController < ApplicationController
     @team = Team.find(params[:id])
     original_coach = @team.user
     if username_lookup(params[:team][:username])
-      @team.user = User.where("username = '#{params[:team].delete(:username)}'").first
+      @team.user = User.find_by username: params[:team].delete(:username)
       if @team.update(team_params)
         new_coach = @team.user
         new_coach.follow(@team)
@@ -184,6 +184,6 @@ class TeamsController < ApplicationController
   end
 
   def username_lookup(username)
-    User.where("username = '#{username.strip}'").first
+    User.find_by username: username.strip
   end
 end

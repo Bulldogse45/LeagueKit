@@ -6,7 +6,7 @@ class MessagesController < ApplicationController
   end
 
   def sent
-    @messages = Message.where("from_user_id = #{current_user.id}").order("created_at DESC")
+    @messages = Message.where("from_user_id = ?", current_user.id).order("created_at DESC")
     render 'index'
   end
 
@@ -26,8 +26,8 @@ class MessagesController < ApplicationController
         @related_messages.prepend(Message.find(start_message.index_message_id))
         start_message = Message.find(start_message.index_message_id)
       end
-      if @message.from == current_user || @message.to_users_ids.include?(current_user.id.to_s)
-        MessageRead.where("message_id = #{@message.id} AND user_id = #{current_user.id}").first.update(read:true)
+      if @message.from != current_user || @message.to_users_ids.include?(current_user.id.to_s)
+        MessageRead.where("message_id = ? AND user_id = ?", @message.id, current_user.id).first.update(read:true)
       end
     else
       flash.now[:alert] = "This message is not yours to see!"
@@ -40,7 +40,7 @@ class MessagesController < ApplicationController
     if params['id'] && Message.find(params['id']).to_users_ids.split(",").include?(current_user.id.to_s)
       @reply_message = Message.find(params['id'])
       to_users = @reply_message.to_users_list.split(", ")
-      to_users -= [@reply_message.to_users.where("user_id = #{current_user.id}").first.user.username]
+      to_users -= [@reply_message.to_users.where("user_id = ?", current_user.id).first.user.username]
       to_users << User.find(@reply_message.from_user_id).username
       to_users = to_users.join(", ")
 
@@ -129,7 +129,7 @@ class MessagesController < ApplicationController
   end
 
   def username_lookup(username)
-    User.where("username = '#{username.strip}'").first
+    User.find_by username: username.strip
   end
 
 end
