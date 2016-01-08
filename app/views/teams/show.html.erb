@@ -24,7 +24,15 @@
           </div>
         </div>
       <% end %>
+      <div class="row player-row">
+        <div class="col-xs-6">
+          <% if @team.user == current_user %>
+            <%= link_to "Add Player", search_all_players_path, class:"" %>
+          <% end %>
+        </div>
+      </div>
     </ul>
+
     <% if @team.id == @team.original_id %>
       <h4>Tournaments:</h4>
       <ul>
