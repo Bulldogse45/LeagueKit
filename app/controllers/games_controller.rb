@@ -19,10 +19,7 @@ class GamesController < ApplicationController
   end
 
   def new
-    @referees = []
-    Tournament.find(params[:tournament_id]).referees.each do |r|
-      @referees << User.find(r.user_id)
-    end
+    @referees = Tournament.find(params[:tournament_id]).referees.collect{|r| r.user}
     @game = Game.new
     if params[:tournament_id]
       @game.tournament = Tournament.find(params[:tournament_id])
@@ -56,10 +53,7 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     @locations = @game.tournament.league.locations
     @teams = @game.tournament.teams
-    @referees = []
-    @game.tournament.referees.each do |r|
-      @referees << User.find(r.user_id)
-    end
+    @referees = @game.tournament.referees.collect{|r| r.user}
     if @game.update(game_params)
       flash.now[:notice] = "Your game was updated!"
       team_members_follow_game(@game)
@@ -79,10 +73,7 @@ class GamesController < ApplicationController
     else
       @locations = @game.tournament.league.locations
       @teams = @game.tournament.teams
-      @referees = []
-      @game.tournament.referees.each do |r|
-        @referees << User.find(r.user_id)
-      end
+      @referees = @game.tournament.referees.collect{|r| r.user}
       render 'new'
     end
   end

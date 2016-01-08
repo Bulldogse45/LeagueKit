@@ -11,15 +11,8 @@ class Tournament < ActiveRecord::Base
   belongs_to :user
   has_many :referees
   has_many :users, through: :referees
+  has_many :coaches, :through => :teams, :source => :user
   attachment :tournament_logo, content_type: ["image/jpeg", "image/png", "image/gif"]
-
-  def coaches
-    coaches = []
-    self.teams.each do |t|
-      coaches << t.user
-    end
-    coaches
-  end
 
 
   def collect_team_ids=(arr)

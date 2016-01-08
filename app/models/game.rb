@@ -28,11 +28,7 @@ class Game < ActiveRecord::Base
   end
 
   def list_referees
-    referees = []
-    self.referees.each do |r|
-      referees << User.find(r.user_id)
-    end
-    referees
+    self.referees.collect{|r| r.user}
   end
 
   def home_team

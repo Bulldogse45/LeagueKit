@@ -50,9 +50,10 @@ class MessagesController < ApplicationController
     if params['user_id']
       @message.to_users << ToUser.new(user_id:params['user_id'])
     end
-    if params['coaches']
-      params['coaches'].each do |c|
-        @message.to_users << ToUser.new(user_id:c)
+    if params['tournament_id']
+      @tournament = Tournament.find(params['tournament_id'])
+      @tournament.coaches.each do |c|
+        @message.to_users << ToUser.new(user_id:c.id)
       end
     end
     if params['referees']

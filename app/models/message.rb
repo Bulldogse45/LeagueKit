@@ -15,10 +15,7 @@ class Message < ActiveRecord::Base
   end
 
   def to_users_list
-    to_users = []
-    self.to_users.each do |u|
-      to_users << u.user.username
-    end
+    to_users = self.to_users.collect{|u| u.user.username}
     to_users.join(", ")
   end
 
