@@ -117,8 +117,14 @@ class TournamentsController < ApplicationController
 
   def team_members_follow_tournament(tournament_id, team_id)
     tournament = Tournament.find(tournament_id)
-    Team.find(team_id).players.each do |p|
+    team = Team.find(team_id)
+    team.players.each do |p|
       user = User.find(p.user_id)
+      user.follow(tournament)
+      UserMailer.new_follow(user, tournament).deliver
+    end
+    unless team.user.following?(tournament)
+      user = team.user
       user.follow(tournament)
       UserMailer.new_follow(user, tournament).deliver
     end

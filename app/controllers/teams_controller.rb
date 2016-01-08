@@ -90,7 +90,6 @@ class TeamsController < ApplicationController
     @team.name = Team.find(params['team']['original_id'].to_i).name
     @team.user = Team.find(params['team']['original_id'].to_i).user
     if @team.save
-      current_user.follow(@team)
       Team.find(@team.original_id).players.each do |p|
         @team.players << p
       end
@@ -138,7 +137,7 @@ class TeamsController < ApplicationController
     @team.user = current_user
     if @team.save
       @team.update(original_id:@team.id)
-      current_user.follow(@team)
+      @team.user.follow(@team)
       redirect_to @team
     else
       render 'new'
@@ -147,11 +146,16 @@ class TeamsController < ApplicationController
 
   def destroy
     @team = Team.find(params[:id])
-    @team.games.each do |g|
-      g.destroy
+    if current_user == @team.user || current_user == @team.tournament.user || @team.league.user
+      @team.games.each do |g|
+        g.destroy
+      end
+      @team.destroy
+      redirect_to :back
+    else
+      flash[:alert]="You are not authorized to remove this team."
+      redirect_to :back
     end
-    @team.destroy
-    redirect_to :back
   end
 
   private
@@ -162,7 +166,9 @@ class TeamsController < ApplicationController
 
   def team_members_follow_tournament(tournament_id, team_id)
     tournament = Tournament.find(tournament_id)
-    Team.find(team_id).players.each do |p|
+    team = Team.find(team_id)
+    team.user.follow(team)
+    team.players.each do |p|
       user = User.find(p.user_id)
       user.follow(tournament)
       UserMailer.new_follow(user, tournament).deliver

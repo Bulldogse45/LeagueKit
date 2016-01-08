@@ -10,7 +10,9 @@
             <%= link_to "#{t.name}", t %>
           </div>
           <div class="col-md-2 col-xs-4 teams-row">
-            <%= link_to "Remove", t, method:'delete', class:"btn-sm btn-danger" %>
+            <% if @tournament.user == current_user %>
+              <%= link_to "Remove", t, method:'delete', class:"btn-sm btn-danger" %>
+            <% end %>
           </div>
         </div>
       <% end %>
