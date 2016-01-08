@@ -7,15 +7,15 @@ class GamesController < ApplicationController
     all_ids = []
     current_user.players.each do |p|
       p.teams.each do |t|
-        all_ids << t.id.to_s
+        all_ids << t.id
       end
     end
     current_user.teams.each do |t|
-      all_ids << t.id.to_s
+      all_ids << t.id
     end
-    team_ids = "(" + all_ids.join(",") +")"
+
     time_range = (Time.now.midnight - 1.day)..Time.now.midnight
-    @games = Game.where("begin_time > '#{Time.now - 1.day}' AND (home_team_id IN #{team_ids} OR away_team_id IN #{team_ids})").order("begin_time ASC")
+    @games = Game.where("begin_time > ? AND (home_team_id IN (?) OR away_team_id IN (?) )", Time.now - 1.day, all_ids, all_ids).order("begin_time ASC")
   end
 
   def new
@@ -39,10 +39,7 @@ class GamesController < ApplicationController
 
   def edit
     @game = Game.find(params[:id])
-    @referees = []
-    @game.tournament.referees.each do |r|
-      @referees << User.find(r.user_id)
-    end
+    @referees =  @game.tournament.referees.collect{|r| r.user}
     @locations = @game.tournament.league.locations
     @teams = @game.tournament.teams
 

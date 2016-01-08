@@ -3,7 +3,7 @@ class LeaguesController < ApplicationController
   before_action :require_user
 
   def index
-    @leagues = League.where("user_id = " + current_user.id.to_s)
+    @leagues = League.where("user_id = ?", current_user.id.to_s)
   end
 
   def new

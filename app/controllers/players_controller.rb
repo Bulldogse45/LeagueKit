@@ -3,7 +3,7 @@ class PlayersController < ApplicationController
   before_action :require_user
 
   def index
-    @players = Player.where("user_id = " + current_user.id.to_s)
+    @players = Player.where("user_id = ?", current_user.id.to_s)
   end
 
   def new
@@ -13,13 +13,13 @@ class PlayersController < ApplicationController
   def all
     @player_participant = PlayerParticipant.new
     @players = Player.search(params[:search])
-    @teams = Team.where("user_id = #{current_user.id.to_s} AND id = original_id")
+    @teams = Team.where("user_id = ? AND id = original_id", current_user.id)
   end
 
   def add_to_team
     @player_participant = PlayerParticipant.new
     @team = Team.find(params['team_id'])
-    @teams = Team.where("user_id = #{current_user.id.to_s} AND id = original_id")
+    @teams = Team.where("user_id = ? AND id = original_id", current_user.id)
     @players = [Player.find(params['player_id'])]
     render 'all'
   end
@@ -35,8 +35,8 @@ class PlayersController < ApplicationController
 
   def show
     @player = Player.find(params['id'])
-    @teams = Team.joins(:player_participants).where("team_id = original_id AND player_id = #{@player.id}")
-    @tournament_teams = Team.joins(:player_participants).where("team_id != original_id AND player_id = #{@player.id}")
+    @teams = Team.joins(:player_participants).where("team_id = original_id AND player_id = ?", @player.id)
+    @tournament_teams = Team.joins(:player_participants).where("team_id != original_id AND player_id = ?", @player.id)
   end
 
   def create
@@ -52,7 +52,7 @@ class PlayersController < ApplicationController
   def update
     @player = Player.find(params[:id])
     if username_lookup(params[:player][:username])
-      @player.user = User.where("username = '#{params[:player].delete(:username)}'").first
+      @player.user = User.where("username = ?", params[:player].delete(:username)).first
       if @player.update(player_params)
         flash.now[:notice] = "Your information was updated!"
         redirect_to @player
@@ -85,7 +85,7 @@ class PlayersController < ApplicationController
   end
 
   def username_lookup(username)
-    User.where("username = '#{username.strip}'").first
+    User.find_by username: username.strip
   end
 
 end

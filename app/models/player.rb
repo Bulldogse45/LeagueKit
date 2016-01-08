@@ -12,11 +12,11 @@ class Player < ActiveRecord::Base
     if self.suffix != nil && self.suffix != ""
       suffix = ", #{self.suffix}"
     end
-    return "#{self.first_name} #{self.last_name}#{suffix}"
+    "#{self.first_name} #{self.last_name}#{suffix}"
   end
 
   def username_lookup(username)
-    User.where("username = '#{username.strip}'").first
+    User.find_by username: username
   end
 
   def games
