@@ -8,8 +8,8 @@ class User < ActiveRecord::Base
   end
 
   validates_presence_of :first_name, :last_name, :username
-  validates_format_of :username, :with => /\A[a-zA-Z0-9]+\Z/, message: "Usernames may only consist of letters and numbers without spaces." 
-  validates :username, uniqueness: true
+  validates_format_of :username, :with => /\A[a-zA-Z0-9]+\Z/, message: "Usernames may only consist of letters and numbers without spaces."
+  validates_uniqueness_of :username, :case_sensitive => false
 
   has_many :leagues
   has_many :message_reads
