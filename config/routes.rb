@@ -65,9 +65,13 @@ Rails.application.routes.draw do
 
   get 'searchteams' => 'teams#search', as: :search_all_teams
 
+  get 'searchtournaments' => 'tournaments#search', as: :search_all_tournaments
+
   get 'addleagueteams' => 'teams#league_add', as: :league_add
 
   get 'searchresultsteams' => 'teams#search_results', as: :team_search_results
+
+  get 'searchresultstournaments' => 'tournaments#search_results', as: :tournament_search_results
 
   post 'team/clone' => 'teams#clone', as: :clone_team
 

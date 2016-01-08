@@ -40,6 +40,14 @@ class Tournament < ActiveRecord::Base
 
   end
 
+  def self.search(search)
+    if search
+      Tournament.where('name LIKE ?', "%#{search}%")
+    else
+      Tournament.where(:all)
+    end
+  end
+
   private
 
   def end_after_begin

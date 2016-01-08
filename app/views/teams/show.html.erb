@@ -13,7 +13,17 @@
         <% else %>
           <%= image_tag("team-default.png", class:"img-responsive pull-left thumbnail-logo") %>
         <% end %>
-        <%= "#{@team.name}" %> <small> <%= link_to "#{@team.user.last_name}, #{@team.user.first_name}" , @team.user %></small> </h2>
+        <%= "#{@team.name}" %>
+        <small>
+          <small>
+            <% if @team.user == current_user %>
+              <%= link_to "Edit Team Settings", edit_tournament_path(@team) %>
+            <% else %>
+              <%= link_to "#{@team.user.full_name}" , @team.user %>
+            <% end %>
+          </small>
+        </small>
+      </h2>
       <div class="table-responsive">
           <table class="table">
               <tbody>
@@ -28,7 +38,11 @@
   </div>
   <div class="row">
     <div class="col-lg-6">
-        <h4>Players</h4>
+        <h4>Players
+          <% if current_user == @team.user %>
+            <%= link_to "Add Player", search_all_players_path, class:"btn-sm btn-primary" %>
+          <% end %>
+        </h4>
         <div class="table-responsive">
             <table class="table table-bordered table-hover player-table">
                 <thead>
@@ -96,7 +110,10 @@
   </div>
   <div class="row">
     <div class="col-lg-6">
-        <h4>Tournaments</h4>
+        <h4>Tournaments
+          <% if current_user == @team.user %>
+            <%= link_to "Search Tournaments", search_all_tournaments_path, class:"btn-sm btn-primary" %>
+          <% end %></h4>
         <div class="table-responsive">
             <table class="table table-bordered table-hover tournament-table">
                 <thead>
@@ -132,10 +149,4 @@
 </div>
 <% if current_user.following?(@team) %>
   <%= render "announces/announces" %>
-  <%= link_to "Announcements", team_announces_path(@team), class:"btn btn-primary" %>
-<% end %>
-
-<% if current_user == @team.user %>
-  <%= link_to "Add Player", search_all_players_path, class:"btn btn-primary" %>
-  <%= link_to "Update Team", edit_team_path(@team), class:"btn btn-primary" %>
 <% end %>

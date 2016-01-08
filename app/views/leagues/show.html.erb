@@ -8,13 +8,13 @@
           <%= image_tag("tournament-default.png", class:"img-responsive pull-left thumbnail-logo") %>
         <% end %>
         <%= @league.name %>
-          <small>
+          <small><small>
             <% if @league.user == current_user %>
-              <%= link_to "Edit League Settings", edit_tournament_path(@league) %>
+              <%= link_to "Edit League Settings", edit_league_path(@league) %>
             <% else %>
               <%= link_to "#{@league.user.full_name}" , @league.user %>
             <% end %>
-          </small>
+          </small></small>
         </h2>
       <div class="table-responsive">
           <table class="table">
