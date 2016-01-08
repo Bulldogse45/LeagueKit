@@ -115,15 +115,15 @@ class GamesController < ApplicationController
       game.away_team.user.follow(game)
       UserMailer.new_follow(game.away_team.user, game).deliver
     end
-    Team.find(game.home_team_id).players.each do |p|
-      user = User.find(p.user_id)
+    game.home_team.players.each do |p|
+      user = p.user
       unless user.following?(game)
         user.follow(game)
         UserMailer.new_follow(user, game).deliver
       end
     end
-    Team.find(game.away_team_id).players.each do |p|
-      user = User.find(p.user_id)
+    game.away_team.players.each do |p|
+      user = p.user
       unless user.following?(game)
         user.follow(game)
         UserMailer.new_follow(user, game).deliver
