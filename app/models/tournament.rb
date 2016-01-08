@@ -47,15 +47,6 @@ class Tournament < ActiveRecord::Base
 
   private
 
-  def team_members_follow_tournament(tournament_id, team_id)
-    tournament = Tournament.find(tournament_id)
-    Team.find(team_id).players.each do |p|
-      user = User.find(p.user_id)
-      user.follow(tournament)
-      UserMailer.new_follow(user, tournament).deliver
-    end
-  end
-
   def end_after_begin
     if self.end_time < self.start_time
       errors.add(:end_time, "A tournament cannot end before it begins.")
