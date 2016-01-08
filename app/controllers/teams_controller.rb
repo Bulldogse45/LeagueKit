@@ -5,7 +5,7 @@ class TeamsController < ApplicationController
 
   def index
     @tournament_teams = []
-    Team.joins(:tournament).where("teams.id != original_id AND tournaments.start_time > '#{(Time.now-72.hours).to_s}'").order("tournaments.start_time ASC").each do |t|
+    Team.joins(:tournament).where("teams.id != original_id AND tournaments.start_time > ?", Time.now-72.hours).order("tournaments.start_time ASC").each do |t|
       if current_user.following?(t)
         @tournament_teams << t
       end
@@ -16,7 +16,6 @@ class TeamsController < ApplicationController
         @teams << t
       end
     end
-
   end
 
   def new

@@ -26,7 +26,7 @@ class MessagesController < ApplicationController
         @related_messages.prepend(Message.find(start_message.index_message_id))
         start_message = Message.find(start_message.index_message_id)
       end
-      if @message.from != current_user || @message.to_users_ids.include?(current_user.id.to_s)
+      if @message.from == current_user || @message.to_users_ids.include?(current_user.id.to_s)
         MessageRead.where("message_id = #{@message.id} AND user_id = #{current_user.id}").first.update(read:true)
       end
     else
@@ -78,7 +78,7 @@ class MessagesController < ApplicationController
       end
       @message.from_user_id = current_user.id
       if @message.save
-        MessageRead.create(user_id:current_user.id,message_id:@message.id)
+        MessageRead.create(user_id:current_user.id,message_id:@message.id, read:true)
         @message.to_users_ids.split(",").each do |u|
           @player_participant = PlayerParticipant.new
           unless @message.from.id.to_s == u
