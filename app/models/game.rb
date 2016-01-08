@@ -10,11 +10,11 @@ class Game < ActiveRecord::Base
   before_save :check_all
 
   def name
-    return "#{self.tournament.name} - Game #{self.tournament.games.index(self) + 1}"
+    "#{self.tournament.name} - Game #{self.tournament.games.index(self) + 1}"
   end
 
   def user
-    return self.tournament.user
+    self.tournament.user
   end
 
   def list_referees=(referee_ids)
