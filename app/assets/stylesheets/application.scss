@@ -280,3 +280,38 @@ footer a:hover{
 .all-announcements-link{
   margin-bottom: 15px;
 }
+.thumbnail-logo{
+  max-height: 50px;
+  max-width: 50px;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+.team-table thead{
+
+  background-color: #006dcc;
+  color: white;
+}
+
+.tournament-table thead{
+
+  background-color: #5cb85c;
+  color: white;
+}
+
+.game-table thead{
+
+  background-color: #d9534f;
+  color: white;
+}
+.player-table thead{
+
+  background-color: #000;
+  color: white;
+}
+
+.location-table thead{
+
+  background-color: #000;
+  color: white;
+}
