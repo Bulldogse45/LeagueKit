@@ -1,3 +1,0 @@
-class AnnouncementViewedsController < ApplicationController
-
-end
