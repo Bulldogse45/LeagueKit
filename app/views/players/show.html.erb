@@ -1,7 +1,15 @@
 
 <div class="container-fluid  body-container">
   <div class="col-lg-12">
-      <h2><%= @player.full_name %> </h2>
+      <h2><%= @player.full_name %>
+        <small>
+          <small>
+            <% if @player.user == current_user %>
+              <%= link_to "Edit Player", edit_player_path(@player) %>
+            <% end %>
+          </small>
+        </small>
+       </h2>
       <div class="table-responsive">
           <table class="table">
               <tbody>

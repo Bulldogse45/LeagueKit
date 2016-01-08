@@ -95,6 +95,19 @@ class TournamentsController < ApplicationController
     end
   end
 
+  def search
+    if params[:team_id]
+      @team=Player.find(params[:team])
+    elsif params[:league_id]
+      @league=League.find(params[:league_id])
+      @leagues = League.where("user_id = ?", current_user.id)
+    end
+  end
+
+  def search_results
+    @tournaments = Tournament.search(params[:search])
+  end
+
   private
 
   def tournament_params
