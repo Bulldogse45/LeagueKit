@@ -56,7 +56,7 @@ class PlayerParticipantsController < ApplicationController
   end
 
   def player_follows_team(team_id, player_id)
-    teams = Team.where("original_id = #{team_id}")
+    teams = Team.where("original_id = ?", team_id)
     user = User.find(Player.find(player_id).user_id)
     teams.each do |t|
       PlayerParticipant.create(team_id:t.id, player_id:player_id)

@@ -4,12 +4,12 @@ class LocationsController < ApplicationController
   before_action :require_user
 
   def index
-    @locations = Location.where("league_id = " + params['id'])
+    @locations = Location.where("league_id = ?", params['id'])
   end
 
   def new
     @location = Location.new
-    @leagues = League.where("user_id = " + current_user.id.to_s)
+    @leagues = League.where("user_id = ?", current_user.id.to_s)
   end
 
   def show
@@ -30,7 +30,7 @@ class LocationsController < ApplicationController
   end
 
   def edit
-    @leagues = League.where("user_id = " + current_user.id.to_s)
+    @leagues = League.where("user_id = ?", current_user.id.to_s)
     @location = Location.find(params['id'])
     render 'new'
   end

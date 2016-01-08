@@ -20,11 +20,11 @@ class WelcomeController < ApplicationController
           league_follower_ids  <<  f.id.to_s
         end
       end
-      @team_announces = Announce.joins(:announcement_viewed).where("viewed = 'false' AND announcable_type = 'Team' AND announcable_id IN (" + team_follower_ids.join(",")+")")
-      @tournament_announces = Announce.joins(:announcement_viewed).where("viewed = 'false' AND announcable_type = 'Tournament' AND announcable_id IN (" + tournament_follower_ids.join(",")+")")
-      @league_announces = Announce.joins(:announcement_viewed).where("viewed = 'false' AND announcable_type = 'League' AND announcable_id IN (" + league_follower_ids.join(",")+")")
-      @game_announces = Announce.joins(:announcement_viewed).where("viewed = 'false' AND announcable_type = 'Game' AND announcable_id IN (" +game_follower_ids.join(",")+")")
-      @announces = Announce.joins(:announcement_viewed).where("viewed = 'false' AND announcable_type = 'Game' AND announcable_id IN (" + game_follower_ids.join(",")+") OR viewed = 'false' AND announcable_type = 'Team' AND announcable_id IN (" + team_follower_ids.join(",")+") OR viewed = 'false' AND announcable_type = 'Tournament' AND announcable_id IN (" + tournament_follower_ids.join(",") + ") OR viewed = 'false' AND announcable_type = 'League' AND announcable_id IN (" + league_follower_ids.join(",")+")").order('created_at DESC').page(params['page']).per(10)
+      @team_announces = Announce.joins(:announcement_viewed).where("viewed = 'false' AND announcable_type = 'Team' AND announcable_id IN (?)", team_follower_ids)
+      @tournament_announces = Announce.joins(:announcement_viewed).where("viewed = 'false' AND announcable_type = 'Tournament' AND announcable_id IN (?)", tournament_follower_ids)
+      @league_announces = Announce.joins(:announcement_viewed).where("viewed = 'false' AND announcable_type = 'League' AND announcable_id IN (?)", league_follower_ids)
+      @game_announces = Announce.joins(:announcement_viewed).where("viewed = 'false' AND announcable_type = 'Game' AND announcable_id IN (?)", game_follower_ids)
+      @announces = Announce.joins(:announcement_viewed).where("viewed = 'false' AND announcable_type = 'Game' AND announcable_id IN (?) OR viewed = 'false' AND announcable_type = 'Team' AND announcable_id IN (?) OR viewed = 'false' AND announcable_type = 'Tournament' AND announcable_id IN (?) OR viewed = 'false' AND announcable_type = 'League' AND announcable_id IN (?)", game_follower_ids, team_follower_ids, tournament_follower_ids, league_follower_ids).order('created_at DESC').page(params['page']).per(10)
       respond_to do |format|
         format.json{
           render json: @announces, serializer: AnnounceSerializer
@@ -45,16 +45,15 @@ class WelcomeController < ApplicationController
       if current_user_session
         assign_teams_tournaments_leagues
       end
-
     end
   end
   private
 
   def assign_teams_tournaments_leagues
-    @my_teams = Team.where("id = original_id AND user_id = #{current_user.id.to_s}")
-    @my_tournaments = Tournament.where("user_id = "+ current_user.id.to_s)
-    @my_leagues = League.where("user_id = #{current_user.id.to_s}")
-    @my_players = current_user.players
+    @my_teams = Team.where("id = original_id AND user_id = ?", current_user.id.to_s)
+    @my_tournaments = Tournament.where("user_id = ?", current_user.id.to_s)
+    @my_leagues = League.where("user_id = ?", current_user.id.to_s)
+    @my_players = Player.where("user_id = ?", current_user.id.to_s)
   end
 
 end
