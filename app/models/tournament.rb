@@ -25,7 +25,9 @@ class Tournament < ActiveRecord::Base
         team.name = team2.name
         team.user = team2.user
         if team.save!
+          team.user.follow(team)
           team2.players.each do |p|
+            p.user.follow(team)
             team.players << p
           end
         end
