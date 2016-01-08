@@ -1,62 +1,157 @@
 
 <div class="container-fluid  body-container">
-  <h1><%= "#{@league.name}" %> </h1>
-  <h3>Tournaments</h3>
-  <ul>
-    <% @league.tournaments.each do |t| %>
-      <li><%= link_to "#{t.name}", t %></li>
-    <% end %>
-  </ul>
-  <h3>Teams</h3>
-  <% if @league.teams.length > 0 %>
-    <div>
-      <% @league.league_ties.each do |t| %>
-        <div class="row margin-bottom-15">
-          <div class="col-xs-4">
-            <%= link_to "#{t.team.name}", t.team %>
-          </div>
-          <div class="col-xs-4">
-            <%= link_to "#{t.team.user.full_name}", t.team.user %>
-          </div>
-          <div class="col-xs-4">
-            <% if current_user == @league.user %>
-              <%= link_to "Remove Team from League", league_ty_path(t), method:'delete', class:"btn-sm btn-danger" %>
-            <% end %>  
-          </div>
-        </div>
-      <% end %>
-    </div>
-  <% else %>
-    <p>  Adding Teams makes them available to be added to your tournaments. </p>
-  <% end %>
+  <div class="col-lg-12">
+      <h2>
+        <% if @league.league_logo %>
+          <%= image_tag attachment_url(@league, :league_logo), class:"img-responsive pull-left thumbnail-logo" %>
+        <% else %>
+          <%= image_tag("tournament-default.png", class:"img-responsive pull-left thumbnail-logo") %>
+        <% end %>
+        <%= @league.name %>
+          <small>
+            <% if @league.user == current_user %>
+              <%= link_to "Edit League Settings", edit_tournament_path(@league) %>
+            <% else %>
+              <%= link_to "#{@league.user.full_name}" , @league.user %>
+            <% end %>
+          </small>
+        </h2>
+      <div class="table-responsive">
+          <table class="table">
+              <tbody>
+                  <tr>
+                    <td>
 
-  <h3>Locations</h3>
-  <% if @league.locations.length > 0 %>
-    <ul>
-      <% @league.locations.each do |t| %>
-      <div class="row location-row">
-        <div class="col-sm-4 col-xs-12">
-          <%= link_to "#{t.name}", t %>
-        </div>
-          <% if current_user == @league.user %>
-            <%= link_to "Edit", edit_location_path(t), class:"btn-sm btn-warning"  %>
-            <%= link_to "Remove", location_path(t), method:'delete', class:"btn-sm btn-danger" %>
-          <% end %>
+                    </td>
+                  </tr>
+              </tbody>
+          </table>
       </div>
-      <% end %>
-    </ul>
-  <% else %>
-    <p>  Adding locations allows the App to check if a court is being used when you create a game.  It also creates a link to the site in Google maps for users.  Alhthough not required, it is highly recommended to create locations!</p>
-  <% end %>
-  <%= render 'announces/announces' %>
-  <div class=" row text-center">
-    <%= link_to "Add Tournament", new_tournament_path, class:"btn btn-primary" %>
-    <%= link_to "Announcements", league_announces_path(@league), class:"btn btn-primary" %>
-    <% if current_user == @league.user %>
-      <%= link_to "Update League", edit_league_path(@league), class:"btn btn-primary" %>
-      <%= link_to "Add Locations", new_location_path, class:"btn btn-primary" %>
-      <%= link_to "Create New Team", new_team_path, class:"btn btn-primary" %>
-      <%= link_to "Add Existing Team", search_all_teams_path(league_id:@league.id), class:"btn btn-primary" %>
-    <% end %>
   </div>
+  <div class="row">
+    <div class="col-lg-6">
+        <h4>
+          Tournaments
+          <% if @league.user == current_user %>
+            <%= link_to "Add Tournament", new_tournament_path, class:"btn-sm btn-primary" %>
+          <% end %>
+        </h4>
+
+          <div class="table-responsive">
+              <table class="table table-bordered table-hover tournament-table">
+                  <thead>
+                      <tr>
+                          <th>Tournament</th>
+                          <th>Director</th>
+                          <th>Start Time</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <% @league.tournaments.each do |t| %>
+                      <tr>
+                          <td>
+                            <%= link_to t do %>
+                              <% if t.tournament_logo %>
+                                <%= image_tag attachment_url(t, :tournament_logo), class:"img-responsive thumbnail-logo pull-left" %> <%= t.name %>
+                              <% else %>
+                                <%= t.name %>
+                              <% end %>
+                            <% end %>
+                          </td>
+                          <td><%= link_to t.user.full_name, t.user %></td>
+                          <td><%= t.start_time.strftime('%a %b %e, %l:%M %P ') %></td>
+                      </tr>
+                      <% end %>
+                  </tbody>
+              </table>
+          </div>
+
+    </div>
+    <div class="col-lg-6">
+        <h4>
+          Teams
+          <% if @league.user == current_user %>
+            <%= link_to "Add Existing Team", search_all_teams_path(league_id:@league.id), class:"btn-sm btn-primary" %>
+            <%= link_to "Create New Team", new_team_path, class:"btn-sm btn-primary" %>
+          <% end %>
+        </h4>
+        <% if @league.teams.length > 0 %>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover team-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Coach</th>
+                        <% if @league.user == current_user %>
+                          <th></th>
+                        <% end %>
+                    </tr>
+                </thead>
+                <tbody>
+                  <% @league.teams.each do |t| %>
+                    <tr>
+                        <td>
+                          <%= link_to t do %>
+                            <% if t.team_logo %>
+                              <%= image_tag attachment_url(t, :team_logo), class:"img-responsive thumbnail-logo pull-left" %> <%= t.name %>
+                            <% else %>
+                              <%= t.name %>
+                            <% end %>
+                          <% end %>
+                        </td>
+                        <td><%= link_to t.user.full_name, t.user %></td>
+                        <% if @league.user == current_user %>
+                          <td>
+                              <%= link_to "Remove", t.league_ties.select{|ty| ty.league_id == @league.id}.first, method:'delete' %>
+                          </td>
+                        <% end %>
+                    </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+        <% else %>
+          <p>  Adding Teams makes them available to be added to your tournaments. </p>
+        <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <h4>
+        Locations
+        <% if @league.user == current_user %>
+          <%= link_to "Add Locations", new_location_path, class:"btn-sm btn-primary" %>
+        <% end %>
+      </h4>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover location-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <% if @league.user == current_user %>
+                          <th></th>
+                        <% end %>
+                    </tr>
+                </thead>
+                <tbody>
+                  <% @league.locations.each do |l| %>
+                    <tr>
+                        <td><%= link_to l.name, l  %></td>
+                        <td><%= l.address_line_1 %></td>
+                        <td><%= l.city  %></td>
+                        <% if @league.user == current_user %>
+                          <td><%= link_to "Edit Location", edit_location_path(l) %></td>
+                        <% end %>
+                    </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+      </div>
+  </div>
+
+  <%= render 'announces/announces' %>
+
 </div>

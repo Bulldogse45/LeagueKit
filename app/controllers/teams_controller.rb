@@ -82,7 +82,9 @@ class TeamsController < ApplicationController
 
   def show
     @team = Team.find(params['id'])
+    @games = @team.games.sort_by{|g| g.begin_time}.take(5)
     @announces = @team.announces.page(params['page']).per(5)
+    @tournament_teams = Team.where("id != original_id AND original_id  = ?", @team.original_id)
   end
 
   def clone
