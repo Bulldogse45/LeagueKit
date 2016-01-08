@@ -107,16 +107,24 @@ class GamesController < ApplicationController
   end
 
   def team_members_follow_game(game)
+    unless game.home_team.user.following?(game)
+      game.home_team.user.follow(game)
+      UserMailer.new_follow(game.home_team.user, game).deliver
+    end
+    unless game.away_team.user.following?(game)
+      game.away_team.user.follow(game)
+      UserMailer.new_follow(game.away_team.user, game).deliver
+    end
     Team.find(game.home_team_id).players.each do |p|
       user = User.find(p.user_id)
-      if !user.following?(game)
+      unless user.following?(game)
         user.follow(game)
         UserMailer.new_follow(user, game).deliver
       end
     end
     Team.find(game.away_team_id).players.each do |p|
       user = User.find(p.user_id)
-      if !user.following?(game)
+      unless user.following?(game)
         user.follow(game)
         UserMailer.new_follow(user, game).deliver
       end
