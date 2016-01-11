@@ -51,7 +51,7 @@
                         <td>
                           <%= link_to g do %>
                             <% if g.tournament.tournament_logo %>
-                              <%= image_tag attachment_url(t.tournament, :tournament_logo), class:"img-responsive thumbnail-logo pull-left" %> <%= t.name %>
+                              <%= image_tag attachment_url(g.tournament, :tournament_logo), class:"img-responsive thumbnail-logo pull-left" %> <%= g.name %>
                             <% else %>
                               <%= g.name %>
                             <% end %>
