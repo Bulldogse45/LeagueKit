@@ -32,6 +32,7 @@ class GamesController < ApplicationController
   end
 
   def show
+    load_announcable
     @game = Game.find(params['id'])
     @home_team = Team.find(@game.home_team_id)
     @away_team = Team.find(@game.away_team_id)
