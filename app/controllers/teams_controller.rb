@@ -4,6 +4,7 @@ class TeamsController < ApplicationController
   before_action :check_user_is_tournament_owner, only: [:clone]
 
   def index
+
     @tournament_teams = []
     Team.joins(:tournament).where("teams.id != original_id AND tournaments.start_time > ?", Time.now-72.hours).order("tournaments.start_time ASC").each do |t|
       if current_user.following?(t)
@@ -81,6 +82,7 @@ class TeamsController < ApplicationController
   end
 
   def show
+    load_announcable
     @team = Team.find(params['id'])
     @games = @team.games.sort_by{|g| g.begin_time}.take(5)
     @announces = @team.announces.page(params['page']).per(5)

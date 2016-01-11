@@ -41,6 +41,7 @@ class TournamentsController < ApplicationController
   end
 
   def show
+    load_announcable
     @tournament = Tournament.find(params['id'])
     @announces = @tournament.announces.page(params['page']).per(5)
   end

@@ -43,7 +43,8 @@
                       <tr>
                           <th>Tournament</th>
                           <th>Director</th>
-                          <th>Start Time</th>
+                          <th>Begin</th>
+                          <th>End</th>
                       </tr>
                   </thead>
                   <tbody>
@@ -59,7 +60,8 @@
                             <% end %>
                           </td>
                           <td><%= link_to t.user.full_name, t.user %></td>
-                          <td><%= t.start_time.strftime('%a %b %e, %l:%M %P ') %></td>
+                          <td><%= t.start_time.strftime('%b %e, %l:%M %P ') %></td>
+                          <td><%= t.end_time.strftime('%b %e, %l:%M %P ') %></td>
                       </tr>
                       <% end %>
                   </tbody>

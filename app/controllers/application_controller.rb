@@ -40,6 +40,11 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def load_announcable
+      resource, id = request.path.split('/')[1,2]
+      @announcable = resource.singularize.classify.constantize.find(id)
+    end
+
     def store_location
       session[:return_to] = request.request_uri
     end

@@ -11,6 +11,7 @@ class LeaguesController < ApplicationController
   end
 
   def show
+    load_announcable
     @league = League.find(params['id'])
     @announces = @league.announces.page(params['page']).per(5)
   end
