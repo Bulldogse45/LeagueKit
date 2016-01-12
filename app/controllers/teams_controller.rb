@@ -37,6 +37,7 @@ class TeamsController < ApplicationController
     team = Team.find(params[:team_id])
     if LeagueTy.where("team_id = ? AND league_id = ?", team.id, league.id).length == 0
       LeagueTy.create(team_id:team.original_id, league_id:league.id)
+      team.user.follow(league)
       flash[:success] = "#{team.name} was successfully added to #{league.name}"
       redirect_to league
     else
@@ -175,6 +176,7 @@ class TeamsController < ApplicationController
     team.players.each do |p|
       user = User.find(p.user_id)
       user.follow(tournament)
+      user.follow(tournament.league)
       UserMailer.new_follow(user, tournament).deliver
     end
   end

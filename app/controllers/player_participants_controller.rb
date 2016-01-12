@@ -73,6 +73,7 @@ class PlayerParticipantsController < ApplicationController
     tournament = Tournament.find(tournament_id)
     user = User.find(Player.find(player_id).user_id)
     user.follow(tournament)
+    user.follow(tournament.league)
     UserMailer.new_follow(user, tournament).deliver
   end
 
