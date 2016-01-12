@@ -120,7 +120,7 @@
                 <% @tournament_teams.each do |t| %>
                   <tr>
                       <td>
-                        <%= link_to t do %>
+                        <%= link_to t.tournament do %>
                           <% if t.tournament.tournament_logo %>
                             <%= image_tag attachment_url(t.tournament, :tournament_logo), class:"img-responsive thumbnail-logo pull-left" %> <%= t.name %>
                           <% else %>
