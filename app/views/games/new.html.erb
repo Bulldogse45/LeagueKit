@@ -9,7 +9,7 @@
       <!-- <#%= f.collection_select(:list_referees ,@referees, :id, :full_name, {:include_blank =>  "N/A", :selected => @game.list_referees.collect{|r| r.id}}, {:multiple => true}) %> -->
       <%= f.hidden_field :tournament_id, :value => @game.tournament_id %>
 
-      <%= f.submit %>
+      <%= f.submit "Save" %>
     <% end %>
   </div>
 </div>

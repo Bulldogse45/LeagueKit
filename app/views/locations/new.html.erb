@@ -10,8 +10,8 @@
       <%= f.collection_select(:league_id ,@leagues, :id, :name) %>
       <%= f.text_area :notes, label:"Location Notes" %>
 
-      <%= f.submit "Create" %>
-      <%= f.submit "Create and Add Another", create_another:true %>
+      <%= f.submit "Save" %>
+      <%= f.submit "Save and Add Another", create_another:true %>
     <% end %>
 
 </div>
