@@ -59,7 +59,7 @@
                     <tr>
                         <td><%= link_to p.player.full_name, p.player  %></td>
                         <td><%= link_to p.player.user.full_name, p.player.user %></td>
-                        <% if @team.user == current_user || p.user == current_user %>
+                        <% if @team.user == current_user || p.player.user == current_user %>
                           <td><%= link_to "Remove From Team",  leave_team_path(id:p.id) %></td>
                         <% end %>
                     </tr>
