@@ -1,7 +1,7 @@
 <div class="container-fluid  body-container">
   <h1 class="text-center"><%= @location.name %> </h1>
   <div class="col-xs-12 col-md-4">
-    <%= link_to image_tag("https://maps.googleapis.com/maps/api/staticmap?center=#{@location.google_address}&zoom=14&size=300x300&markers=#{@location.google_address}&sensor=false"), "https://www.google.com/maps/place/#{@location.google_address}" %>
+    <%= link_to image_tag("https://maps.googleapis.com/maps/api/staticmap?center=#{@location.google_address}&zoom=14&size=300x300&markers=#{@location.google_address}&sensor=false", class:"img-responsive"), "https://www.google.com/maps/place/#{@location.google_address}" %>
   </div>
   <div class="col-xs-12 col-md-8">
     <h3>Address</h3>
