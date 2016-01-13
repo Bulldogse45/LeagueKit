@@ -1,6 +1,8 @@
 class PlayerParticipantsController < ApplicationController
   before_action :check_user_is_owner, only: [:edit, :update]
   before_action :check_user_is_owner_or_coach, only: [:leave_team]
+  before_action :check_team_selected, only: [:create]
+  before_action :check_user_is_coach, only: [:create]
   before_action :require_user
 
   def create
@@ -88,6 +90,20 @@ class PlayerParticipantsController < ApplicationController
     unless current_user == PlayerParticipant.find(params['id']).player.user || current_user == PlayerParticipant.find(params['id']).team.user
       flash.now[:alert]= "You must be the player's guardian or coach to access this page!"
       redirect_to root_path
+    end
+  end
+
+  def check_team_selected
+    if params[:player_participant][:team_id] == ""
+      flash.now[:alert]= "Please select a team you would like the player added to."
+      redirect_to :back
+    end
+  end
+
+  def check_user_is_coach
+    if Team.find(params[:player_participant][:team_id]).user != current_user
+      flash.now[:alert]= "Sorry you must be the coach of that team to add a player."
+      redirect_to :back
     end
   end
 

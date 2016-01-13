@@ -17,7 +17,7 @@
         <small>
           <small>
             <% if @team.user == current_user %>
-              <%= link_to "Edit Team Settings", edit_tournament_path(@team) %>
+              <%= link_to "Edit Team Settings", edit_team_path(@team) %>
             <% else %>
               <%= link_to "#{@team.user.full_name}" , @team.user %>
             <% end %>
@@ -49,6 +49,9 @@
                     <tr>
                         <th>Player</th>
                         <th>Guardian</th>
+                        <% if @team.user == current_user %>
+                          <th></th>
+                        <% end %>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,6 +59,9 @@
                     <tr>
                         <td><%= link_to p.player.full_name, p.player  %></td>
                         <td><%= link_to p.player.user.full_name, p.player.user %></td>
+                        <% if @team.user == current_user || p.user == current_user %>
+                          <td><%= link_to "Remove From Team",  leave_team_path(id:p.id) %></td>
+                        <% end %>
                     </tr>
                     <% end %>
                 </tbody>

@@ -1,5 +1,11 @@
 <div class="container-fluid  body-container">
-  <h1 class="text-center">New Team</h1>
+
+  <% if @team.new_record? %>
+    <h1 class="text-center">New Team</h1>
+  <% else %>
+    <h1 class="text-center">Edit Team</h1>
+  <% end %>
+
   <div class="col-lg-6 col-lg-offset-3">
     <%= bootstrap_form_for(@team) do |f| %>
       <% if @team.persisted? %>

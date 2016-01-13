@@ -1,31 +1,50 @@
 
-<h2>Teams</h2>
-<div class="title-team-row row hidden-xs">
-  <div class="col-sm-3 hidden-xs">Team Name</div>
-  <div class="col-sm-3 hidden-xs">Coach</div>
-</div>
 
-<% @teams.each do |t| %>
-  <div class="team-row row">
-    <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Team Name</div><div class="col-sm-3 col-xs-6"><%= link_to "#{t.name}", t %></div>
-    <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Coach</div><div class="col-sm-3 col-xs-6"><%= link_to "#{t.user.username}", t.user %></div>
-  </div>
-<% end %>
-<% if @tournament_teams.length >0 %>
-  <h2>Tournaments</h2>
-  <div class="title-team-row row hidden-xs">
-    <div class="col-sm-3 hidden-xs">Team Name</div>
-    <div class="col-sm-3 hidden-xs">Tournament</div>
-    <div class="col-sm-3 hidden-xs">Tournament Start Date</div>
-    <div class="col-sm-3 hidden-xs">Coach</div>
-  </div>
-
-  <% @tournament_teams.each do |t| %>
-    <div class="team-row row">
-      <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Team Name</div><div class="col-sm-3 col-xs-6"><%= link_to "#{t.name}", t %></div>
-      <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Tournament</div><div class="col-sm-3 col-xs-6"><%= link_to "#{t.tournament.name}", t.tournament %></div>
-      <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Tournament Start Date</div><div class="col-sm-3 col-xs-6"><%= "#{t.tournament.start_time.strftime("%b %d, %Y")}" %></div>
-      <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Coach</div><div class="col-sm-3 col-xs-6"><%= link_to "#{t.user.username}", t.user %></div>
+<div class="col-lg-12">
+    <h2>Teams</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover team-table">
+            <thead>
+                <tr>
+                    <th>Team Name</th>
+                    <th>Coach</th>
+                </tr>
+            </thead>
+            <tbody>
+              <% @teams.each do |t| %>
+                <tr>
+                    <td><%= link_to "#{t.name}", t %></td>
+                    <td><%= link_to "#{t.user.username}", t.user %></td>
+                </tr>
+                <% end %>
+                <tr>
+            </tbody>
+        </table>
     </div>
-  <% end %>
-<% end %>
+</div>
+<div class="col-lg-12">
+    <h2>Tournaments</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover team-table">
+            <thead>
+                <tr>
+                    <th>Team Name</th>
+                    <th>Tournament</th>
+                    <th>Tournament Start Date</th>
+                    <th>Coach</th>
+                </tr>
+            </thead>
+            <tbody>
+              <% @tournament_teams.each do |t| %>
+                <tr>
+                    <td><%= link_to "#{t.name}", t %></td>
+                    <td><%= link_to "#{t.tournament.name}", t.tournament %></td>
+                    <td><%= "#{t.tournament.start_time.strftime("%b %d, %Y")}" %></td>
+                    <td><%= link_to "#{t.user.username}", t.user %></td>
+                </tr>
+                <% end %>
+                <tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -76,7 +76,7 @@
   </div>
   <div class="text-right all-announcements-link">
     <% if @team %>
-      <%= link_to team_announces_path(@team), class:"btn-primary btn-sm" do %>
+      <%= link_to team_announces_path(@team), class:"btn-primary btn-sm margin-right-15" do %>
         View All Announcements <i class="fa bullhorn"></i>
       <% end %>
       <% if @team.user == current_user %>
@@ -84,18 +84,18 @@
       <% end %>
 
     <% elsif @tournament %>
-      <%= link_to tournament_announces_path(@tournament) do %>
+      <%= link_to tournament_announces_path(@tournament), class:"btn-primary btn-sm margin-right-15" do %>
         View All Announcements <i class="fa fa-bullhorn"></i>
       <% end %>
       <% if @tournament.user == current_user %>
         <%= link_to "New Announcement", [:new, @announcable, :announce], class:"btn-primary btn-sm" %>
       <% end %>
     <% elsif @game %>
-      <%= link_to game_announces_path(@game) do %>
+      <%= link_to game_announces_path(@game), class:"btn-primary btn-sm margin-right-15" do %>
         View All Announcements <i class="fa bullhorn"></i>
       <% end %>
     <% elsif @league %>
-      <%= link_to league_announces_path(@league) do %>
+      <%= link_to league_announces_path(@league), class:"btn-primary btn-sm margin-right-15" do %>
         View All Announcements <i class="fa bullhorn"></i>
       <% end %>
       <% if @league.user == current_user %>
