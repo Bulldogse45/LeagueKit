@@ -4,7 +4,7 @@
     <% @players.each do |p| %>
       <div class="team-row row">
         <div class="col-xs-3">
-          <%= link_to "#{p.last_name}, #{p.first_name}", p %></p>
+          <%= link_to "#{p.full_name}", p %></p>
         </div>
         <%= form_for @player_participant do |f| %>
           <%= f.hidden_field :player_id, value: p.id %>
