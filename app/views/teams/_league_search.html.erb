@@ -8,8 +8,8 @@
 
 <% @teams.each do |t| %>
   <div class="team-row row">
-    <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Team Name</div><div class="col-sm-3 col-xs-6"><%= link_to "#{t.name}", t %></div>
-    <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Coach</div><div class="col-sm-3 col-xs-6"><%= link_to "#{t.user.username}", t.user %></div>
+    <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Team Name</div><div class="col-sm-3 col-xs-6"><%= link_to t.name, t %></div>
+    <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Coach</div><div class="col-sm-3 col-xs-6"><%= link_to t.user.username, t.user %></div>
     <%= form_tag league_add_path, :method => 'get' do %>
     <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Player</div>
     <%= hidden_field(nil, :team_id, :value => t.id) %>
