@@ -7,9 +7,9 @@
   </div>
   <% @tournaments.each do |t| %>
     <div class="team-row row">
-      <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Tournament Name</div><div class="col-sm-3 col-xs-6"><%= link_to "#{t.name}", t %></div>
-      <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Tournament Start Date</div><div class="col-sm-3 col-xs-6"><%= "#{t.start_time.strftime("%b %d, %Y")}" %></div>
-      <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Tourn. Director</div><div class="col-sm-3 col-xs-6"><%= link_to "#{t.user.username}", t.user %></div>
+      <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Tournament Name</div><div class="col-sm-3 col-xs-6"><%= link_to t.name, t %></div>
+      <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Tournament Start Date</div><div class="col-sm-3 col-xs-6"><%= t.start_time.strftime("%b %d, %Y") %></div>
+      <div class="col-xs-6 hidden-sm hidden-md hidden-lg">Tourn. Director</div><div class="col-sm-3 col-xs-6"><%= link_to t.user.username, t.user %></div>
     </div>
   <% end %>
 

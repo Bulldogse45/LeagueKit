@@ -13,8 +13,8 @@
             <tbody>
               <% @teams.each do |t| %>
                 <tr>
-                    <td><%= link_to "#{t.name}", t %></td>
-                    <td><%= link_to "#{t.user.username}", t.user %></td>
+                    <td><%= link_to t.name, t %></td>
+                    <td><%= link_to t.user.username, t.user %></td>
                 </tr>
                 <% end %>
                 <tr>
@@ -37,10 +37,10 @@
             <tbody>
               <% @tournament_teams.each do |t| %>
                 <tr>
-                    <td><%= link_to "#{t.name}", t %></td>
-                    <td><%= link_to "#{t.tournament.name}", t.tournament %></td>
-                    <td><%= "#{t.tournament.start_time.strftime("%b %d, %Y")}" %></td>
-                    <td><%= link_to "#{t.user.username}", t.user %></td>
+                    <td><%= link_to t.name, t %></td>
+                    <td><%= link_to t.tournament.name, t.tournament %></td>
+                    <td><%= t.tournament.start_time.strftime("%b %d, %Y") %></td>
+                    <td><%= link_to t.user.username, t.user %></td>
                 </tr>
                 <% end %>
                 <tr>

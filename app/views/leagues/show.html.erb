@@ -12,7 +12,7 @@
             <% if @league.user == current_user %>
               <%= link_to "Edit League Settings", edit_league_path(@league) %>
             <% else %>
-              <%= link_to "#{@league.user.full_name}" , @league.user %>
+              <%= link_to @league.user.full_name , @league.user %>
             <% end %>
           </small></small>
         </h2>
