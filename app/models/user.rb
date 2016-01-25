@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   has_many :games, through: :referees
   has_many :to_users
   has_many :messages, through: :to_users
+  has_many :messages, inverse_of: :from
 
   def full_name
     suffix = ""

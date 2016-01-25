@@ -2,11 +2,7 @@ class Message < ActiveRecord::Base
   has_many :message_reads
   has_many :to_users
   has_many :users, through: :to_users
-
-
-  def from
-    User.find(self.from_user_id)
-  end
+  belongs_to :from, class_name: "User", foreign_key:"from_user_id"
 
   def to_users_list=(args)
     args.split(",").each do |u|
